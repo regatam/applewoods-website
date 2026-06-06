@@ -1,5 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { EnvelopeSimpleIcon, PhoneIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./styles.css";
@@ -61,9 +62,9 @@ const storyItems = [
   {
     label: "Security built in",
     eyebrow: "01 / controlled access",
-    title: "The first impression is protected, lit, and intentional.",
+    title: "The entrance is designed to feel secure, welcoming, and well cared for.",
     body:
-      "Controlled access, CCTV planning, smart lighting, and visitor systems help the community feel protected from the first gate.",
+      "Controlled access, CCTV monitoring, smart lighting, and visitor management systems help create a secure and welcoming environment from the moment residents and guests enter the community.",
     image: "/assets/security-built-in-camera.jpg",
   },
   {
@@ -71,7 +72,7 @@ const storyItems = [
     eyebrow: "02 / value protection",
     title: "Standards keep the neighborhood looking consistent.",
     body:
-      "Landscaping, architectural standards, curb appeal guidelines, and maintained streets are planned as part of the community system.",
+      "Landscaping, architectural standards, curb appeal guidelines, safety features, crossings, and parking areas support appearance, function, and long-term value.",
     image: "/assets/beautyaw.png",
   },
   {
@@ -79,7 +80,7 @@ const storyItems = [
     eyebrow: "03 / shared comfort",
     title: "The lifestyle expands beyond the home.",
     body:
-      "A clubhouse, gym, pool, green areas, and resident services bring comfort into the community without every homeowner managing it alone.",
+      "A clubhouse, fitness center, resort-style pool, green spaces, services, and a private concierge line bring comfort beyond the home.",
     image: "/assets/awclubpool.png",
   },
   {
@@ -87,67 +88,197 @@ const storyItems = [
     eyebrow: "04 / resident systems",
     title: "Smart systems make daily living easier to coordinate.",
     body:
-      "Access systems, lighting, connectivity, communication tools, and the Applewoods portal support a more organized way to live.",
+      "Smart access, lighting, irrigation, connectivity, resident communication tools, and the Apple Woods Portal create a more connected daily experience.",
     image: "/assets/technology-built-in-sign.jpg",
   },
 ];
 
 const lotTypes = [
   {
-    name: "Standard Lots",
+    name: "Classic Homesites",
     price: "Expected from $85,000",
-    body: "A strong entry point into the Applewoods community.",
+    body: "An attractive introductory opportunity to join the Apple Woods community, with Phase 1 homesites offered at early-release pricing designed to provide exceptional value within a thoughtfully planned neighborhood.",
   },
   {
-    name: "Premier Lots",
+    name: "Premier Homesites",
     price: "Expected from $95,000",
-    body: "Select homesites near the planned clubhouse area.",
+    body: "A limited collection near the planned clubhouse, river walk, natural water elements, landscaping, and resort-style pool area.",
   },
   {
-    name: "Corner Lots",
+    name: "Corner Homesites",
     price: "Priced individually",
-    body: "Larger or irregular lots priced by size and location.",
+    body: "Larger or irregular homesites priced by size and location.",
   },
 ];
 
 const faqs = [
   {
-    question: "Which lots are still available?",
+    question: "I hear I can find cheaper lots elsewhere. Why Apple Woods?",
     answer:
-      "Availability can change quickly as buyers reserve or move under contract. Confirm current status with the sales team.",
+      "Some lots may cost less, but Apple Woods offers more than land: standards, landscaping, technology, amenities, security, services, and long-term planning that help protect the neighborhood experience.",
+  },
+  {
+    question: "Which homesites are still available?",
+    answer:
+      "Availability changes quickly. Some homesites may be pending but not fully secured until deposit is received, so buyers should confirm current status with the sales team.",
   },
   {
     question: "Will prices stay the same?",
     answer:
-      "Phase 1 is expected to be the lowest-priced entry point. As availability decreases, future pricing may move higher.",
+      "Phase 1 is expected to offer the strongest introductory pricing. As inventory becomes more limited, later pricing is expected to increase.",
   },
   {
     question: "Can I design my own home?",
     answer:
-      "Yes. Homes go through architectural review to protect community curb appeal and standards.",
+      "Yes. Homeowners can design custom homes, subject to architectural review, so each home supports the community's standards and long-term curb appeal.",
+  },
+  {
+    question: "Are the dues expensive?",
+    answer:
+      "No. Shared community costs help keep dues manageable while supporting landscaping, services, amenities, and neighborhood quality.",
+  },
+  {
+    question: "Are dues mandatory?",
+    answer:
+      "Yes. Core dues are required for all homeowners and help maintain shared services, appearance, and community quality. Optional services are paid only by residents who choose them.",
+  },
+  {
+    question: "Am I responsible for all dues when I purchase?",
+    answer:
+      "No. A reduced dues structure applies during lot ownership before construction, covering basic maintenance and essential services. Full dues begin after the home is built.",
+  },
+  {
+    question: "Do I have to build a huge home?",
+    answer:
+      "No. Apple Woods focuses on design, curb appeal, and standards rather than oversized homes. The minimum covered area is 2,000 sq. ft.",
+  },
+  {
+    question: "If I build an expensive home, will less expensive homes affect my value?",
+    answer:
+      "No. Homes can vary in size and budget, but architectural and landscaping standards protect curb appeal, consistency, and long-term community value.",
+  },
+  {
+    question: "What are the restrictions?",
+    answer:
+      "Community standards cover home size, architecture, landscaping, maintenance, lighting, noise, colors, and outdoor storage to protect the community's appearance and quality of life.",
+  },
+  {
+    question: "How big are the homesites?",
+    answer:
+      "Most homesites are about 6,000 sq. ft., typically 60 ft. wide by 100 ft. deep, with standard setbacks of 25 ft. front, 5 ft. sides, and 10 ft. rear.",
+  },
+  {
+    question: "Are 6,000 sq. ft. homesites too small?",
+    answer:
+      "Not necessarily. Apple Woods pairs efficient homesites with shared amenities, green areas, pool, fitness, and gathering spaces, so owners can invest in the home while the community provides more of the lifestyle.",
+  },
+  {
+    question: "Can I build on two lots?",
+    answer:
+      "Combining lots may be permitted in select cases. If approved, added architectural and entrance-design guidelines may apply.",
   },
 ];
+
+const initialLeadForm = {
+  fullName: "",
+  phone: "",
+  email: "",
+  lotInterest: "not-sure",
+  budget: "not-sure",
+  timeline: "not-sure",
+  interestType: "availability",
+  notes: "",
+};
+
+const directContactLinks = [
+  {
+    label: "Call sales",
+    detail: "956-455-9555",
+    href: "tel:+19564559555",
+    icon: "phone",
+  },
+  {
+    label: "Email",
+    detail: "info@applewoods.us",
+    href: "mailto:alfonso@park-street.us",
+    icon: "mail",
+  },
+  {
+    label: "WhatsApp",
+    detail: "956-455-9555",
+    href: "https://wa.me/19564559555",
+    icon: "message",
+  },
+];
+
+function ContactIcon({ type }) {
+  const iconProps = {
+    "aria-hidden": true,
+    focusable: "false",
+    size: 22,
+    weight: "regular",
+  };
+
+  if (type === "phone") {
+    return <PhoneIcon {...iconProps} />;
+  }
+
+  if (type === "message") {
+    return <WhatsappLogoIcon {...iconProps} />;
+  }
+
+  return <EnvelopeSimpleIcon {...iconProps} />;
+}
 
 const v2FeatureItems = [
   {
     title: "Security built in",
-    body: "Controlled access, CCTV planning, smart lighting, and connected systems.",
+    body: "Controlled access, CCTV monitoring, smart lighting, connected systems, and flood-conscious planning.",
     image: "/assets/security-built-in-camera.jpg",
   },
   {
     title: "Beauty built in",
-    body: "Maintained landscaping, architectural standards, and curb appeal guidelines.",
+    body: "Landscaping, architectural standards, curb appeal guidelines, and preserved green areas.",
     image: "/assets/beauty-built-in-house-closeup.jpg",
   },
   {
     title: "Technology built in",
-    body: "Smart lighting, access systems, and resident communication tools.",
+    body: "Smart lighting, irrigation, access systems, connectivity, and resident communication tools.",
     image: "/assets/technology-built-in-sign.jpg",
   },
   {
     title: "Luxury built in",
-    body: "Shared amenities and services that add comfort without extra household burden.",
+    body: "Shared amenities and services that add comfort without making every homeowner carry the full cost alone.",
     image: "/assets/luxury-built-in-clubhouse-aerial.jpg",
+  },
+  {
+    title: "Wellness built in",
+    body: "Blue Zone programs, fitness amenities, and wellness activities support an active mind and body.",
+    image: "/assets/awclubpool.png",
+  },
+  {
+    title: "Attainability built in",
+    body: "Community scale helps share service and amenity costs while keeping dues manageable.",
+    image: "/assets/awfont.png",
+  },
+];
+
+const valueStackItems = [
+  {
+    title: "Daily Environment",
+    body: "Landscaping, lighting, curb appeal, and preserved green areas are planned as shared community systems.",
+  },
+  {
+    title: "Security Layer",
+    body: "Controlled access, CCTV monitoring, and visitor systems support a more managed setting.",
+  },
+  {
+    title: "Shared Lifestyle",
+    body: "Clubhouse, fitness, pool, green spaces, and wellness programming give residents more than a homesite.",
+  },
+  {
+    title: "Cost Clarity",
+    body: "Shared costs, manageable dues, and reduced dues before construction help make the value easier to understand.",
   },
 ];
 
@@ -334,11 +465,11 @@ function useVersionTwoMotion() {
 function Nav() {
   return (
     <header className="site-nav" aria-label="Primary navigation">
-      <a className="brand" href="#top" aria-label="Applewoods home">
+      <a className="brand" href="#top" aria-label="Apple Woods home">
         <span className="brand-mark" aria-hidden="true">
           AW
         </span>
-        <span>Applewoods</span>
+        <span>Apple Woods</span>
       </a>
       <nav className="nav-links">
         <a href="#different">Different</a>
@@ -358,14 +489,18 @@ function Hero() {
     <section className="hero section-grid" id="top">
       <div className="hero-copy">
         <p className="eyebrow">Affordable luxury</p>
-        <h1>A Safer Smarter Place to Call Home</h1>
+        <h1>
+          <span>More Than a Subdivision:</span>
+          {" "}
+          <span>A Place to Truly Call Home</span>
+        </h1>
         <p className="hero-subhead">
-          Applewoods is a smart community where security, luxury, and technology are
-          built into everyday life.
+          Apple Woods is a smart residential community designed around security,
+          comfort, beauty, technology, and attainable everyday luxury.
         </p>
         <div className="hero-actions" aria-label="Primary actions">
           <a className="button button-dark" href="#contact">
-            Ask About Phase 1 Lots
+            Ask About Lots
           </a>
           <a className="button button-quiet" href="#structured">
             Explore The Community
@@ -373,12 +508,12 @@ function Hero() {
         </div>
       </div>
 
-      <div className="hero-visual" aria-label="Applewoods entrance render">
+      <div className="hero-visual" aria-label="Apple Woods entrance render">
         <div className="hero-card-label">
           <span>Structured Living</span>
           <strong>Brownsville, TX</strong>
         </div>
-        <img src="/assets/fountain-close-night.jpg" alt="Applewoods entrance fountain render" />
+        <img src="/assets/apple-corregido.png" alt="Apple Woods entrance render" />
         <div className="hero-fact-strip">
           <div>
             <strong>Phase 1</strong>
@@ -390,7 +525,7 @@ function Hero() {
           </div>
           <div>
             <strong>24/7</strong>
-            <span>Security planning</span>
+            <span>CCTV monitoring</span>
           </div>
         </div>
       </div>
@@ -402,14 +537,14 @@ function Difference() {
   return (
     <section className="difference" id="different">
       <div className="section-heading">
-        <p className="eyebrow">Why Applewoods is different</p>
+        <p className="eyebrow">Why Apple Woods is different</p>
         <h2>Everything that makes a neighborhood feel premium is planned from the start.</h2>
       </div>
       <div className="difference-grid">
         <article>
           <span>01</span>
           <h3>Security built in</h3>
-          <p>Controlled access, CCTV planning, smart lighting, and connected systems.</p>
+          <p>Controlled access, CCTV monitoring, smart lighting, and connected systems.</p>
         </article>
         <article>
           <span>02</span>
@@ -435,8 +570,8 @@ function V2Hero() {
   return (
     <section className="v2-hero" id="top">
       <header className="v2-nav" aria-label="Primary navigation">
-        <a className="v2-logo" href="#top" aria-label="Applewoods home">
-          <img src="/assets/applewoods-logo.png" alt="Applewoods Smart Living" />
+        <a className="v2-logo" href="#top" aria-label="Apple Woods home">
+          <img src="/assets/applewoods-logo.png" alt="Apple Woods Smart Living" />
         </a>
         <nav>
           <a href="#location">Location</a>
@@ -452,10 +587,14 @@ function V2Hero() {
       <div className="v2-hero-copy">
         <p>Life, beautifully organized.</p>
         <div>
-          <h1>A Safer, Smarter Place to Call Home</h1>
+          <h1>
+            <span>More Than a Subdivision:</span>
+            {" "}
+            <span>A Place to Truly Call Home</span>
+          </h1>
           <p>
-            Applewoods is a smart community where security, luxury, and technology are
-            built into everyday life.
+            Apple Woods is a smart residential community designed around security,
+            comfort, beauty, technology, and attainable everyday luxury.
           </p>
           <div className="v2-actions">
             <a href="#structured">Explore</a>
@@ -466,8 +605,8 @@ function V2Hero() {
 
       <figure className="v2-hero-image">
         <picture>
-          <source media="(max-width: 760px)" srcSet="/assets/mobilehero.png" />
-          <img src="/assets/apple-2.png" alt="Applewoods entrance at night" />
+          <source media="(max-width: 760px)" srcSet="/assets/apple-corregido.png" />
+          <img src="/assets/apple-corregido.png" alt="Apple Woods entrance at night" />
         </picture>
       </figure>
     </section>
@@ -520,10 +659,10 @@ function V2Difference() {
   return (
     <section className="v2-difference" id="different">
       <div className="v2-difference-heading">
-        <p>How Applewoods is different</p>
+        <p>How Apple Woods is different</p>
         <h2>Everything that makes a neighborhood feel premium is planned from the start.</h2>
       </div>
-      <div className="v2-feature-scroller" aria-label="Applewoods feature cards" ref={scrollerRef}>
+      <div className="v2-feature-scroller" aria-label="Apple Woods feature cards" ref={scrollerRef}>
         <div className="v2-feature-row">
           {v2FeatureItems.map((item) => (
             <article key={item.title}>
@@ -634,6 +773,46 @@ function V2StickyAmenities() {
   );
 }
 
+function ValueStack() {
+  return (
+    <section className="value-stack" id="value-stack">
+      <div className="value-stack-inner">
+        <div className="value-stack-heading">
+          <p>Shared value</p>
+          <h2>What Community Scale Makes Possible</h2>
+          <p>
+            Apple Woods shares the cost of security, landscaping, amenities,
+            technology, and upkeep so homeowners get a more complete lifestyle
+            without carrying every cost individually.
+          </p>
+        </div>
+
+        <figure className="value-stack-media">
+          <img
+            src="/assets/value-stack-actual-plan.png"
+            alt="Apple Woods shared clubhouse, pool, green space, and surrounding homesites"
+          />
+        </figure>
+
+        <div className="value-stack-grid">
+          {valueStackItems.map((item, itemIndex) => (
+            <article key={item.title}>
+              <span>{String(itemIndex + 1).padStart(2, "0")}</span>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </article>
+          ))}
+        </div>
+
+        <div className="value-stack-actions">
+          <a href="#contact">Ask Costs</a>
+          <a href="tel:+19564559555">Call Sales</a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function StickyStory() {
   const [ref, { index, progress }] = useStickyIndex(storyItems.length);
   const active = storyItems[index];
@@ -649,7 +828,7 @@ function StickyStory() {
           <p className="eyebrow">Structured Living</p>
           <h2>A neighborhood designed to make everyday life easier.</h2>
           <p>
-            Applewoods brings together the things residents usually have to figure out
+            Apple Woods brings together the things residents usually have to figure out
             on their own: access, lighting, landscaping, maintenance, security,
             amenities, and communication. The result is a community that feels more
             organized, more modern, and easier to enjoy.
@@ -723,15 +902,15 @@ function LifeInside() {
   return (
     <section className="life-inside" id="life-inside">
       <div className="life-image">
-        <img src="/assets/awnice.png" alt="Applewoods clubhouse exterior render" />
+        <img src="/assets/awnice.png" alt="Apple Woods clubhouse exterior render" />
       </div>
       <div className="life-copy">
-        <p className="eyebrow">Life Inside Applewoods</p>
+        <p className="eyebrow">Life Inside Apple Woods</p>
         <h2>The comfort of a private community, built into everyday life.</h2>
         <p>
-          From the clubhouse and gym to the pool, landscaping, lighting, and shared
-          services, Applewoods is designed to make daily life feel easier, cleaner,
-          and more elevated.
+          From the clubhouse and fitness center to the pool, landscaping, lighting,
+          and shared services, Apple Woods is designed to make daily life feel easier,
+          more comfortable, and more refined.
         </p>
         <dl className="amenity-list">
           <div>
@@ -760,43 +939,74 @@ function PhaseOne() {
   return (
     <section className="phase-one" id="phase-one">
       <div className="phase-intro">
-        <p className="eyebrow">Phase 1 Lots</p>
-        <h2>The first opportunity to own in Applewoods.</h2>
+        <p className="eyebrow">Phase 1 Homesites</p>
+        <h2>The first opportunity to own in Apple Woods.</h2>
         <p>
-          Phase 1 is the first release inside the Applewoods community and is expected
-          to be the lowest-priced entry point. Review availability, compare lot types,
-          and confirm current pricing before preferred lots move to reserved, under
-          contract, or sold.
+          Phase 1 is the first release inside Apple Woods and gives early buyers a
+          strong opportunity to secure a homesite at introductory pricing.
         </p>
       </div>
       <div className="lot-layout">
         <div className="masterplan-card">
           <a className="masterplan-map" href="/assets/phase-1-aw-sold.pdf">
-            <img src="/assets/phase-1-aw-sold-map.png" alt="Applewoods Phase 1 sold lot map" />
+            <img src="/assets/phase-1-aw-sold-map.png" alt="Apple Woods Phase 1 sold lot map" />
           </a>
           <object
             className="masterplan-pdf"
             data="/assets/phase-1-aw-sold.pdf#toolbar=1&navpanes=0&view=Fit"
             type="application/pdf"
-            aria-label="Applewoods Phase 1 sold lot map"
+            aria-label="Apple Woods Phase 1 sold lot map"
           >
-            <a href="/assets/phase-1-aw-sold.pdf">Open Applewoods Phase 1 lot map</a>
+            <a href="/assets/phase-1-aw-sold.pdf">Open Apple Woods Phase 1 lot map</a>
           </object>
         </div>
-        <div className="lot-cards">
-          {lotTypes.map((lot, lotIndex) => (
-            <article key={lot.name}>
-              <span>{String(lotIndex + 1).padStart(2, "0")}</span>
-              <h3>{lot.name}</h3>
-              <strong>{lot.price}</strong>
-              <p>{lot.body}</p>
-            </article>
-          ))}
+        <div className="phase-details">
+          <div className="lot-cards">
+            {lotTypes.map((lot, lotIndex) => (
+              <article key={lot.name}>
+                <span>{String(lotIndex + 1).padStart(2, "0")}</span>
+                <h3>{lot.name}</h3>
+                <strong>{lot.price}</strong>
+                <p>{lot.body}</p>
+              </article>
+            ))}
+          </div>
+
+          <aside className="price-sheet-card" aria-label="Apple Woods Phase 1 price sheet">
+            <a
+              className="price-sheet-preview"
+              href="/assets/apple-woods-price-sheet.pdf"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open Apple Woods price sheet"
+            >
+              <img
+                src="/assets/apple-woods-price-sheet-preview.png"
+                alt="Apple Woods Phase 1 developer introductory offer price sheet preview"
+              />
+            </a>
+            <div className="price-sheet-copy">
+              <p className="eyebrow">Current Price Sheet</p>
+              <h3>Developer's introductory offer</h3>
+              <p>
+                Review the latest Phase 1 homesite list, suggested retail pricing,
+                and introductory offer pricing.
+              </p>
+              <div className="price-sheet-actions">
+                <a href="/assets/apple-woods-price-sheet.pdf" target="_blank" rel="noreferrer">
+                  Open Sheet
+                </a>
+                <a href="/assets/apple-woods-price-sheet.pdf" download>
+                  Download
+                </a>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
       <p className="phase-note">
         Lot status can change quickly once buyers begin confirming selections. As
-        availability decreases, future pricing may move higher.
+        availability decreases, future pricing may increase.
       </p>
     </section>
   );
@@ -809,21 +1019,305 @@ function Location() {
         <p className="eyebrow">Location</p>
         <h2>A private community with fast access to where Brownsville is growing.</h2>
         <p>
-          Applewoods gives residents access to daily essentials, key roads, Rancho
-          Viejo, and the port growth corridor from a community designed to feel
-          protected, modern, and set apart.
+          Apple Woods combines everyday convenience with regional access to major
+          highways, Rancho Viejo, the Port of Brownsville, South Padre Island, and key
+          commercial areas.
         </p>
       </div>
       <div className="location-panel">
-        <img src="/assets/locationsaw.png" alt="Applewoods location context" />
+        <img src="/assets/locationsaw.png" alt="Apple Woods location context" />
       </div>
     </section>
   );
 }
 
 function Contact() {
+  const [formData, setFormData] = useState(initialLeadForm);
+  const [touched, setTouched] = useState({});
+  const [status, setStatus] = useState("idle");
+  const [message, setMessage] = useState("");
+
+  const emailValue = formData.email.trim();
+  const phoneValue = formData.phone.trim();
+  const emailIsInvalid = emailValue && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue);
+  const contactMissing = !phoneValue && !emailValue;
+
+  const errors = {
+    phone: contactMissing ? "Add a phone or email so we can reply." : "",
+    email: emailIsInvalid ? "Use a valid email, or leave it blank and add a phone." : "",
+  };
+
+  const updateField = (event) => {
+    const { name, value } = event.target;
+    setStatus((current) => (current === "success" ? "idle" : current));
+    setMessage("");
+    setFormData((current) => ({ ...current, [name]: value }));
+  };
+
+  const markTouched = (event) => {
+    setTouched((current) => ({ ...current, [event.target.name]: true }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setTouched({ phone: true, email: true });
+
+    if (contactMissing || emailIsInvalid) {
+      setStatus("error");
+      setMessage("Only a phone or email is needed. Everything else can stay blank.");
+      return;
+    }
+
+    setStatus("submitting");
+    setMessage("");
+
+    const payload = {
+      leadStage: "complete",
+      ...formData,
+      fullName: formData.fullName.trim(),
+      phone: phoneValue,
+      email: emailValue,
+      notes: formData.notes.trim(),
+    };
+
+    try {
+      const response = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok && response.status !== 404) {
+        throw new Error("Lead submission failed");
+      }
+
+      setStatus("success");
+      setMessage("Sent. We have enough to start the conversation.");
+    } catch (error) {
+      setStatus("error");
+      setMessage(
+        "Something did not send. Please call, text, email, or WhatsApp and we can take it from there."
+      );
+    }
+  };
+
+  const submitLabel =
+    status === "submitting" ? "Sending..." : status === "success" ? "Sent" : "Send inquiry";
+
   return (
     <section className="contact" id="contact">
+      <div className="contact-heading">
+        <p className="eyebrow">3.0 Inquiry</p>
+        <h2>Tell us what you are thinking.</h2>
+        <p>
+          Share as much or as little as you want. A few details help us point you
+          toward the right next step.
+        </p>
+      </div>
+
+      <div className="inquiry-grid">
+        <aside className="direct-contact">
+          <p className="eyebrow">Direct contact</p>
+          <h3>Rather talk it through?</h3>
+          <p>
+            Call or message if that is easier. The form is here to start the
+            conversation, not make you do homework.
+          </p>
+          <div className="direct-actions">
+            {directContactLinks.map((item) => (
+              <a className="cta-dark" href={item.href} key={item.label}>
+                <ContactIcon type={item.icon} />
+                <span>
+                  <strong>{item.label}</strong>
+                  <small>{item.detail}</small>
+                </span>
+              </a>
+            ))}
+          </div>
+          <div className="contact-note">
+            <span>What happens next</span>
+            <p>
+              We confirm current Phase 1 availability, answer first questions, and
+              help you understand which lots fit what you are considering.
+            </p>
+          </div>
+        </aside>
+
+        <form className="lead-form" onSubmit={handleSubmit} noValidate>
+          <div className="lead-form-intro">
+            <p className="eyebrow">Quick note</p>
+            <h2>What would make this useful for you?</h2>
+            <p>
+              Only a phone or email is needed so we can reply. Everything else is
+              optional context.
+            </p>
+          </div>
+
+          <label className="field">
+            <span>Name</span>
+            <input
+              className="input"
+              type="text"
+              name="fullName"
+              autoComplete="name"
+              placeholder="Your name"
+              value={formData.fullName}
+              onBlur={markTouched}
+              onChange={updateField}
+            />
+          </label>
+
+          <div className="field-grid two">
+            <label className="field">
+              <span>Phone</span>
+              <input
+                className="input"
+                type="tel"
+                name="phone"
+                autoComplete="tel"
+                placeholder="Phone number"
+                value={formData.phone}
+                aria-describedby={errors.phone && touched.phone ? "phone-error" : undefined}
+                aria-invalid={Boolean(errors.phone && touched.phone)}
+                onBlur={markTouched}
+                onChange={updateField}
+              />
+              {errors.phone && touched.phone ? (
+                <em className="field-error" id="phone-error">
+                  {errors.phone}
+                </em>
+              ) : null}
+            </label>
+
+            <label className="field">
+              <span>Email</span>
+              <input
+                className="input"
+                type="email"
+                name="email"
+                autoComplete="email"
+                placeholder="Email address"
+                value={formData.email}
+                aria-describedby={errors.email && touched.email ? "email-error" : undefined}
+                aria-invalid={Boolean(errors.email && touched.email)}
+                onBlur={markTouched}
+                onChange={updateField}
+              />
+              {errors.email && touched.email ? (
+                <em className="field-error" id="email-error">
+                  {errors.email}
+                </em>
+              ) : null}
+            </label>
+          </div>
+
+          <label className="field">
+            <span>Questions or comments</span>
+            <textarea
+              className="input"
+              name="notes"
+              placeholder="Tell us what you are considering. Share as much or as little as you want."
+              rows="6"
+              value={formData.notes}
+              onBlur={markTouched}
+              onChange={updateField}
+            />
+          </label>
+
+          <div className="field-grid three">
+            <label className="field">
+              <span>Lot type</span>
+              <select
+                className="input"
+                name="lotInterest"
+                value={formData.lotInterest}
+                onBlur={markTouched}
+                onChange={updateField}
+              >
+                <option value="not-sure">Not sure yet</option>
+                <option value="standard">Standard lot</option>
+                <option value="premier">Premier lot</option>
+                <option value="corner">Corner lot</option>
+              </select>
+            </label>
+
+            <label className="field">
+              <span>Budget</span>
+              <select
+                className="input"
+                name="budget"
+                value={formData.budget}
+                onBlur={markTouched}
+                onChange={updateField}
+              >
+                <option value="not-sure">Not sure yet</option>
+                <option value="85-95">$85k to $95k</option>
+                <option value="95-plus">$95k+</option>
+                <option value="depends">Depends on lot</option>
+              </select>
+            </label>
+
+            <label className="field">
+              <span>Timing</span>
+              <select
+                className="input"
+                name="timeline"
+                value={formData.timeline}
+                onBlur={markTouched}
+                onChange={updateField}
+              >
+                <option value="not-sure">Not sure yet</option>
+                <option value="now">Ready now</option>
+                <option value="soon">Next 30 days</option>
+                <option value="later">Planning ahead</option>
+              </select>
+            </label>
+          </div>
+
+          <fieldset className="interest-field">
+            <legend>What are you interested in?</legend>
+            <div className="radio-grid">
+              {[
+                ["availability", "Check availability"],
+                ["buy", "Buy a lot"],
+                ["build", "Build a home"],
+              ].map(([value, label]) => (
+                <label className="radio-card" key={value}>
+                  <input
+                    type="radio"
+                    name="interestType"
+                    value={value}
+                    checked={formData.interestType === value}
+                    onChange={updateField}
+                  />
+                  <span>{label}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <button className="cta-submit" type="submit" disabled={status === "submitting" || status === "success"}>
+            {submitLabel}
+          </button>
+
+          {message ? (
+            <p className={`form-message ${status === "error" ? "is-error" : "is-success"}`}>
+              {message}
+            </p>
+          ) : null}
+
+          {status === "success" ? (
+            <div className="mini-actions" aria-label="Follow-up options">
+              {directContactLinks.map((item) => (
+                <a href={item.href} key={item.label}>
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          ) : null}
+        </form>
+      </div>
+
       <div className="faq">
         <p className="eyebrow">Before Phase 1 availability changes</p>
         <h2>Confirm the details that matter.</h2>
@@ -834,40 +1328,54 @@ function Contact() {
           </details>
         ))}
       </div>
-      <form className="lead-form">
-        <p className="eyebrow">Ask About Phase 1 Lots</p>
-        <h2>Phase 1 is the lowest entry point into Applewoods.</h2>
-        <label>
-          Name
-          <input type="text" name="name" autoComplete="name" />
-        </label>
-        <label>
-          Email
-          <input type="email" name="email" autoComplete="email" />
-        </label>
-        <label>
-          Lot interest
-          <select name="lotInterest" defaultValue="standard">
-            <option value="standard">Standard lot</option>
-            <option value="premier">Premier lot</option>
-            <option value="corner">Corner lot</option>
-            <option value="unsure">Not sure yet</option>
-          </select>
-        </label>
-        <button type="submit">Ask About Phase 1 Lots</button>
-      </form>
     </section>
   );
 }
 
 function Footer() {
   return (
-    <footer className="footer">
-      <div>
-        <img src="/assets/applewoods-logo.png" alt="Applewoods Smart Living" />
-        <p>Structured Living in Brownsville, Texas.</p>
+    <footer className="footer" id="footer">
+      <div className="footer-inner">
+        <a className="footer-logo" href="#top" aria-label="Apple Woods home">
+          <img src="/assets/applewoods-logo.png" alt="Apple Woods Smart Living" />
+        </a>
+
+        <div className="footer-content">
+          <div className="footer-message">
+            <p>
+              Apple Woods is designed for a calmer way to live in Brownsville:
+              organized, secure, beautiful, and built around everyday comfort.
+            </p>
+            <div className="footer-socials" aria-label="Social links">
+              <a href="https://www.facebook.com/" aria-label="Apple Woods on Facebook">
+                <svg viewBox="3 4 16 20" aria-hidden="true" focusable="false">
+                  <path d="M14.2 8.18h2.13V4.64c-.37-.05-1.62-.16-3.08-.16-3.05 0-5.14 1.86-5.14 5.28v2.98H4.67v3.96h3.44v6.74h4.22V16.7h3.32l.53-3.96h-3.85v-2.59c0-1.15.31-1.97 1.87-1.97Z" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div className="footer-menu" aria-label="Footer information and shortcuts">
+            <div className="footer-list">
+              <p>Brownsville, Texas</p>
+              <p>Phase 1 Homesites</p>
+              <p>Private Smart Living Community</p>
+            </div>
+            <nav className="footer-list" aria-label="Footer navigation">
+              <a href="#location">Location</a>
+              <a href="#life-inside">Live Here</a>
+              <a href="#different">Community</a>
+              <a href="#structured">Amenities</a>
+              <a href="#contact">Contact Us</a>
+            </nav>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <span>Copyright © Apple Woods 2026</span>
+          <a href="#top">Back to top</a>
+        </div>
       </div>
-      <a href="#top">Back to top</a>
     </footer>
   );
 }
@@ -899,6 +1407,7 @@ function VersionTwoPage() {
         <V2Hero />
         <V2Difference />
         <V2StickyAmenities />
+        <ValueStack />
         <LifeInside />
         <PhaseOne />
         <Location />

@@ -62,36 +62,28 @@ const isSmallViewport = () =>
 
 const storyItems = [
   {
-    label: "Security built in",
-    eyebrow: "01 / controlled access",
-    title: "The entrance is designed to feel secure, welcoming, and well cared for.",
+    label: "Shared scale",
+    eyebrow: "01 / shared scale",
+    title: "Premium living, shared across the whole community.",
     body:
-      "Controlled access, CCTV monitoring, smart lighting, and visitor management systems help create a secure and welcoming environment from the moment residents and guests enter the community.",
-    image: "/assets/security-built-in-camera.jpg",
-  },
-  {
-    label: "Beauty built in",
-    eyebrow: "02 / value protection",
-    title: "Standards keep the neighborhood looking consistent.",
-    body:
-      "Landscaping, architectural standards, curb appeal guidelines, safety features, crossings, and parking areas support appearance, function, and long-term value.",
-    image: "/assets/beautyaw.png",
-  },
-  {
-    label: "Amenities built in",
-    eyebrow: "03 / shared comfort",
-    title: "The lifestyle expands beyond the home.",
-    body:
-      "A clubhouse, fitness center, resort-style pool, green spaces, services, and a private concierge line bring comfort beyond the home.",
+      "Security, landscaping, amenities, and technology are built and maintained for everyone here, so you get the lifestyle of a high-end neighborhood without carrying the full cost of it on your own.",
     image: "/assets/awclubpool.png",
   },
   {
-    label: "Technology built in",
-    eyebrow: "04 / resident systems",
-    title: "Smart systems make daily living easier to coordinate.",
+    label: "Attainable luxury",
+    eyebrow: "02 / attainable luxury",
+    title: "The quality of a luxury community, from $85,000.",
     body:
-      "Smart access, lighting, irrigation, connectivity, resident communication tools, and the Apple Woods Portal create a more connected daily experience.",
-    image: "/assets/technology-built-in-sign.jpg",
+      "Because the cost of amenities and services is shared, Phase 1 homesites start at just $85,000. That price buys you into a fully planned smart community, not just a piece of land.",
+    image: "/assets/luxury-built-in-clubhouse-aerial.jpg",
+  },
+  {
+    label: "Nothing like it here",
+    eyebrow: "03 / nothing like it",
+    title: "There is nothing like this in Brownsville.",
+    body:
+      "A gated, smart, amenity-rich community planned to this level, at these prices, does not exist anywhere else in the area. Phase 1 is the first and best opportunity to get in.",
+    image: "/assets/locationsaw.png",
   },
 ];
 
@@ -624,8 +616,8 @@ function V2StickyAmenities() {
           </div>
           <div className="v2-amenities-content">
             <div className="v2-amenities-title">
-              <p>Our</p>
-              <p>Amenities</p>
+              <p>Attainable</p>
+              <p>Luxury</p>
             </div>
 
             <figure className="v2-amenity-image" ref={imageRef}>

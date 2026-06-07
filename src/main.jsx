@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { EnvelopeSimpleIcon, PhoneIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lightbox from "./components/Lightbox";
 import "./styles.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -747,6 +748,8 @@ function LifeInside() {
 }
 
 function PhaseOne() {
+  const [mapOpen, setMapOpen] = useState(false);
+
   return (
     <section className="phase-one" id="phase-one">
       <div className="phase-intro">
@@ -759,17 +762,15 @@ function PhaseOne() {
       </div>
       <div className="lot-layout">
         <div className="masterplan-card">
-          <a className="masterplan-map" href="/assets/phase-1-aw-sold.pdf">
-            <img src="/assets/phase-1-aw-sold-map.png" alt="Apple Woods Phase 1 sold lot map" />
-          </a>
-          <object
-            className="masterplan-pdf"
-            data="/assets/phase-1-aw-sold.pdf#toolbar=1&navpanes=0&view=Fit"
-            type="application/pdf"
-            aria-label="Apple Woods Phase 1 sold lot map"
+          <button
+            type="button"
+            className="masterplan-trigger"
+            onClick={() => setMapOpen(true)}
+            aria-label="Open the Phase 1 lot map"
           >
-            <a href="/assets/phase-1-aw-sold.pdf">Open Apple Woods Phase 1 lot map</a>
-          </object>
+            <img src="/assets/phase-1-aw-sold-map.png" alt="Apple Woods Phase 1 sold lot map" />
+            <span className="masterplan-hint">Tap to explore the lot map</span>
+          </button>
         </div>
         <div className="phase-details">
           <div className="lot-cards">
@@ -819,6 +820,9 @@ function PhaseOne() {
         Lot status can change quickly once buyers begin confirming selections. As
         availability decreases, future pricing may increase.
       </p>
+      <Lightbox open={mapOpen} onClose={() => setMapOpen(false)} label="Apple Woods Phase 1 lot map">
+        <img src="/assets/phase-1-aw-sold-map@2x.png" alt="Apple Woods Phase 1 lot map" />
+      </Lightbox>
     </section>
   );
 }

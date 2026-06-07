@@ -4,6 +4,7 @@ import { EnvelopeSimpleIcon, PhoneIcon, WhatsappLogoIcon } from "@phosphor-icons
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lightbox from "./components/Lightbox";
+import PriceSheet from "./components/PriceSheet";
 import "./styles.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -749,6 +750,7 @@ function LifeInside() {
 
 function PhaseOne() {
   const [mapOpen, setMapOpen] = useState(false);
+  const [priceOpen, setPriceOpen] = useState(false);
 
   return (
     <section className="phase-one" id="phase-one">
@@ -785,33 +787,21 @@ function PhaseOne() {
           </div>
 
           <aside className="price-sheet-card" aria-label="Apple Woods Phase 1 price sheet">
-            <a
+            <button
+              type="button"
               className="price-sheet-preview"
-              href="/assets/apple-woods-price-sheet.pdf"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Open Apple Woods price sheet"
+              onClick={() => setPriceOpen(true)}
+              aria-label="Open the Apple Woods price sheet"
             >
               <img
                 src="/assets/apple-woods-price-sheet-preview.png"
                 alt="Apple Woods Phase 1 developer introductory offer price sheet preview"
               />
-            </a>
+            </button>
             <div className="price-sheet-copy">
               <p className="eyebrow">Current Price Sheet</p>
               <h3>Developer's introductory offer</h3>
-              <p>
-                Review the latest Phase 1 homesite list, suggested retail pricing,
-                and introductory offer pricing.
-              </p>
-              <div className="price-sheet-actions">
-                <a href="/assets/apple-woods-price-sheet.pdf" target="_blank" rel="noreferrer">
-                  Open Sheet
-                </a>
-                <a href="/assets/apple-woods-price-sheet.pdf" download>
-                  Download
-                </a>
-              </div>
+              <p>Review the latest Phase 1 homesite list, suggested retail pricing, and introductory offer pricing.</p>
             </div>
           </aside>
         </div>
@@ -822,6 +812,9 @@ function PhaseOne() {
       </p>
       <Lightbox open={mapOpen} onClose={() => setMapOpen(false)} label="Apple Woods Phase 1 lot map">
         <img src="/assets/phase-1-aw-sold-map@2x.png" alt="Apple Woods Phase 1 lot map" />
+      </Lightbox>
+      <Lightbox open={priceOpen} onClose={() => setPriceOpen(false)} label="Apple Woods price sheet">
+        <PriceSheet />
       </Lightbox>
     </section>
   );

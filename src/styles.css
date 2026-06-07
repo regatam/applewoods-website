@@ -742,6 +742,10 @@ h1 {
   overflow: hidden;
   border: 1px solid rgba(88, 53, 41, 0.12);
   background: #fffaf4;
+  border: 0;
+  padding: 0;
+  cursor: zoom-in;
+  width: 100%;
 }
 
 .price-sheet-preview img {
@@ -781,43 +785,6 @@ h1 {
   margin: 0;
   color: var(--taupe);
   line-height: 1.5;
-}
-
-.price-sheet-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.price-sheet-actions a {
-  display: inline-flex;
-  min-height: 38px;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 14px;
-  border: 1px solid #8e763e;
-  border-radius: 6px;
-  color: #5f401c;
-  font-family: var(--font-heading);
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1;
-  text-transform: uppercase;
-  transition:
-    background 180ms ease,
-    color 180ms ease,
-    transform 180ms ease;
-}
-
-.price-sheet-actions a:first-child {
-  background: #8e763e;
-  color: #fffaf4;
-}
-
-.price-sheet-actions a:hover,
-.price-sheet-actions a:focus-visible {
-  transform: translateY(-1px);
 }
 
 .phase-note {
@@ -2449,10 +2416,6 @@ textarea.input {
 
   .price-sheet-copy h3 {
     font-size: 24px;
-  }
-
-  .price-sheet-actions {
-    display: grid;
   }
 
   .difference-grid {

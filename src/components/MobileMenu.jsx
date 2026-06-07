@@ -46,7 +46,7 @@ export default function MobileMenu() {
         ref={triggerRef}
         onClick={() => setOpen(true)}
       >
-        <ListIcon size={24} weight="regular" aria-hidden="true" />
+        <ListIcon size={20} weight="regular" aria-hidden="true" />
       </button>
       {createPortal(
         <div

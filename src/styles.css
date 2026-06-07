@@ -1566,8 +1566,8 @@ textarea.input {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  min-height: 44px;
+  width: 32px;
+  min-height: 32px;
   padding: 0;
   border: 1px solid var(--brown);
   border-radius: 6px;

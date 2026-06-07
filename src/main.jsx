@@ -273,8 +273,24 @@ function useVersionTwoMotion() {
 function V2Nav() {
   const c = useContent();
   const { nav } = c;
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    const amenities = document.querySelector(".v2-amenities");
+    if (!amenities) return undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => setHidden(entry.isIntersecting),
+      { rootMargin: "0px 0px -90% 0px" }
+    );
+    observer.observe(amenities);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <header className="v2-nav" aria-label="Primary navigation">
+    <header
+      className={hidden ? "v2-nav is-hidden" : "v2-nav"}
+      aria-label="Primary navigation"
+    >
       <a className="v2-logo" href="#top" aria-label="Apple Woods home">
         <img src="/assets/applewoods-logo.png" alt={nav.logoAlt} />
       </a>

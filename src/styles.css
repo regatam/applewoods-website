@@ -1382,6 +1382,15 @@ textarea.input {
   backdrop-filter: saturate(140%) blur(14px);
   -webkit-backdrop-filter: saturate(140%) blur(14px);
   border-bottom: 1px solid rgba(88, 53, 41, 0.08);
+  transition:
+    transform 360ms ease,
+    opacity 360ms ease;
+}
+
+.v2-nav.is-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .v2-logo img {

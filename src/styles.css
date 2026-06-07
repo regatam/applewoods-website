@@ -1809,7 +1809,7 @@ textarea.input {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(300px, 0.86fr) minmax(340px, 0.82fr) minmax(280px, 0.72fr);
+  grid-template-columns: auto minmax(280px, 0.82fr) minmax(220px, 0.68fr);
   gap: clamp(24px, 4vw, 58px);
   align-items: center;
   width: min(var(--max), calc(100% - 48px));
@@ -1826,6 +1826,7 @@ textarea.input {
   font-weight: 700;
   line-height: 0.9;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .v2-amenity-image {

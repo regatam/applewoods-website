@@ -1369,13 +1369,19 @@ textarea.input {
 }
 
 .v2-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: grid;
   grid-template-columns: minmax(150px, 1fr) auto minmax(150px, 1fr);
   align-items: center;
-  width: min(var(--max), calc(100% - 48px));
-  margin-inline: auto;
-  padding: 18px 0 24px;
+  width: 100%;
+  padding: 14px max(24px, calc((100% - var(--max)) / 2));
   color: #8f7a52;
+  background: rgba(253, 251, 247, 0.72);
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  border-bottom: 1px solid rgba(88, 53, 41, 0.08);
 }
 
 .v2-logo img {

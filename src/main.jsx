@@ -270,27 +270,33 @@ function useVersionTwoMotion() {
   return rootRef;
 }
 
+function V2Nav() {
+  const c = useContent();
+  const { nav } = c;
+  return (
+    <header className="v2-nav" aria-label="Primary navigation">
+      <a className="v2-logo" href="#top" aria-label="Apple Woods home">
+        <img src="/assets/applewoods-logo.png" alt={nav.logoAlt} />
+      </a>
+      <nav>
+        {nav.links.map((link) => (
+          <a href={link.href} key={link.href}>
+            {link.label}
+          </a>
+        ))}
+      </nav>
+      <a className="v2-owner-link" href="#contact">
+        {nav.cta}
+      </a>
+    </header>
+  );
+}
+
 function V2Hero() {
   const c = useContent();
-  const { nav, hero } = c;
+  const { hero } = c;
   return (
     <section className="v2-hero" id="top">
-      <header className="v2-nav" aria-label="Primary navigation">
-        <a className="v2-logo" href="#top" aria-label="Apple Woods home">
-          <img src="/assets/applewoods-logo.png" alt={nav.logoAlt} />
-        </a>
-        <nav>
-          {nav.links.map((link) => (
-            <a href={link.href} key={link.href}>
-              {link.label}
-            </a>
-          ))}
-        </nav>
-        <a className="v2-owner-link" href="#contact">
-          {nav.cta}
-        </a>
-      </header>
-
       <div className="v2-hero-copy">
         <p>{hero.tagline}</p>
         <div>
@@ -926,6 +932,7 @@ function VersionTwoPage() {
 
   return (
     <div className="v2-shell" ref={motionRef}>
+      <V2Nav />
       <main className="v2-page">
         <V2Hero />
         <V2Difference />

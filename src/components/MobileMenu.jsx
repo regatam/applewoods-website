@@ -55,6 +55,7 @@ export default function MobileMenu() {
           aria-modal="true"
           aria-label="Menu"
           aria-hidden={!open}
+          inert={!open ? "" : undefined}
         >
           <div className="v2-mobile-top">
             <button

@@ -4,7 +4,6 @@ import { EnvelopeSimpleIcon, PhoneIcon, WhatsappLogoIcon } from "@phosphor-icons
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lightbox from "./components/Lightbox";
-import PriceSheet from "./components/PriceSheet";
 import { ContentProvider, useContent } from "./content";
 import "./styles.css";
 
@@ -553,7 +552,7 @@ function PhaseOne() {
               aria-label="Open the Apple Woods price sheet"
             >
               <img
-                src="/assets/apple-woods-price-sheet-preview.png"
+                src="/assets/apple-woods-price-sheet-v3-preview.png"
                 alt={phaseOne.pricePreviewAlt}
               />
             </button>
@@ -570,7 +569,11 @@ function PhaseOne() {
         <img src="/assets/phase-1-aw-sold-map@2x.png" alt="Apple Woods Phase 1 lot map" />
       </Lightbox>
       <Lightbox open={priceOpen} onClose={() => setPriceOpen(false)} label="Apple Woods price sheet" plain>
-        <PriceSheet />
+        <iframe
+          className="price-sheet-frame"
+          src="/assets/apple-woods-price-sheet-v3.html"
+          title="Apple Woods Phase 1 price sheet"
+        />
       </Lightbox>
     </section>
   );

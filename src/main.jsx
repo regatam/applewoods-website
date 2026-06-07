@@ -521,47 +521,35 @@ function PhaseOne() {
         <p>{phaseOne.body}</p>
       </div>
       <div className="lot-layout">
-        <div className="masterplan-card">
+        <div className="lot-docs">
           <button
             type="button"
-            className="masterplan-trigger"
+            className="lot-doc"
             onClick={() => setMapOpen(true)}
             aria-label="Open the Phase 1 lot map"
           >
             <img src="/assets/phase-1-aw-sold-map.png" alt={phaseOne.mapAlt} />
-            <span className="masterplan-hint">{phaseOne.masterplanHint}</span>
+            <span className="lot-doc-hint">{phaseOne.masterplanHint}</span>
+          </button>
+          <button
+            type="button"
+            className="lot-doc"
+            onClick={() => setPriceOpen(true)}
+            aria-label="Open the Apple Woods price sheet"
+          >
+            <img src="/assets/apple-woods-price-sheet-v3-preview.png" alt={phaseOne.pricePreviewAlt} />
+            <span className="lot-doc-hint">{phaseOne.priceSheetHint}</span>
           </button>
         </div>
-        <div className="phase-details">
-          <div className="lot-cards">
-            {phaseOne.lots.map((lot, lotIndex) => (
-              <article key={lot.name}>
-                <span>{String(lotIndex + 1).padStart(2, "0")}</span>
-                <h3>{lot.name}</h3>
-                <strong>{lot.price}</strong>
-                <p>{lot.body}</p>
-              </article>
-            ))}
-          </div>
-
-          <aside className="price-sheet-card" aria-label="Apple Woods Phase 1 price sheet">
-            <button
-              type="button"
-              className="price-sheet-preview"
-              onClick={() => setPriceOpen(true)}
-              aria-label="Open the Apple Woods price sheet"
-            >
-              <img
-                src="/assets/apple-woods-price-sheet-v3-preview.png"
-                alt={phaseOne.pricePreviewAlt}
-              />
-            </button>
-            <div className="price-sheet-copy">
-              <p className="eyebrow">{phaseOne.priceSheet.eyebrow}</p>
-              <h3>{phaseOne.priceSheet.heading}</h3>
-              <p>{phaseOne.priceSheet.body}</p>
-            </div>
-          </aside>
+        <div className="lot-cards">
+          {phaseOne.lots.map((lot, lotIndex) => (
+            <article key={lot.name}>
+              <span>{String(lotIndex + 1).padStart(2, "0")}</span>
+              <h3>{lot.name}</h3>
+              <strong>{lot.price}</strong>
+              <p>{lot.body}</p>
+            </article>
+          ))}
         </div>
       </div>
       <p className="phase-note">{phaseOne.phaseNote}</p>

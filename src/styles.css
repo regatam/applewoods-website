@@ -649,37 +649,41 @@ h1 {
 
 .lot-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
   gap: 32px;
-  align-items: stretch;
 }
 
-.masterplan-card {
+.lot-docs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.lot-doc {
   position: relative;
-  min-height: 580px;
-  overflow: visible;
-  background: var(--paper-deep);
-}
-
-.masterplan-card img {
-  width: 100%;
-  height: 100%;
-  min-height: 580px;
-  object-fit: contain;
-}
-
-.masterplan-trigger {
   display: block;
   width: 100%;
-  height: 100%;
   padding: 0;
-  border: 0;
+  border: 1px solid var(--line);
   background: var(--paper-deep);
   cursor: zoom-in;
-  position: relative;
+  overflow: hidden;
 }
 
-.masterplan-hint {
+.lot-doc img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  transition: transform 320ms ease;
+}
+
+.lot-doc:hover img,
+.lot-doc:focus-visible img {
+  transform: scale(1.02);
+}
+
+.lot-doc-hint {
   position: absolute;
   left: 16px;
   bottom: 16px;
@@ -691,14 +695,10 @@ h1 {
   letter-spacing: 0.04em;
 }
 
-.phase-details {
-  display: grid;
-  gap: 16px;
-}
-
 .lot-cards {
   display: grid;
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 }
 
 .lot-cards article {
@@ -721,67 +721,6 @@ h1 {
 
 .lot-cards p {
   margin-bottom: 0;
-  color: var(--taupe);
-  line-height: 1.5;
-}
-
-.price-sheet-card {
-  display: grid;
-  grid-template-columns: minmax(128px, 0.42fr) minmax(0, 0.58fr);
-  gap: 18px;
-  align-items: stretch;
-  padding: 16px;
-  border: 1px solid rgba(88, 53, 41, 0.18);
-  background:
-    linear-gradient(135deg, rgba(255, 250, 244, 0.92), rgba(241, 232, 220, 0.82)),
-    var(--paper);
-}
-
-.price-sheet-preview {
-  min-height: 210px;
-  overflow: hidden;
-  background: #fffaf4;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  width: 100%;
-}
-
-.price-sheet-preview img {
-  width: 100%;
-  height: 100%;
-  min-height: 210px;
-  object-fit: cover;
-  object-position: top center;
-  transition: transform 260ms ease;
-}
-
-.price-sheet-preview:hover img,
-.price-sheet-preview:focus-visible img {
-  transform: scale(1.025);
-}
-
-.price-sheet-copy {
-  display: grid;
-  align-content: center;
-  gap: 12px;
-  min-width: 0;
-}
-
-.price-sheet-copy .eyebrow {
-  margin: 0;
-  color: #8e763e;
-}
-
-.price-sheet-copy h3 {
-  margin: 0;
-  color: var(--brown);
-  font-size: 26px;
-  line-height: 1;
-}
-
-.price-sheet-copy p:not(.eyebrow) {
-  margin: 0;
   color: var(--taupe);
   line-height: 1.5;
 }
@@ -2150,7 +2089,8 @@ textarea.input {
     grid-template-columns: 1fr;
   }
 
-  .lot-cards {
+  .lot-cards,
+  .lot-docs {
     grid-template-columns: 1fr;
   }
 }
@@ -2387,37 +2327,6 @@ textarea.input {
     margin-bottom: 0;
   }
 
-  .masterplan-card {
-    display: grid;
-    order: 1;
-    min-height: 0;
-    overflow: visible;
-    background: transparent;
-  }
-
-  .phase-details {
-    order: 2;
-  }
-
-  .lot-cards {
-    order: 2;
-  }
-
-  .price-sheet-card {
-    order: 3;
-    grid-template-columns: 1fr;
-    padding: 14px;
-  }
-
-  .price-sheet-preview,
-  .price-sheet-preview img {
-    min-height: 260px;
-  }
-
-  .price-sheet-copy h3 {
-    font-size: 24px;
-  }
-
   .difference-grid {
     grid-template-columns: 1fr;
   }
@@ -2543,18 +2452,10 @@ textarea.input {
   }
 
   .life-image img,
-  .masterplan-card,
-  .masterplan-card img,
   .location-panel,
   .location-panel img {
     min-height: 380px;
     height: 380px;
-  }
-
-  .masterplan-card,
-  .masterplan-card img {
-    height: auto;
-    min-height: 0;
   }
 
   .amenity-list div {

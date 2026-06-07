@@ -151,6 +151,7 @@ export const smcopyContent = {
     // Additional visible micro-copy on the masterplan/price-sheet (no slot in the
     // requested shape — added as clearly-named keys, see report).
     masterplanHint: "Tap to explore the lot map",
+    priceSheetHint: "Tap to view the price sheet",
     pricePreviewAlt:
       "Apple Woods Phase 1 developer introductory offer price sheet preview",
   },

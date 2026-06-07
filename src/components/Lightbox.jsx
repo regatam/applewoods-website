@@ -8,6 +8,7 @@ export default function Lightbox({ open, onClose, label, children }) {
 
   useEffect(() => {
     if (!open) return undefined;
+    const previouslyFocused = document.activeElement;
     const onKey = (e) => {
       if (e.key === "Escape") onClose();
     };
@@ -18,6 +19,7 @@ export default function Lightbox({ open, onClose, label, children }) {
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
+      if (previouslyFocused instanceof HTMLElement) previouslyFocused.focus();
     };
   }, [open, onClose]);
 

@@ -4,6 +4,7 @@ import { EnvelopeSimpleIcon, PhoneIcon, WhatsappLogoIcon } from "@phosphor-icons
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lightbox from "./components/Lightbox";
+import LanguageSwitcher from "./components/LanguageSwitcher";
 import { ContentProvider, useContent } from "./content";
 import "./styles.css";
 
@@ -301,9 +302,12 @@ function V2Nav() {
           </a>
         ))}
       </nav>
-      <a className="v2-owner-link" href="#contact">
-        {nav.cta}
-      </a>
+      <div className="v2-nav-actions">
+        <LanguageSwitcher />
+        <a className="v2-owner-link" href="#contact">
+          {nav.cta}
+        </a>
+      </div>
     </header>
   );
 }

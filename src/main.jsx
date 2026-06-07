@@ -605,7 +605,7 @@ function V2StickyAmenities() {
           </div>
           <div className="v2-amenities-content">
             <div className="v2-amenities-title">
-              <p>Attainable</p>
+              <p>Affordable</p>
               <p>Luxury</p>
             </div>
 
@@ -644,10 +644,6 @@ function V2StickyAmenities() {
               </div>
               <h2>{active.label.replace(" built in", "")}</h2>
               <p>{active.body}</p>
-              <div className="v2-amenity-cta">
-                <a href="#phase-one">View Phase 1 pricing</a>
-                <a href="#contact">Talk to sales</a>
-              </div>
             </div>
           </div>
         </div>

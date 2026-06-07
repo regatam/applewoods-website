@@ -1912,41 +1912,6 @@ textarea.input {
   line-height: 1.55;
 }
 
-.v2-amenity-cta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 28px;
-}
-
-.v2-amenity-cta a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 20px;
-  font-family: var(--font-heading);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  transition: transform 180ms ease;
-}
-
-.v2-amenity-cta a:first-child {
-  background: #f8f1e7;
-  color: #1c130d;
-}
-
-.v2-amenity-cta a:last-child {
-  border: 1px solid rgba(248, 241, 231, 0.5);
-  color: #f8f1e7;
-}
-
-.v2-amenity-cta a:hover,
-.v2-amenity-cta a:focus-visible {
-  transform: translateY(-1px);
-}
-
 .value-stack {
   padding: clamp(84px, 10vw, 136px) 0;
   border-bottom: 1px solid rgba(142, 118, 62, 0.16);

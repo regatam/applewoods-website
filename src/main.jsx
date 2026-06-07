@@ -70,16 +70,24 @@ const storyItems = [
     image: "/assets/awclubpool.png",
   },
   {
+    label: "Cost clarity",
+    eyebrow: "02 / cost clarity",
+    title: "Shared costs keep the dues manageable.",
+    body:
+      "Because expenses are shared across the community, dues stay affordable. You pay reduced dues while you own the lot and before you build, and full dues begin only once your home is up.",
+    image: "/assets/value-stack-actual-plan.png",
+  },
+  {
     label: "Attainable luxury",
-    eyebrow: "02 / attainable luxury",
+    eyebrow: "03 / attainable luxury",
     title: "The quality of a luxury community, from $85,000.",
     body:
-      "Because the cost of amenities and services is shared, Phase 1 homesites start at just $85,000. That price buys you into a fully planned smart community, not just a piece of land.",
+      "Phase 1 homesites start at just $85,000. That price buys you into a fully planned smart community, with all of this built in, not just a piece of land.",
     image: "/assets/luxury-built-in-clubhouse-aerial.jpg",
   },
   {
     label: "Nothing like it here",
-    eyebrow: "03 / nothing like it",
+    eyebrow: "04 / nothing like it",
     title: "There is nothing like this in Brownsville.",
     body:
       "A gated, smart, amenity-rich community planned to this level, at these prices, does not exist anywhere else in the area. Phase 1 is the first and best opportunity to get in.",
@@ -254,25 +262,6 @@ const v2FeatureItems = [
     title: "Attainability built in",
     body: "Community scale helps share service and amenity costs while keeping dues manageable.",
     image: "/assets/awfont.png",
-  },
-];
-
-const valueStackItems = [
-  {
-    title: "Daily Environment",
-    body: "Landscaping, lighting, curb appeal, and preserved green areas are planned as shared community systems.",
-  },
-  {
-    title: "Security Layer",
-    body: "Controlled access, CCTV monitoring, and visitor systems support a more managed setting.",
-  },
-  {
-    title: "Shared Lifestyle",
-    body: "Clubhouse, fitness, pool, green spaces, and wellness programming give residents more than a homesite.",
-  },
-  {
-    title: "Cost Clarity",
-    body: "Shared costs, manageable dues, and reduced dues before construction help make the value easier to understand.",
   },
 ];
 
@@ -655,48 +644,12 @@ function V2StickyAmenities() {
               </div>
               <h2>{active.label.replace(" built in", "")}</h2>
               <p>{active.body}</p>
+              <div className="v2-amenity-cta">
+                <a href="#phase-one">View Phase 1 pricing</a>
+                <a href="#contact">Talk to sales</a>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ValueStack() {
-  return (
-    <section className="value-stack" id="value-stack">
-      <div className="value-stack-inner">
-        <div className="value-stack-heading">
-          <p>Shared value</p>
-          <h2>What Community Scale Makes Possible</h2>
-          <p>
-            Apple Woods shares the cost of security, landscaping, amenities,
-            technology, and upkeep so homeowners get a more complete lifestyle
-            without carrying every cost individually.
-          </p>
-        </div>
-
-        <figure className="value-stack-media">
-          <img
-            src="/assets/value-stack-actual-plan.png"
-            alt="Apple Woods shared clubhouse, pool, green space, and surrounding homesites"
-          />
-        </figure>
-
-        <div className="value-stack-grid">
-          {valueStackItems.map((item, itemIndex) => (
-            <article key={item.title}>
-              <span>{String(itemIndex + 1).padStart(2, "0")}</span>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </article>
-          ))}
-        </div>
-
-        <div className="value-stack-actions">
-          <a href="#contact">Ask Costs</a>
-          <a href="tel:+19564559555">Call Sales</a>
         </div>
       </div>
     </section>
@@ -1189,7 +1142,6 @@ function VersionTwoPage() {
         <V2Hero />
         <V2Difference />
         <V2StickyAmenities />
-        <ValueStack />
         <LifeInside />
         <PhaseOne />
         <Location />

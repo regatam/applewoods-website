@@ -4,16 +4,19 @@ export const smcopyContent = {
   nav: {
     logoAlt: "Apple Woods Smart Living",
     links: [
-      { href: "#location", label: "Location" },
-      { href: "#life-inside", label: "Live Here" },
-      { href: "#different", label: "Community" },
-      { href: "#structured", label: "Amenities" },
+      { href: "#location", label: { en: "Location", es: "Ubicación" } },
+      { href: "#life-inside", label: { en: "Live Here", es: "Vive Aquí" } },
+      { href: "#different", label: { en: "Community", es: "Comunidad" } },
+      { href: "#structured", label: { en: "Amenities", es: "Amenidades" } },
     ],
-    cta: "Contact us",
+    cta: { en: "Contact us", es: "Contáctanos" },
   },
   hero: {
-    tagline: "Life, beautifully organized.",
-    headlineLines: ["More Than a Subdivision:", "A Place to Truly Call Home"],
+    tagline: { en: "Life, beautifully organized.", es: "La vida, bellamente organizada." },
+    headlineLines: [
+      { en: "More Than a Subdivision:", es: "Más Que Un Fraccionamiento:" },
+      { en: "A Place to Truly Call Home", es: "Un Lugar Para Sentirte En Casa" },
+    ],
     subhead:
       "Apple Woods is a smart residential community designed around security, comfort, beauty, technology, and attainable everyday luxury.",
     actions: { explore: "Explore", lots: "View Lots" },

@@ -1353,6 +1353,10 @@ textarea.input {
   }
 }
 
+.v2-shell {
+  background: var(--v2-paper);
+}
+
 .v2-page {
   overflow-x: clip;
   background: var(--v2-paper);
@@ -1369,6 +1373,7 @@ textarea.input {
 }
 
 .v2-nav {
+  --v2-nav-menu-width: 416px;
   position: sticky;
   top: 0;
   z-index: 50;

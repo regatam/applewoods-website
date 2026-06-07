@@ -579,4 +579,8 @@ git commit -m "feat: mobile hamburger menu with slide-in panel + language switch
 
 **Pending after this plan:**
 - **Spanish translation copy pass** — convert all remaining strings (both versions) to `{en,es}` using the client's Google Doc (English source + Spanish there; confirm which tab/column). This plan only does the mechanism + demo strings.
-- Earlier-flagged follow-ups: swap the rusty security-entrance photo; wire `api/lead.js` to actually deliver leads.
+- **Redeploy both Vercel sites** once Rene confirms the nav (sticky-nav work + this bilingual nav are committed locally on `launch-prep`, not yet pushed/deployed).
+
+**Earlier-flagged follow-ups (resolved/deferred):**
+- ~~Swap the rusty security-entrance photo~~ — DONE (already fixed).
+- Lead-form delivery (`api/lead.js` currently only `console.info`s): deferred — to be wired when the site is pushed to the official domain.

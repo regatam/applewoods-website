@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lightbox from "./components/Lightbox";
 import LanguageSwitcher from "./components/LanguageSwitcher";
+import MobileMenu from "./components/MobileMenu";
 import { ContentProvider, useContent } from "./content";
 import "./styles.css";
 
@@ -307,6 +308,7 @@ function V2Nav() {
         <a className="v2-owner-link" href="#contact">
           {nav.cta}
         </a>
+        <MobileMenu />
       </div>
     </header>
   );

@@ -1562,6 +1562,110 @@ textarea.input {
   color: var(--ink);
 }
 
+.v2-hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid var(--brown);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--brown);
+  cursor: pointer;
+}
+
+.v2-mobile-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px 40px;
+  background: var(--v2-paper);
+  transform: translateX(100%);
+  transition: transform 360ms ease;
+  overflow-y: auto;
+}
+
+.v2-mobile-panel.is-open {
+  transform: translateX(0);
+}
+
+.v2-mobile-top {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.v2-mobile-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--brown);
+  cursor: pointer;
+}
+
+.v2-mobile-links {
+  display: grid;
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.v2-mobile-links button {
+  padding: 16px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(88, 53, 41, 0.12);
+  background: transparent;
+  color: var(--brown);
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 500;
+  text-align: left;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.v2-mobile-contact {
+  margin-top: 8px;
+  color: var(--ink) !important;
+}
+
+.v2-mobile-lang {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 24px;
+  color: var(--brown);
+}
+
+.v2-mobile-lang button {
+  padding: 8px 14px;
+  border: 1px solid var(--brown);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--brown);
+  font-family: var(--font-heading);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.v2-mobile-lang button.is-active {
+  background: var(--brown);
+  color: var(--white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-mobile-panel {
+    transition: none;
+  }
+}
+
 .v2-hero-copy {
   display: grid;
   grid-template-columns: var(--v2-copy-rail) minmax(0, 1fr);
@@ -2136,6 +2240,15 @@ textarea.input {
 
   .v2-nav nav {
     display: none;
+  }
+
+  .v2-lang,
+  .v2-owner-link {
+    display: none;
+  }
+
+  .v2-hamburger {
+    display: inline-flex;
   }
 
   .v2-hero-copy,

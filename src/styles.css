@@ -2563,10 +2563,3 @@ textarea.input {
 
 }
 
-.price-sheet-frame {
-  width: min(960px, 95vw);
-  height: 90vh;
-  border: 0;
-  border-radius: 4px;
-  background: #ffffff;
-}

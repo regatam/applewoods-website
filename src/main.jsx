@@ -568,12 +568,8 @@ function PhaseOne() {
       <Lightbox open={mapOpen} onClose={() => setMapOpen(false)} label="Apple Woods Phase 1 lot map">
         <img src="/assets/phase-1-aw-sold-map@2x.png" alt="Apple Woods Phase 1 lot map" />
       </Lightbox>
-      <Lightbox open={priceOpen} onClose={() => setPriceOpen(false)} label="Apple Woods price sheet" plain>
-        <iframe
-          className="price-sheet-frame"
-          src="/assets/apple-woods-price-sheet-v3.html"
-          title="Apple Woods Phase 1 price sheet"
-        />
+      <Lightbox open={priceOpen} onClose={() => setPriceOpen(false)} label="Apple Woods price sheet">
+        <img src="/assets/apple-woods-price-sheet-v3@2x.png" alt="Apple Woods Phase 1 price sheet" />
       </Lightbox>
     </section>
   );

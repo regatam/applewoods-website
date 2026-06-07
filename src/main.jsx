@@ -883,7 +883,12 @@ function Footer() {
           <div className="footer-message">
             <p>{footer.message}</p>
             <div className="footer-socials" aria-label="Social links">
-              <a href="https://www.facebook.com/" aria-label={footer.facebookLabel}>
+              <a
+                href="https://www.facebook.com/profile.php?id=100063724533236"
+                target="_blank"
+                rel="noreferrer"
+                aria-label={footer.facebookLabel}
+              >
                 <svg viewBox="3 4 16 20" aria-hidden="true" focusable="false">
                   <path d="M14.2 8.18h2.13V4.64c-.37-.05-1.62-.16-3.08-.16-3.05 0-5.14 1.86-5.14 5.28v2.98H4.67v3.96h3.44v6.74h4.22V16.7h3.32l.53-3.96h-3.85v-2.59c0-1.15.31-1.97 1.87-1.97Z" />
                 </svg>

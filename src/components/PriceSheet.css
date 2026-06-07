@@ -45,6 +45,11 @@
   background: rgba(176, 138, 62, 0.12);
 }
 
+.price-sheet-table td:nth-child(n + 3),
+.price-sheet-table th:nth-child(n + 3) {
+  text-align: right;
+}
+
 .price-offer {
   font-weight: 600;
   color: #5f401c;

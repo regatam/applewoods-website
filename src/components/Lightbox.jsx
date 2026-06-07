@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import "./Lightbox.css";
 
-export default function Lightbox({ open, onClose, label, children }) {
+export default function Lightbox({ open, onClose, label, children, plain }) {
   const closeRef = useRef(null);
 
   useEffect(() => {
@@ -38,18 +38,22 @@ export default function Lightbox({ open, onClose, label, children }) {
       <button ref={closeRef} type="button" className="lightbox-close" onClick={onClose} aria-label="Close">
         ×
       </button>
-      <TransformWrapper
-        doubleClick={{ mode: "toggle", step: 1.4 }}
-        wheel={{ step: 0.12 }}
-        pinch={{ step: 6 }}
-        minScale={1}
-        maxScale={6}
-        centerOnInit
-      >
-        <TransformComponent wrapperClass="lightbox-stage" contentClass="lightbox-content">
-          {children}
-        </TransformComponent>
-      </TransformWrapper>
+      {plain ? (
+        <div className="lightbox-stage lightbox-stage--plain">{children}</div>
+      ) : (
+        <TransformWrapper
+          doubleClick={{ mode: "toggle", step: 1.4 }}
+          wheel={{ step: 0.12 }}
+          pinch={{ step: 6 }}
+          minScale={1}
+          maxScale={6}
+          centerOnInit
+        >
+          <TransformComponent wrapperClass="lightbox-stage" contentClass="lightbox-content">
+            {children}
+          </TransformComponent>
+        </TransformWrapper>
+      )}
     </div>,
     document.body
   );

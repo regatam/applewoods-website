@@ -740,11 +740,10 @@ h1 {
 .price-sheet-preview {
   min-height: 210px;
   overflow: hidden;
-  border: 1px solid rgba(88, 53, 41, 0.12);
   background: #fffaf4;
   border: 0;
   padding: 0;
-  cursor: zoom-in;
+  cursor: pointer;
   width: 100%;
 }
 

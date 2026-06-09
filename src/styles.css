@@ -1390,13 +1390,13 @@ textarea.input {
   position: relative;
   background: var(--v2-paper);
   padding-top: 0;
-  --v2-nav-menu-width: 416px;
+  --v2-nav-menu-width: 490px;
   --v2-copy-gap: 84px;
   --v2-copy-rail: clamp(0px, calc(50vw - 316px), 308px);
 }
 
 .v2-nav {
-  --v2-nav-menu-width: 416px;
+  --v2-nav-menu-width: 490px;
   position: sticky;
   top: 0;
   z-index: 50;

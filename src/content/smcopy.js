@@ -198,11 +198,13 @@ const ecologyCard = {
 export const smcopyContent = {
   nav: {
     logoAlt: "Apple Woods Smart Living",
+    // Order mirrors the page scroll order; "Now" is the Phase 1 availability section.
     links: [
-      { href: "#location", label: { en: "Location", es: "Ubicación" } },
-      { href: "#life-inside", label: { en: "Live Here", es: "Vive aquí" } },
       { href: "#different", label: { en: "Community", es: "Comunidad" } },
       { href: "#structured", label: { en: "Amenities", es: "Servicios" } },
+      { href: "#life-inside", label: { en: "Live Here", es: "Vive aquí" } },
+      { href: "#phase-one", label: { en: "Now", es: "Ahora" } },
+      { href: "#location", label: { en: "Location", es: "Ubicación" } },
     ],
     cta: { en: "Contact us", es: "Contáctanos" },
   },
@@ -752,10 +754,11 @@ export const smcopyContent = {
       { en: "Private Smart Living Community", es: "Comunidad privada de vida inteligente" },
     ],
     nav: [
-      { href: "#location", label: { en: "Location", es: "Ubicación" } },
-      { href: "#life-inside", label: { en: "Live Here", es: "Vive aquí" } },
       { href: "#different", label: { en: "Community", es: "Comunidad" } },
       { href: "#structured", label: { en: "Amenities", es: "Servicios" } },
+      { href: "#life-inside", label: { en: "Live Here", es: "Vive aquí" } },
+      { href: "#phase-one", label: { en: "Now", es: "Ahora" } },
+      { href: "#location", label: { en: "Location", es: "Ubicación" } },
       { href: "#contact", label: { en: "Contact Us", es: "Contáctanos" } },
     ],
     copyright: "Copyright © Apple Woods 2026",

@@ -345,10 +345,25 @@ function V2Hero() {
   );
 }
 
+// Render copy that may contain blank-line paragraph breaks as separate <p> tags.
+function Paras({ text }) {
+  return (
+    <>
+      {String(text)
+        .split(/\n\n+/)
+        .map((para, paraIndex) => (
+          <p key={paraIndex}>{para}</p>
+        ))}
+    </>
+  );
+}
+
 function V2Difference() {
   const c = useContent();
   const { difference } = c;
   const scrollerRef = useRef(null);
+  const cards = difference.items.filter((item) => !item.wide);
+  const wideCards = difference.items.filter((item) => item.wide);
 
   useEffect(() => {
     const scroller = scrollerRef.current;
@@ -398,7 +413,7 @@ function V2Difference() {
       </div>
       <div className="v2-feature-scroller" aria-label="Apple Woods feature cards" ref={scrollerRef}>
         <div className="v2-feature-row">
-          {difference.items.map((item) => (
+          {cards.map((item) => (
             <article key={item.title}>
               <div className="v2-feature-image">
                 <img src={item.image} alt="" aria-hidden="true" />
@@ -411,6 +426,17 @@ function V2Difference() {
           ))}
         </div>
       </div>
+      {wideCards.map((item) => (
+        <article className="v2-feature-wide" key={item.title}>
+          <div className="v2-feature-image">
+            <img src={item.image} alt="" aria-hidden="true" />
+          </div>
+          <div className="v2-feature-copy">
+            <h3>{item.title}</h3>
+            <Paras text={item.body} />
+          </div>
+        </article>
+      ))}
     </section>
   );
 }
@@ -501,7 +527,7 @@ function V2StickyAmenities() {
                 <span>{String(stories.length).padStart(2, "0")}</span>
               </div>
               <h2>{active.label.replace(" built in", "")}</h2>
-              <p>{active.body}</p>
+              <Paras text={active.body} />
             </div>
           </div>
         </div>
@@ -521,7 +547,7 @@ function LifeInside() {
       <div className="life-copy">
         <p className="eyebrow">{lifeInside.eyebrow}</p>
         <h2>{lifeInside.heading}</h2>
-        <p>{lifeInside.body}</p>
+        <Paras text={lifeInside.body} />
         <dl className="amenity-list">
           {lifeInside.items.map((item) => (
             <div key={item.term}>
@@ -599,7 +625,7 @@ function Location() {
       <div>
         <p className="eyebrow">{location.eyebrow}</p>
         <h2>{location.heading}</h2>
-        <p>{location.body}</p>
+        <Paras text={location.body} />
       </div>
       <div className="location-panel">
         <img src="/assets/locationsaw.png" alt={location.imageAlt} />
@@ -886,11 +912,16 @@ function Contact() {
       <div className="faq">
         <p className="eyebrow">{contact.faq.eyebrow}</p>
         <h2>{contact.faq.heading}</h2>
-        {contact.faq.items.map((item) => (
-          <details key={item.question}>
-            <summary>{item.question}</summary>
-            <p>{item.answer}</p>
-          </details>
+        {contact.faq.groups.map((group) => (
+          <div className="faq-group" key={group.label}>
+            <h3 className="faq-group-label">{group.label}</h3>
+            {group.items.map((item) => (
+              <details key={item.question}>
+                <summary>{item.question}</summary>
+                <Paras text={item.answer} />
+              </details>
+            ))}
+          </div>
         ))}
       </div>
     </section>

@@ -2520,6 +2520,8 @@ textarea.input {
     scroll-padding-inline: 16px;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
+    /* Breathing room between the card copy and the horizontal scrollbar. */
+    padding-bottom: 5px;
   }
 
   .v2-feature-row {
@@ -2533,6 +2535,10 @@ textarea.input {
 
   .v2-feature-row article {
     flex: 0 0 clamp(280px, 78vw, 340px);
+    /* Explicit width too: Safari sizes the max-content row from item CONTENT
+       (the 488px max-width paragraphs) instead of the flex basis, inflating
+       scrollWidth with phantom space after the last card. */
+    width: clamp(280px, 78vw, 340px);
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }

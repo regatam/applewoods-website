@@ -230,7 +230,7 @@ export const smcopyContent = {
     eyebrow: { en: "How Apple Woods is different", es: "En qué se diferencia Apple Woods" },
     heading: {
       en: "Everything that makes a neighborhood feel premium is planned from the start.",
-      es: "Todo lo que hace que un vecindario se sienta exclusivo está planificado desde el principio.",
+      es: "Todo lo que hace que un fraccionamiento se sienta exclusivo está planificado desde el principio.",
     },
     items: [
       {

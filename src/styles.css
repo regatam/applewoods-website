@@ -1564,6 +1564,10 @@ textarea.input {
 }
 
 .v2-lang-menu button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
   padding: 10px 12px;
   border: 0;
   border-radius: 6px;
@@ -1580,9 +1584,19 @@ textarea.input {
   background: var(--paper-deep);
 }
 
+/* Selected language: filled brand-tint state with a check, not just bold text. */
 .v2-lang-menu button.is-active {
+  background: rgba(138, 108, 50, 0.12);
+  color: #302318;
+  font-weight: 600;
+}
+
+.v2-lang-menu button.is-active::after {
+  content: "✓";
+  color: #8a6c32;
+  font-size: 12px;
   font-weight: 700;
-  color: var(--ink);
+  line-height: 1;
 }
 
 .v2-hamburger {

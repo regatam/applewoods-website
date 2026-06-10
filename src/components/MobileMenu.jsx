@@ -1,13 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { ListIcon, XIcon, GlobeIcon } from "@phosphor-icons/react";
-import { useContent, useLang } from "../content";
-
-const LANG_LABELS = { en: "English", es: "Español" };
+import { ListIcon, XIcon } from "@phosphor-icons/react";
+import { useContent } from "../content";
 
 export default function MobileMenu() {
   const c = useContent();
-  const { lang, setLang } = useLang();
   const [open, setOpen] = useState(false);
   const triggerRef = useRef(null);
   const closeRef = useRef(null);
@@ -87,20 +84,6 @@ export default function MobileMenu() {
               {c.nav.portal.label}
             </a>
           </nav>
-          <div className="v2-mobile-lang" role="group" aria-label="Language">
-            <GlobeIcon size={20} weight="regular" aria-hidden="true" />
-            {["en", "es"].map((code) => (
-              <button
-                key={code}
-                type="button"
-                aria-pressed={lang === code}
-                className={lang === code ? "is-active" : ""}
-                onClick={() => setLang(code)}
-              >
-                {LANG_LABELS[code]}
-              </button>
-            ))}
-          </div>
         </div>,
         document.body
       )}

@@ -1704,31 +1704,6 @@ textarea.input {
   text-transform: uppercase;
 }
 
-.v2-mobile-lang {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: auto;
-  padding-top: 24px;
-  color: var(--brown);
-}
-
-.v2-mobile-lang button {
-  padding: 8px 14px;
-  border: 1px solid var(--brown);
-  border-radius: 6px;
-  background: transparent;
-  color: var(--brown);
-  font-family: var(--font-heading);
-  font-size: 13px;
-  cursor: pointer;
-}
-
-.v2-mobile-lang button.is-active {
-  background: var(--brown);
-  color: var(--white);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .v2-mobile-panel {
     transition: none;
@@ -2406,13 +2381,28 @@ textarea.input {
     display: none;
   }
 
-  .v2-lang,
   .v2-owner-link {
     display: none;
   }
 
   .v2-hamburger {
     display: inline-flex;
+  }
+
+  /* Globe stays in the bar next to the hamburger — comfortable tap sizes. */
+  .v2-lang-button,
+  .v2-hamburger {
+    width: 38px;
+    min-height: 38px;
+  }
+
+  .v2-lang-menu {
+    min-width: 168px;
+  }
+
+  .v2-lang-menu button {
+    padding: 12px 14px;
+    font-size: 14px;
   }
 
   .v2-hero-copy,

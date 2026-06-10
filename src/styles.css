@@ -28,6 +28,12 @@
 
 html {
   scroll-behavior: smooth;
+  /* Brand cursor (A-mark), hotspot at the apex. Interactive elements keep
+     their native pointer/text cursors. Fallback chain: plain url for
+     Firefox (no image-set in cursor), -webkit-image-set for Safari. */
+  cursor: url("/assets/aw-cursor.png") 10 1, auto;
+  cursor: -webkit-image-set(url("/assets/aw-cursor.png") 1x, url("/assets/aw-cursor@2x.png") 2x) 10 1, auto;
+  cursor: image-set(url("/assets/aw-cursor.png") 1x, url("/assets/aw-cursor@2x.png") 2x) 10 1, auto;
 }
 
 body {

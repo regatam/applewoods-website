@@ -283,7 +283,7 @@ export const smcopyContent = {
           en: "Community scale helps share service and amenity costs while keeping dues manageable.",
           es: "La escala de la comunidad ayuda a compartir los costos de servicios y amenidades mientras mantiene las cuotas accesibles.",
         },
-        image: "/assets/awfont.png",
+        image: "/assets/attainability-aw.jpg",
       },
       ecologyCard,
     ],

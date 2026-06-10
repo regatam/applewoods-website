@@ -1930,22 +1930,36 @@ textarea.input {
   line-height: 1.2;
 }
 
-/* Full-row feature card (Ecology) rendered below the card grid. */
+/* Full-row feature card (Ecology) rendered below the card grid.
+   Editorial layout: image floats top-left at a fixed height, the copy runs
+   beside it and then flows full-width beneath — avoids stretching the image
+   to the height of four paragraphs. */
 .v2-feature-wide {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr);
-  gap: 24px 36px;
   width: min(var(--max), calc(100% - 48px));
   margin: 24px auto 0;
 }
 
+.v2-feature-wide::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
 .v2-feature-wide .v2-feature-image {
-  height: 100%;
-  min-height: 320px;
+  float: left;
+  width: min(42%, 470px);
+  height: 350px;
+  margin: 0 36px 16px 0;
+}
+
+.v2-feature-wide .v2-feature-copy {
+  display: block;
+  min-height: 0;
+  padding: 6px 0 0;
 }
 
 .v2-feature-wide h3 {
-  margin: 0;
+  margin: 0 0 16px;
   color: #302318;
   font-size: 24px;
   font-weight: 500;
@@ -1953,13 +1967,16 @@ textarea.input {
 }
 
 .v2-feature-wide p {
-  max-width: 760px;
-  margin: 0;
+  margin: 0 0 12px;
   color: #17110e;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   font-weight: 300;
-  line-height: 1.35;
+  line-height: 1.42;
+}
+
+.v2-feature-wide p:last-child {
+  margin-bottom: 0;
 }
 
 .v2-amenities {
@@ -2352,14 +2369,11 @@ textarea.input {
     height: clamp(218px, 27vw, 270px);
   }
 
-  .v2-feature-wide {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
   .v2-feature-wide .v2-feature-image {
+    float: none;
+    width: 100%;
     height: clamp(218px, 27vw, 270px);
-    min-height: 0;
+    margin: 0 0 18px;
   }
 
   .v2-amenity-image figcaption {

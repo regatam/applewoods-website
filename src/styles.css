@@ -1998,6 +1998,11 @@ textarea.input {
   margin-bottom: 0;
 }
 
+/* In-rail expandable card — mobile scroller only. */
+.v2-feature-expand {
+  display: none;
+}
+
 .v2-feature-more {
   position: relative;
   max-height: 168px; /* ~7 lines at 20px/1.2 */
@@ -2657,21 +2662,27 @@ textarea.input {
     font-size: 18px;
   }
 
+  /* Ecology joins the scroller as a rail card; the solo row goes away.
+     Collapsed body is ~4 lines so the card height matches its neighbors;
+     expanding grows the rail in place (other cards stay top-aligned). */
   .v2-feature-solo {
-    width: calc(100% - 32px);
-    margin-top: 20px;
+    display: none;
   }
 
-  .v2-feature-solo article {
-    width: 100%;
+  .v2-feature-expand {
+    display: block;
   }
 
-  .v2-feature-solo p {
-    font-size: 18px;
+  .v2-feature-expand p {
+    margin: 0 0 10px;
   }
 
-  .v2-feature-more {
-    max-height: 152px; /* ~7 lines at 18px/1.2 */
+  .v2-feature-expand p:last-child {
+    margin-bottom: 0;
+  }
+
+  .v2-feature-expand .v2-feature-more:not(.is-open) {
+    max-height: 88px; /* ~4 lines at 18px/1.2 */
   }
 
   .value-stack {

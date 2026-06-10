@@ -382,32 +382,31 @@ function Paras({ text }) {
   );
 }
 
-// A grid-sized card on its own centered row, body collapsed to a few lines
-// with an expand toggle (Ecology — too much copy for a regular card).
-function SoloFeatureCard({ item, moreLabel, lessLabel }) {
+// Grid-style card whose body is collapsed behind a Read more toggle
+// (Ecology — too much copy for a regular card). Used twice: centered on its
+// own row on desktop/tablet, and as a rail card inside the mobile scroller.
+function ExpandableFeatureCard({ item, moreLabel, lessLabel, className }) {
   const [expanded, setExpanded] = useState(false);
   return (
-    <div className="v2-feature-solo">
-      <article>
-        <div className="v2-feature-image">
-          <img src={item.image} alt="" aria-hidden="true" />
+    <article className={className}>
+      <div className="v2-feature-image">
+        <img src={item.image} alt="" aria-hidden="true" />
+      </div>
+      <div className="v2-feature-copy">
+        <h3>{item.title}</h3>
+        <div className={expanded ? "v2-feature-more is-open" : "v2-feature-more"}>
+          <Paras text={item.body} />
         </div>
-        <div className="v2-feature-copy">
-          <h3>{item.title}</h3>
-          <div className={expanded ? "v2-feature-more is-open" : "v2-feature-more"}>
-            <Paras text={item.body} />
-          </div>
-          <button
-            type="button"
-            className="v2-feature-toggle"
-            aria-expanded={expanded}
-            onClick={() => setExpanded((v) => !v)}
-          >
-            {expanded ? lessLabel : moreLabel}
-          </button>
-        </div>
-      </article>
-    </div>
+        <button
+          type="button"
+          className="v2-feature-toggle"
+          aria-expanded={expanded}
+          onClick={() => setExpanded((v) => !v)}
+        >
+          {expanded ? lessLabel : moreLabel}
+        </button>
+      </div>
+    </article>
   );
 }
 
@@ -477,15 +476,25 @@ function V2Difference() {
               </div>
             </article>
           ))}
+          {wideCards.map((item) => (
+            <ExpandableFeatureCard
+              key={"rail-" + item.title}
+              className="v2-feature-expand"
+              item={item}
+              moreLabel={difference.readMore}
+              lessLabel={difference.readLess}
+            />
+          ))}
         </div>
       </div>
       {wideCards.map((item) => (
-        <SoloFeatureCard
-          key={item.title}
-          item={item}
-          moreLabel={difference.readMore}
-          lessLabel={difference.readLess}
-        />
+        <div className="v2-feature-solo" key={item.title}>
+          <ExpandableFeatureCard
+            item={item}
+            moreLabel={difference.readMore}
+            lessLabel={difference.readLess}
+          />
+        </div>
       ))}
     </section>
   );

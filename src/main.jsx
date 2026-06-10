@@ -385,10 +385,29 @@ function Paras({ text }) {
 // Grid-style card whose body is collapsed behind a Read more toggle
 // (Ecology — too much copy for a regular card). Used twice: centered on its
 // own row on desktop/tablet, and as a rail card inside the mobile scroller.
-function ExpandableFeatureCard({ item, moreLabel, lessLabel, className }) {
+function ExpandableFeatureCard({ item, moreLabel, lessLabel, className, collapseOffscreen }) {
   const [expanded, setExpanded] = useState(false);
+  const cardRef = useRef(null);
+
+  // Rail variant: once the reader slides away to other cards, fold the body
+  // back up — they've read it; the rail returns to its compact height.
+  useEffect(() => {
+    if (!collapseOffscreen || !expanded) return undefined;
+    const node = cardRef.current;
+    const root = node?.closest(".v2-feature-scroller");
+    if (!node || !root) return undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.intersectionRatio < 0.5) setExpanded(false);
+      },
+      { root, threshold: 0.5 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [collapseOffscreen, expanded]);
+
   return (
-    <article className={className}>
+    <article className={className} ref={cardRef}>
       <div className="v2-feature-image">
         <img src={item.image} alt="" aria-hidden="true" />
       </div>
@@ -483,6 +502,7 @@ function V2Difference() {
               item={item}
               moreLabel={difference.readMore}
               lessLabel={difference.readLess}
+              collapseOffscreen
             />
           ))}
         </div>

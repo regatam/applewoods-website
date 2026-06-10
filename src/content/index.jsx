@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useMemo, useCallback } from "react";
+import React, { createContext, useContext, useState, useMemo, useCallback, useEffect } from "react";
 import { clientContent } from "./client";
 import { smcopyContent } from "./smcopy";
 
@@ -52,6 +52,11 @@ export function ContentProvider({ children }) {
     setLangState(next);
     try { window.localStorage.setItem("aw_lang", next); } catch (e) {}
   }, []);
+  // Keep <html lang> in sync so :lang() CSS, screen readers, and search
+  // engines see the active language.
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
   const base = VERSIONS[resolveVersion()] ?? clientContent;
   const content = useMemo(() => localize(base, lang), [base, lang]);
   return (

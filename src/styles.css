@@ -2269,7 +2269,10 @@ textarea.input {
   .v2-difference-heading,
   .v2-amenities-content,
   .value-stack-heading {
-    grid-template-columns: 1fr;
+    /* minmax(0, 1fr), not 1fr: a plain 1fr track's floor is the content's
+       min-content size, so one long word (Spanish hero) widens the whole
+       column past the viewport and clips everything in it. */
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .hero {
@@ -2463,7 +2466,14 @@ textarea.input {
   }
 
   .v2-hero-copy h1 {
-    font-size: 48px;
+    /* Fluid so the longest EN word ("SUBDIVISION:") still fits small phones. */
+    font-size: clamp(32px, 12vw, 48px);
+  }
+
+  /* Spanish headline runs much longer ("FRACCIONAMIENTO:", "VERDADERAMENTE")
+     — needs a smaller size to fit phone widths without clipping. */
+  :lang(es) .v2-hero-copy h1 {
+    font-size: clamp(26px, 8.8vw, 38px);
   }
 
   .v2-hero-image {

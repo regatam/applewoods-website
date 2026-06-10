@@ -1930,53 +1930,87 @@ textarea.input {
   line-height: 1.2;
 }
 
-/* Full-row feature card (Ecology) rendered below the card grid.
-   Editorial layout: image floats top-left at a fixed height, the copy runs
-   beside it and then flows full-width beneath — avoids stretching the image
-   to the height of four paragraphs. */
-.v2-feature-wide {
+/* Ecology: a grid-sized card centered on its own row below the six, body
+   collapsed to ~7 lines with an expand toggle. Matches the grid cards' style. */
+.v2-feature-solo {
+  display: flex;
+  justify-content: center;
   width: min(var(--max), calc(100% - 48px));
   margin: 24px auto 0;
 }
 
-.v2-feature-wide::after {
-  content: "";
-  display: block;
-  clear: both;
+.v2-feature-solo article {
+  width: calc((100% - 48px) / 3);
+  min-width: 0;
 }
 
-.v2-feature-wide .v2-feature-image {
-  float: left;
-  width: min(42%, 470px);
-  height: 350px;
-  margin: 0 36px 16px 0;
-}
-
-.v2-feature-wide .v2-feature-copy {
-  display: block;
-  min-height: 0;
-  padding: 6px 0 0;
-}
-
-.v2-feature-wide h3 {
-  margin: 0 0 16px;
+.v2-feature-solo h3 {
+  margin: 0;
   color: #302318;
   font-size: 24px;
   font-weight: 500;
   line-height: 1;
 }
 
-.v2-feature-wide p {
-  margin: 0 0 12px;
+.v2-feature-solo p {
+  max-width: 488px;
+  margin: 0 0 10px;
   color: #17110e;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 300;
-  line-height: 1.42;
+  line-height: 1.2;
 }
 
-.v2-feature-wide p:last-child {
+.v2-feature-solo p:last-child {
   margin-bottom: 0;
+}
+
+.v2-feature-more {
+  position: relative;
+  max-height: 168px; /* ~7 lines at 20px/1.2 */
+  overflow: hidden;
+  transition: max-height 420ms ease;
+}
+
+.v2-feature-more::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 44px;
+  background: linear-gradient(rgba(253, 251, 247, 0), var(--v2-paper));
+  opacity: 1;
+  transition: opacity 280ms ease;
+  pointer-events: none;
+}
+
+.v2-feature-more.is-open {
+  max-height: 1400px;
+}
+
+.v2-feature-more.is-open::after {
+  opacity: 0;
+}
+
+.v2-feature-toggle {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #8a6c32;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.v2-feature-toggle:hover,
+.v2-feature-toggle:focus-visible {
+  color: #583529;
 }
 
 .v2-amenities {
@@ -2369,11 +2403,8 @@ textarea.input {
     height: clamp(218px, 27vw, 270px);
   }
 
-  .v2-feature-wide .v2-feature-image {
-    float: none;
-    width: 100%;
-    height: clamp(218px, 27vw, 270px);
-    margin: 0 0 18px;
+  .v2-feature-solo article {
+    width: calc((100% - 24px) / 2);
   }
 
   .v2-amenity-image figcaption {
@@ -2594,13 +2625,21 @@ textarea.input {
     font-size: 18px;
   }
 
-  .v2-feature-wide {
+  .v2-feature-solo {
     width: calc(100% - 32px);
     margin-top: 20px;
   }
 
-  .v2-feature-wide p {
-    font-size: 17px;
+  .v2-feature-solo article {
+    width: 100%;
+  }
+
+  .v2-feature-solo p {
+    font-size: 18px;
+  }
+
+  .v2-feature-more {
+    max-height: 152px; /* ~7 lines at 18px/1.2 */
   }
 
   .value-stack {

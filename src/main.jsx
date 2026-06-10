@@ -358,6 +358,35 @@ function Paras({ text }) {
   );
 }
 
+// A grid-sized card on its own centered row, body collapsed to a few lines
+// with an expand toggle (Ecology — too much copy for a regular card).
+function SoloFeatureCard({ item, moreLabel, lessLabel }) {
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <div className="v2-feature-solo">
+      <article>
+        <div className="v2-feature-image">
+          <img src={item.image} alt="" aria-hidden="true" />
+        </div>
+        <div className="v2-feature-copy">
+          <h3>{item.title}</h3>
+          <div className={expanded ? "v2-feature-more is-open" : "v2-feature-more"}>
+            <Paras text={item.body} />
+          </div>
+          <button
+            type="button"
+            className="v2-feature-toggle"
+            aria-expanded={expanded}
+            onClick={() => setExpanded((v) => !v)}
+          >
+            {expanded ? lessLabel : moreLabel}
+          </button>
+        </div>
+      </article>
+    </div>
+  );
+}
+
 function V2Difference() {
   const c = useContent();
   const { difference } = c;
@@ -427,15 +456,12 @@ function V2Difference() {
         </div>
       </div>
       {wideCards.map((item) => (
-        <article className="v2-feature-wide" key={item.title}>
-          <div className="v2-feature-image">
-            <img src={item.image} alt="" aria-hidden="true" />
-          </div>
-          <div className="v2-feature-copy">
-            <h3>{item.title}</h3>
-            <Paras text={item.body} />
-          </div>
-        </article>
+        <SoloFeatureCard
+          key={item.title}
+          item={item}
+          moreLabel={difference.readMore}
+          lessLabel={difference.readLess}
+        />
       ))}
     </section>
   );

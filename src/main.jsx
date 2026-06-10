@@ -398,7 +398,17 @@ function ExpandableFeatureCard({ item, moreLabel, lessLabel, className, collapse
     if (!node || !root) return undefined;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.intersectionRatio < 0.5) setExpanded(false);
+        if (entry.intersectionRatio >= 0.5) return;
+        setExpanded(false);
+        // Collapsing pulls the next section up under the reader's thumb —
+        // bring them back to the top of the rail instead.
+        const rootTop = root.getBoundingClientRect().top;
+        if (rootTop < 0) {
+          window.scrollTo({
+            top: window.scrollY + rootTop - 84,
+            behavior: prefersReducedMotion() ? "auto" : "smooth",
+          });
+        }
       },
       { root, threshold: 0.5 }
     );

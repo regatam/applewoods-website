@@ -2627,7 +2627,7 @@ textarea.input {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
     /* Breathing room between the card copy and the horizontal scrollbar. */
-    padding-bottom: 11px;
+    padding-bottom: 15px;
   }
 
   .v2-feature-row {

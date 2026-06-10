@@ -207,6 +207,10 @@ export const smcopyContent = {
       { href: "#location", label: { en: "Location", es: "Ubicación" } },
     ],
     cta: { en: "Contact us", es: "Contáctanos" },
+    portal: {
+      href: "https://cms.park-street.us/login",
+      label: { en: "Portal", es: "Portal" },
+    },
   },
   hero: {
     tagline: { en: "Life, beautifully organized.", es: "La vida, bellamente organizada." },

@@ -276,6 +276,7 @@ function V2Nav() {
   const c = useContent();
   const { nav } = c;
   const [hidden, setHidden] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
 
   useEffect(() => {
     const amenities = document.querySelector(".v2-amenities");
@@ -288,9 +289,24 @@ function V2Nav() {
     return () => observer.disconnect();
   }, []);
 
+  // Past the hero, Contact us becomes the page's one filled CTA (the hero's
+  // gold View Pricing owns that role while it is on screen).
+  useEffect(() => {
+    const hero = document.querySelector(".v2-hero");
+    if (!hero) return undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => setPastHero(!entry.isIntersecting),
+      { rootMargin: "-72px 0px 0px 0px" }
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <header
-      className={hidden ? "v2-nav is-hidden" : "v2-nav"}
+      className={
+        "v2-nav" + (hidden ? " is-hidden" : "") + (pastHero ? " is-scrolled" : "")
+      }
       aria-label="Primary navigation"
     >
       <a className="v2-logo" href="#top" aria-label="Apple Woods home">
@@ -305,7 +321,15 @@ function V2Nav() {
       </nav>
       <div className="v2-nav-actions">
         <LanguageSwitcher />
-        <a className="v2-owner-link" href="#contact">
+        <a
+          className="v2-owner-link v2-portal-link"
+          href={nav.portal.href}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {nav.portal.label}
+        </a>
+        <a className="v2-owner-link v2-contact-link" href="#contact">
           {nav.cta}
         </a>
         <MobileMenu />

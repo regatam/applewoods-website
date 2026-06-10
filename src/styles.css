@@ -1515,6 +1515,20 @@ textarea.input {
   box-shadow: 0 10px 28px rgba(48, 35, 24, 0.08);
 }
 
+/* Past the hero (header.is-scrolled), Contact us takes over as the page's
+   one filled CTA — same gold treatment as the hero's View Pricing button. */
+.v2-nav.is-scrolled .v2-contact-link {
+  background: #8a6c32;
+  border-color: #8a6c32;
+  color: #fbf7ed;
+}
+
+.v2-nav.is-scrolled .v2-contact-link:hover,
+.v2-nav.is-scrolled .v2-contact-link:focus-visible {
+  background: #6e5328;
+  border-color: #6e5328;
+}
+
 .v2-nav-actions {
   justify-self: end;
   display: flex;
@@ -1676,6 +1690,18 @@ textarea.input {
 .v2-mobile-contact {
   margin-top: 8px;
   color: var(--ink) !important;
+}
+
+.v2-mobile-portal {
+  display: block;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(88, 53, 41, 0.12);
+  color: var(--brown);
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 500;
+  text-align: left;
+  text-transform: uppercase;
 }
 
 .v2-mobile-lang {

@@ -77,6 +77,15 @@ export default function MobileMenu() {
             <button type="button" className="v2-mobile-contact" onClick={() => go("#contact")}>
               {c.nav.cta}
             </button>
+            <a
+              className="v2-mobile-portal"
+              href={c.nav.portal.href}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setOpen(false)}
+            >
+              {c.nav.portal.label}
+            </a>
           </nav>
           <div className="v2-mobile-lang" role="group" aria-label="Language">
             <GlobeIcon size={20} weight="regular" aria-hidden="true" />

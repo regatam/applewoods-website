@@ -351,7 +351,7 @@ export const smcopyContent = {
     eyebrow: { en: "Life Inside Apple Woods", es: "La vida dentro de Apple Woods" },
     heading: {
       en: "The comfort of a private community, built into everyday life.",
-      es: "El confort de una comunidad privada, integrada en la vida cotidiana.",
+      es: "La comodidad de una comunidad privada, integrada en tu día a día.",
     },
     body: {
       en: "From the clubhouse and fitness center to the pool, landscaping, lighting, and shared services, Apple Woods is designed to make daily life feel easier, more comfortable, and more refined.",

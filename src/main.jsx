@@ -338,6 +338,13 @@ function V2Nav() {
   );
 }
 
+// Headline strings may mark words for bold with **double asterisks**.
+function emphasize(text) {
+  return String(text)
+    .split(/\*\*(.+?)\*\*/g)
+    .map((part, i) => (i % 2 ? <strong key={i}>{part}</strong> : part));
+}
+
 function V2Hero() {
   const c = useContent();
   const { hero } = c;
@@ -347,9 +354,9 @@ function V2Hero() {
         <p>{hero.tagline}</p>
         <div>
           <h1>
-            <span>{hero.headlineLines[0]}</span>
+            <span>{emphasize(hero.headlineLines[0])}</span>
             {" "}
-            <span>{hero.headlineLines[1]}</span>
+            <span>{emphasize(hero.headlineLines[1])}</span>
           </h1>
           <p>{hero.subhead}</p>
           <div className="v2-actions">

@@ -1736,6 +1736,10 @@ textarea.input {
   line-height: 0.92;
 }
 
+.v2-hero-copy h1 strong {
+  font-weight: 700;
+}
+
 .v2-hero-copy div > p {
   max-width: 680px;
   color: #4d403b;

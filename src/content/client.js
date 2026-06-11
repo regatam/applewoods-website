@@ -16,7 +16,8 @@ const clientContent = structuredClone(smcopyContent);
 // ES headline = doc Spanish (em dash swapped for the colon used in the EN display split).
 clientContent.hero.headlineLines = [
   { en: "More Than a Subdivision:", es: "Más que un simple Fraccionamiento:" },
-  { en: "A Place to Truly Call Home", es: "Un Lugar que Verdaderamente se le Puede Llamar Hogar" },
+  // **word** = bold emphasis (client request 2026-06-10), rendered by the hero h1.
+  { en: "A Place to **Truly** Call **Home**", es: "Un Lugar que **Verdaderamente** se le Puede Llamar **Hogar**" },
 ];
 // EN = client's long official subhead. ES = doc Spanish (2026-06 full pass).
 clientContent.hero.subhead = {
@@ -28,6 +29,9 @@ clientContent.hero.actions.lots = { en: "View Pricing", es: "Ver Precios" };
 // --- Difference items (Security, Beauty, Technology, Luxury, Wellness, Attainability) ---
 // EN = client's long bodies. ES = doc Spanish (2026-06 full pass; trailing periods added
 // where the doc omitted them). The Ecology card (items[6]) is inherited from smcopy as-is.
+// ES section heading reworded per client feedback 2026-06-10.
+clientContent.difference.heading.es =
+  "Todo lo que distingue a una comunidad de primer nivel está pensado desde el inicio.";
 clientContent.difference.items[0].body = {
   en: "Controlled access, strategically planned security cameras, smart lighting, connected community systems, and proactive flood mitigation measures help create a safer, smarter, and more resilient neighborhood.",
   es: "El acceso controlado, las cámaras de seguridad estratégicamente ubicadas, la iluminación inteligente, los sistemas comunitarios conectados y las medidas preventivas contra inundaciones ayudan a crear un fraccionamiento más seguro, inteligente y resiliente.",
@@ -48,6 +52,7 @@ clientContent.difference.items[4].body = {
   en: "Blue Zone programs, combined with engaging fitness and wellness activities, make Apple Woods an ideal community for maintaining an active mind and body.",
   es: "Los programas inspirados en las Zonas Azules, combinados con actividades dinámicas de bienestar y acondicionamiento físico, convierten a Apple Woods en una comunidad ideal para mantener una mente y un cuerpo activos.",
 };
+clientContent.difference.items[5].title.es = "Accesibilidad económica integrada";
 clientContent.difference.items[5].body = {
   en: "Apple Woods leverages economies of scale to share the cost of community services and amenities among homeowners, helping deliver an elevated lifestyle while keeping dues affordable.",
   es: "Apple Woods aprovecha las economías de escala para compartir entre los propietarios el costo de servicios y amenidades comunitarias, ayudando a ofrecer un estilo de vida elevado mientras se mantienen cuotas accesibles.",

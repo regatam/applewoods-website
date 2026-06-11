@@ -1732,11 +1732,12 @@ textarea.input {
   margin-bottom: 18px;
   color: #302318;
   font-size: 48px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 0.92;
 }
 
 .v2-hero-copy h1 strong {
+  font-size: 1.16em;
   font-weight: 700;
 }
 
@@ -2561,7 +2562,12 @@ textarea.input {
   }
 
   /* Spanish headline runs much longer ("FRACCIONAMIENTO:", "VERDADERAMENTE")
-     — needs a smaller size to fit phone widths without clipping. */
+     — needs a smaller size to fit phone widths without clipping. The enlarged
+     bold words get a gentler scale here for the same reason. */
+  :lang(es) .v2-hero-copy h1 strong {
+    font-size: 1.06em;
+  }
+
   :lang(es) .v2-hero-copy h1 {
     font-size: clamp(26px, 8.8vw, 38px);
   }

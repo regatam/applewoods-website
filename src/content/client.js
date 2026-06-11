@@ -149,6 +149,10 @@ clientContent.phaseOne.body = {
   en: "Apple Woods Phase 1 is expected to provide the best opportunity for early buyers to secure a homesite at introductory pricing. Explore available homesites, compare locations and features, and verify current pricing, as the most sought-after properties may soon become reserved, under contract, or sold.",
   es: "Apple Woods Fase 1 representa una excelente oportunidad para que los primeros compradores aseguren su lote residencial a precios de lanzamiento. Explore los terrenos disponibles, compare ubicaciones y características, y verifique los precios actuales, ya que las propiedades más atractivas podrían reservarse, entrar en contrato o venderse próximamente.",
 };
+// ES card titles say "Terrenos", not "Lotes" (client feedback 2026-06-11).
+clientContent.phaseOne.lots[0].name.es = "Terrenos estándar";
+clientContent.phaseOne.lots[1].name.es = "Terrenos prémium";
+clientContent.phaseOne.lots[2].name.es = "Terrenos en esquina";
 clientContent.phaseOne.lots[0].body = {
   en: "An attractive introductory opportunity to join the Apple Woods community, with Phase 1 homesites offered at early-release pricing designed to provide exceptional value within a thoughtfully planned and growing neighborhood.",
   es: "Una excelente oportunidad de introducción para formar parte de la comunidad Apple Woods en su primera fase. Con precios especiales de lanzamiento, esta etapa inicial ofrece un valor excepcional dentro de un fraccionamiento cuidadosamente planificado y diseñado para crecer en armonía, comodidad y estilo de vida.",

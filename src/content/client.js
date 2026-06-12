@@ -139,7 +139,10 @@ clientContent.lifeInside.items[2].detail = {
   en: "A welcoming outdoor space where families can gather, play, relax, and create lasting memories together.",
   es: "Un espacio al aire libre que invita a las familias a reunirse, convivir, relajarse y crear recuerdos inolvidables juntos.",
 };
-clientContent.lifeInside.items[3].detail = {
+// Doc titles the item "Pool Area / Area de Alberca" (2026-06-11 copy doc).
+clientContent.lifeInside.items[2].term = { en: "Pool Area", es: "Área de alberca" };
+// items[3]/[4] (Outdoor Spaces, Event Center) ship the doc copy from smcopy as-is.
+clientContent.lifeInside.items[5].detail = {
   en: "Beautiful landscaping, carefully planned lighting, and consistent community standards ensure the neighborhood remains attractive, welcoming, and well maintained.",
   es: "Hermosos jardines escénicos, iluminación cuidadosamente planificada y estándares consistentes en la comunidad ayudan a mantener el fraccionamiento atractivo, armonioso y bien cuidado.",
 };

@@ -633,6 +633,41 @@ h1 {
   line-height: 1.5;
 }
 
+/* Full amenity descriptions expand under the teaser line. */
+.amenity-more {
+  display: grid;
+  gap: 12px;
+  margin: 14px 0 2px;
+  animation: amenity-reveal 260ms ease;
+}
+
+.amenity-more p {
+  margin: 0;
+}
+
+.amenity-toggle {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+@keyframes amenity-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .amenity-more {
+    animation: none;
+  }
+}
+
 .phase-one {
   scroll-margin-top: 32px;
   padding: 116px 0;

@@ -632,6 +632,37 @@ function V2StickyAmenities() {
   );
 }
 
+// Amenity row — items with a long `body` (full client descriptions) keep the
+// one-line teaser visible and expand the rest behind a Read more toggle.
+function AmenityRow({ item, moreLabel, lessLabel }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <dt>{item.term}</dt>
+      <dd>
+        {item.detail}
+        {item.body ? (
+          <>
+            {open ? (
+              <div className="amenity-more">
+                <Paras text={item.body} />
+              </div>
+            ) : null}
+            <button
+              type="button"
+              className="v2-feature-toggle amenity-toggle"
+              aria-expanded={open}
+              onClick={() => setOpen((v) => !v)}
+            >
+              {open ? lessLabel : moreLabel}
+            </button>
+          </>
+        ) : null}
+      </dd>
+    </div>
+  );
+}
+
 function LifeInside() {
   const c = useContent();
   const { lifeInside } = c;
@@ -646,10 +677,12 @@ function LifeInside() {
         <Paras text={lifeInside.body} />
         <dl className="amenity-list">
           {lifeInside.items.map((item) => (
-            <div key={item.term}>
-              <dt>{item.term}</dt>
-              <dd>{item.detail}</dd>
-            </div>
+            <AmenityRow
+              key={item.term}
+              item={item}
+              moreLabel={lifeInside.readMore}
+              lessLabel={lifeInside.readLess}
+            />
           ))}
         </dl>
       </div>

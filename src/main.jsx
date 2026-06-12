@@ -693,7 +693,7 @@ function LifeInside() {
   return (
     <section className="life-inside" id="life-inside">
       <div className="life-image">
-        <img src="/assets/awnice.png" alt={lifeInside.imageAlt} />
+        <img src="/assets/aw-water-walk.jpg" alt={lifeInside.imageAlt} loading="lazy" />
       </div>
       <div className="life-copy">
         <p className="eyebrow">{lifeInside.eyebrow}</p>

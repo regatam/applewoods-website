@@ -147,6 +147,12 @@ clientContent.lifeInside.items[5].detail = {
   es: "Hermosos jardines escénicos, iluminación cuidadosamente planificada y estándares consistentes en la comunidad ayudan a mantener el fraccionamiento atractivo, armonioso y bien cuidado.",
 };
 
+// Section image is the water walk render (swapped 2026-06-12).
+clientContent.lifeInside.imageAlt = {
+  en: "Apple Woods water walk render with fountains, koi ponds, and palm-lined homes",
+  es: "Representación del andador de agua de Apple Woods con fuentes, estanques de peces koi y residencias entre palmeras",
+};
+
 // --- Phase One (EN + ES from the 2026-06 doc) ---
 clientContent.phaseOne.body = {
   en: "Apple Woods Phase 1 is expected to provide the best opportunity for early buyers to secure a homesite at introductory pricing. Explore available homesites, compare locations and features, and verify current pricing, as the most sought-after properties may soon become reserved, under contract, or sold.",

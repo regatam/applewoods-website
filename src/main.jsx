@@ -634,31 +634,55 @@ function V2StickyAmenities() {
 
 // Amenity row — items with a long `body` (full client descriptions) keep the
 // one-line teaser visible and expand the rest behind a Read more toggle.
+// The expanded copy spans the full row width under the title, and Read less
+// sits at its end so the reader can collapse from where they finished.
 function AmenityRow({ item, moreLabel, lessLabel }) {
   const [open, setOpen] = useState(false);
+  const rowRef = useRef(null);
+
+  const collapse = () => {
+    setOpen(false);
+    // Collapsing from the bottom of a long body strands the reader far below
+    // the row — bring them back to where the section was before expanding.
+    requestAnimationFrame(() => {
+      const node = rowRef.current;
+      if (!node) return;
+      window.scrollTo({
+        top: window.scrollY + node.getBoundingClientRect().top - 90,
+        behavior: prefersReducedMotion() ? "auto" : "smooth",
+      });
+    });
+  };
+
   return (
-    <div>
+    <div ref={rowRef}>
       <dt>{item.term}</dt>
       <dd>
         {item.detail}
-        {item.body ? (
-          <>
-            {open ? (
-              <div className="amenity-more">
-                <Paras text={item.body} />
-              </div>
-            ) : null}
-            <button
-              type="button"
-              className="v2-feature-toggle amenity-toggle"
-              aria-expanded={open}
-              onClick={() => setOpen((v) => !v)}
-            >
-              {open ? lessLabel : moreLabel}
-            </button>
-          </>
+        {item.body && !open ? (
+          <button
+            type="button"
+            className="v2-feature-toggle amenity-toggle"
+            aria-expanded={false}
+            onClick={() => setOpen(true)}
+          >
+            {moreLabel}
+          </button>
         ) : null}
       </dd>
+      {item.body && open ? (
+        <dd className="amenity-more">
+          <Paras text={item.body} />
+          <button
+            type="button"
+            className="v2-feature-toggle amenity-toggle"
+            aria-expanded={true}
+            onClick={collapse}
+          >
+            {lessLabel}
+          </button>
+        </dd>
+      ) : null}
     </div>
   );
 }

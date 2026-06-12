@@ -595,8 +595,16 @@ h1 {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: 68px;
-  align-items: center;
+  /* Top-aligned, not centered: expanded amenity copy makes the column tall,
+     and centering would shift the whole section while reading. */
+  align-items: start;
   padding: 130px 0;
+}
+
+/* The image keeps the reader company while long amenity copy is open. */
+.life-image {
+  position: sticky;
+  top: 90px;
 }
 
 .life-image img {
@@ -633,11 +641,14 @@ h1 {
   line-height: 1.5;
 }
 
-/* Full amenity descriptions expand under the teaser line. */
-.amenity-more {
+/* Full amenity descriptions expand as a single full-width column under the
+   title row (grid-column spans both the dt and dd tracks). */
+.amenity-list .amenity-more {
+  grid-column: 1 / -1;
   display: grid;
-  gap: 12px;
-  margin: 14px 0 2px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  margin: 18px 0 2px;
   animation: amenity-reveal 260ms ease;
 }
 
@@ -2395,6 +2406,12 @@ textarea.input {
   .hero {
     gap: 40px;
     padding-top: 120px;
+  }
+
+  /* Stacked layout: the image sits above the copy and must scroll with it,
+     not stick over it. */
+  .life-image {
+    position: static;
   }
 
   .hero-visual {

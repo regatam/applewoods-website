@@ -103,7 +103,7 @@ clientContent.amenities = {
         en: "Designed for effortless living, Apple Woods offers thoughtfully curated amenities including a clubhouse, fitness center, resort-style pool, beautifully landscaped green spaces, and community services that enhance everyday life. By sharing these amenities across the community, homeowners enjoy exceptional comforts and conveniences without the expense or responsibility of maintaining them individually. Residents also benefit from exclusive access to a private concierge line, providing an added level of convenience, support, and peace of mind.",
         es: "Diseñado para una vida sin complicaciones, Apple Woods ofrece amenidades cuidadosamente seleccionadas, incluyendo una casa club, gimnasio, alberca estilo resort, jardines escénicos y servicios comunitarios que enriquecen la vida diaria. Al compartir estas amenidades dentro de la comunidad, los propietarios disfrutan de comodidades y beneficios excepcionales sin el gasto ni la responsabilidad de mantenerlos de forma individual.\n\nLos residentes también cuentan con acceso exclusivo a una línea privada de concierge, brindando un nivel adicional de conveniencia, atención personalizada y tranquilidad.",
       },
-      image: "/assets/awclubpool.png",
+      image: "/assets/aw-pool-slide.jpg",
     },
     {
       label: { en: "Technology built in", es: "Tecnología integrada" },

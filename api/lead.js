@@ -81,6 +81,36 @@ async function sendResendEmails(lead) {
   return { status: "sent" };
 }
 
+// Real-time lead alert to Slack via an incoming webhook. No-op until
+// SLACK_WEBHOOK_URL is set. SLACK_LEAD_MENTION (e.g. "<@U123>") is prepended so
+// the right person gets pinged. Bridges notifications until Resend email is live.
+async function notifySlack(lead) {
+  const webhook = process.env.SLACK_WEBHOOK_URL;
+  if (!webhook) return { status: "skipped", reason: "No SLACK_WEBHOOK_URL" };
+
+  const mention = process.env.SLACK_LEAD_MENTION;
+  const detail = (label, value) => `*${label}:* ${value || "—"}`;
+  const lines = [
+    `${mention ? mention + " " : ""}:house_with_garden: *New Apple Woods lead*`,
+    detail("Name", lead.fullName),
+    detail("Phone", lead.phone),
+    detail("Email", lead.email),
+    detail("Lot interest", lead.lotInterest),
+    detail("Budget", lead.budget),
+    detail("Timeline", lead.timeline),
+    detail("Interest", lead.interestType),
+    lead.notes ? detail("Notes", lead.notes) : null,
+  ].filter(Boolean);
+
+  const res = await fetch(webhook, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: lines.join("\n") }),
+  });
+  if (!res.ok) throw new Error(`Slack webhook responded ${res.status}`);
+  return { status: "sent" };
+}
+
 export default async function handler(request, response) {
   if (request.method === "OPTIONS") {
     response.setHeader("Allow", "POST, OPTIONS");
@@ -125,11 +155,18 @@ export default async function handler(request, response) {
 
   console.info("Applewoods lead received", lead);
 
-  try {
-    const provider = await sendResendEmails(lead);
-    return response.status(200).json({ ok: true, provider });
-  } catch (error) {
-    console.error("Applewoods lead email failed", error);
-    return response.status(502).json({ ok: false, error: "Lead notification failed" });
-  }
+  // Fire all notification channels; never fail the visitor because a
+  // notification did (the lead is already captured in the log above).
+  const [emailResult, slackResult] = await Promise.allSettled([
+    sendResendEmails(lead),
+    notifySlack(lead),
+  ]);
+  if (emailResult.status === "rejected") console.error("Applewoods lead email failed", emailResult.reason);
+  if (slackResult.status === "rejected") console.error("Applewoods lead Slack notify failed", slackResult.reason);
+
+  return response.status(200).json({
+    ok: true,
+    email: emailResult.status === "fulfilled" ? emailResult.value : { status: "error" },
+    slack: slackResult.status === "fulfilled" ? slackResult.value : { status: "error" },
+  });
 }

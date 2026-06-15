@@ -33,7 +33,7 @@ clientContent.hero.actions.lots = { en: "View Pricing", es: "Ver Precios" };
 clientContent.difference.heading.es =
   "Todo lo que distingue a una comunidad de primer nivel está pensado desde el inicio.";
 clientContent.difference.items[0].body = {
-  en: "Controlled access, strategically planned security cameras, smart lighting, connected community systems, and proactive flood mitigation measures help create a safer, smarter, and more resilient neighborhood.",
+  en: "Controlled access gated community, strategically planned security cameras, smart lighting, connected community systems, and proactive flood mitigation measures help create a safer, smarter, and more resilient neighborhood.",
   es: "El acceso controlado, las cámaras de seguridad estratégicamente ubicadas, la iluminación inteligente, los sistemas comunitarios conectados y las medidas preventivas contra inundaciones ayudan a crear un fraccionamiento más seguro, inteligente y resiliente.",
 };
 clientContent.difference.items[1].body = {
@@ -321,6 +321,7 @@ clientContent.contact.faq.groups = [
           es: "Apple Woods se basa en el principio de que todos los propietarios se benefician de vivir en una comunidad que valora la belleza, el respeto y el orgullo de pertenencia. Nuestros estándares comunitarios están diseñados para proteger el carácter del fraccionamiento, fortalecer el valor de las propiedades y asegurar un entorno armónico y visualmente atractivo.\n\nEstos estándares incluyen lineamientos para el tamaño de las viviendas, el diseño arquitectónico, la jardinería, el mantenimiento exterior, la iluminación, los niveles de ruido, la selección de colores y el almacenamiento de objetos en exteriores. Al cumplir con estas normas compartidas, los propietarios contribuyen a crear un fraccionamiento estéticamente agradable y cómodo para todos sus residentes.\n\nNo dude en solicitar la lista completa de estándares o en plantear cualquier duda específica.",
         },
       },
+      faqDocItems.respectAmenities,
     ],
   },
   {
@@ -337,6 +338,7 @@ clientContent.contact.faq.groups = [
       faqDocItems.reading,
       faqDocItems.outdoorSpaces,
       faqDocItems.trashService,
+      faqDocItems.designedFor,
     ],
   },
 ];

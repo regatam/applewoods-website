@@ -324,7 +324,7 @@ h1 {
 }
 
 .section-heading h2,
-.life-copy h2,
+.life-intro h2,
 .phase-intro h2,
 .location h2,
 .faq h2,
@@ -370,14 +370,14 @@ h1 {
 .difference-grid p,
 .phase-intro p,
 .location p,
-.life-copy p,
+.life-intro p,
 .faq p {
   color: var(--taupe);
   line-height: 1.6;
 }
 
 .location p + p,
-.life-copy p + p {
+.life-intro p + p {
   margin-top: 14px;
 }
 
@@ -592,74 +592,111 @@ h1 {
 
 .life-inside {
   scroll-margin-top: 32px;
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 68px;
-  /* Top-aligned, not centered: expanded amenity copy makes the column tall,
-     and centering would shift the whole section while reading. */
-  align-items: start;
   padding: 130px 0;
 }
 
-/* The image keeps the reader company while long amenity copy is open. */
-.life-image {
-  position: sticky;
-  top: 90px;
+/* Section intro — eyebrow, heading, and body sit above the amenity grid now
+   that the standalone sticky image is gone and the section runs full width. */
+.life-intro {
+  max-width: 760px;
+  margin-bottom: 60px;
 }
 
-.life-image img {
+/* Each amenity is a stacked card: title -> image -> copy. Two up on desktop,
+   one up on small screens (see the 760px block). align-items:start keeps cards
+   top-aligned so an expanded Read more doesn't stretch its row neighbor. */
+.amenity-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 56px 44px;
+  align-items: start;
+}
+
+.amenity-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.amenity-card-title {
+  margin: 0 0 16px;
+  font-size: 23px;
+  line-height: 1.1;
+}
+
+.amenity-figure {
+  margin: 0 0 20px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--paper-deep);
+  box-shadow: 0 24px 60px rgba(42, 23, 17, 0.13);
+}
+
+.amenity-figure img {
   width: 100%;
-  height: 680px;
+  height: 100%;
   object-fit: cover;
-  box-shadow: 0 30px 90px rgba(42, 23, 17, 0.16);
 }
 
-.amenity-list {
-  display: grid;
-  gap: 0;
-  margin: 36px 0 0;
-  border-top: 1px solid var(--line);
-}
-
-.amenity-list div {
-  display: grid;
-  grid-template-columns: 0.55fr 1fr;
-  gap: 20px;
-  padding: 22px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.amenity-list dt {
-  color: var(--brown);
+/* Placeholder shown until item.image is filled. The diagonal hatch + label
+   make it read as an intentional slot, not a broken image. */
+.amenity-figure-ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 16px;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(88, 53, 41, 0.05) 0,
+      rgba(88, 53, 41, 0.05) 12px,
+      rgba(88, 53, 41, 0.015) 12px,
+      rgba(88, 53, 41, 0.015) 24px
+    ),
+    var(--paper-deep);
+  color: var(--olive);
+  font-family: var(--font-heading);
+  font-size: 13px;
   font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  text-align: center;
 }
 
-.amenity-list dd {
+.amenity-card-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.amenity-card-detail {
   margin: 0;
   color: var(--taupe);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-/* Full amenity descriptions expand as a single full-width column under the
-   title row (grid-column spans both the dt and dd tracks). */
-.amenity-list .amenity-more {
-  grid-column: 1 / -1;
+/* Full amenity description, revealed under the teaser by Read more. */
+.amenity-card-more {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: 14px;
-  margin: 18px 0 2px;
+  margin-top: 2px;
   animation: amenity-reveal 260ms ease;
 }
 
-.amenity-more p {
+.amenity-card-more p {
   margin: 0;
+  color: var(--taupe);
+  line-height: 1.6;
 }
 
 .amenity-toggle {
-  display: block;
-  margin-top: 10px;
-  font-size: 12px;
+  margin-top: 2px;
+  /* Hug content at the card's left edge instead of stretching full width in
+     the flex column (which centered the label). */
+  align-self: flex-start;
+  text-align: left;
 }
 
 @keyframes amenity-reveal {
@@ -674,7 +711,7 @@ h1 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .amenity-more {
+  .amenity-card-more {
     animation: none;
   }
 }
@@ -765,7 +802,51 @@ h1 {
 }
 
 .lot-cards span {
-  margin-bottom: 44px;
+  margin-bottom: 16px;
+}
+
+/* Per-lot image: a small landscape thumb between the number and the title.
+   Clicking it opens the same zoom lightbox the map / price sheet use. */
+.lot-thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-bottom: 22px;
+  padding: 0;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--paper-deep);
+  cursor: zoom-in;
+  overflow: hidden;
+}
+
+.lot-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 320ms ease;
+}
+
+.lot-thumb:hover img,
+.lot-thumb:focus-visible img {
+  transform: scale(1.04);
+}
+
+/* Expand affordance, mirrors the zoom-in cue on the doc thumbnails. */
+.lot-thumb-zoom {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 3px;
+  background: rgba(15, 9, 6, 0.62);
+  color: #fffaf4;
 }
 
 .lot-cards strong {
@@ -2387,7 +2468,6 @@ textarea.input {
   }
 
   .hero,
-  .life-inside,
   .phase-intro,
   .lot-layout,
   .location,
@@ -2406,12 +2486,6 @@ textarea.input {
   .hero {
     gap: 40px;
     padding-top: 120px;
-  }
-
-  /* Stacked layout: the image sits above the copy and must scroll with it,
-     not stick over it. */
-  .life-image {
-    position: static;
   }
 
   .hero-visual {
@@ -2558,8 +2632,13 @@ textarea.input {
     font-size: 46px;
   }
 
+  .amenity-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 44px;
+  }
+
   .section-heading h2,
-  .life-copy h2,
+  .life-intro h2,
   .phase-intro h2,
   .location h2,
   .faq h2,
@@ -2915,15 +2994,10 @@ textarea.input {
     padding: 82px 0;
   }
 
-  .life-image img,
   .location-panel,
   .location-panel img {
     min-height: 380px;
     height: 380px;
-  }
-
-  .amenity-list div {
-    display: block;
   }
 
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { EnvelopeSimpleIcon, PhoneIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
+import { ArrowsOutSimpleIcon, EnvelopeSimpleIcon, PhoneIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lightbox from "./components/Lightbox";
@@ -632,20 +632,23 @@ function V2StickyAmenities() {
   );
 }
 
-// Amenity row — items with a long `body` (full client descriptions) keep the
-// one-line teaser visible and expand the rest behind a Read more toggle.
-// The expanded copy spans the full row width under the title, and Read less
-// sits at its end so the reader can collapse from where they finished.
-function AmenityRow({ item, moreLabel, lessLabel }) {
+// Amenity card — title, then its image, then the teaser copy (the 2026-06-14
+// redesign: each amenity is its own clean block instead of a text-only row).
+// Items with a long `body` keep a Read more toggle that expands the full client
+// description in place; Read less collapses and returns the reader to the top
+// of the card. `item.image` is optional — until a render is dropped in, the
+// figure shows a labeled placeholder so the layout stays honest about where
+// imagery will land.
+function AmenityCard({ item, moreLabel, lessLabel }) {
   const [open, setOpen] = useState(false);
-  const rowRef = useRef(null);
+  const cardRef = useRef(null);
 
   const collapse = () => {
     setOpen(false);
     // Collapsing from the bottom of a long body strands the reader far below
-    // the row — bring them back to where the section was before expanding.
+    // the card — bring them back to where the card started before expanding.
     requestAnimationFrame(() => {
-      const node = rowRef.current;
+      const node = cardRef.current;
       if (!node) return;
       window.scrollTo({
         top: window.scrollY + node.getBoundingClientRect().top - 90,
@@ -655,35 +658,45 @@ function AmenityRow({ item, moreLabel, lessLabel }) {
   };
 
   return (
-    <div ref={rowRef}>
-      <dt>{item.term}</dt>
-      <dd>
-        {item.detail}
-        {item.body && !open ? (
-          <button
-            type="button"
-            className="v2-feature-toggle amenity-toggle"
-            aria-expanded={false}
-            onClick={() => setOpen(true)}
-          >
-            {moreLabel}
-          </button>
+    <article className="amenity-card" ref={cardRef}>
+      <h3 className="amenity-card-title">{item.term}</h3>
+      <figure className="amenity-figure">
+        {item.image ? (
+          <img src={item.image} alt={item.imageAlt || item.term} loading="lazy" />
+        ) : (
+          <span className="amenity-figure-ph" aria-hidden="true">
+            {item.term}
+          </span>
+        )}
+      </figure>
+      <div className="amenity-card-copy">
+        <p className="amenity-card-detail">{item.detail}</p>
+        {item.body ? (
+          open ? (
+            <div className="amenity-card-more">
+              <Paras text={item.body} />
+              <button
+                type="button"
+                className="v2-feature-toggle amenity-toggle"
+                aria-expanded={true}
+                onClick={collapse}
+              >
+                {lessLabel}
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="v2-feature-toggle amenity-toggle"
+              aria-expanded={false}
+              onClick={() => setOpen(true)}
+            >
+              {moreLabel}
+            </button>
+          )
         ) : null}
-      </dd>
-      {item.body && open ? (
-        <dd className="amenity-more">
-          <Paras text={item.body} />
-          <button
-            type="button"
-            className="v2-feature-toggle amenity-toggle"
-            aria-expanded={true}
-            onClick={collapse}
-          >
-            {lessLabel}
-          </button>
-        </dd>
-      ) : null}
-    </div>
+      </div>
+    </article>
   );
 }
 
@@ -692,23 +705,20 @@ function LifeInside() {
   const { lifeInside } = c;
   return (
     <section className="life-inside" id="life-inside">
-      <div className="life-image">
-        <img src="/assets/aw-water-walk.jpg" alt={lifeInside.imageAlt} loading="lazy" />
-      </div>
-      <div className="life-copy">
+      <div className="life-intro">
         <p className="eyebrow">{lifeInside.eyebrow}</p>
         <h2>{lifeInside.heading}</h2>
         <Paras text={lifeInside.body} />
-        <dl className="amenity-list">
-          {lifeInside.items.map((item) => (
-            <AmenityRow
-              key={item.term}
-              item={item}
-              moreLabel={lifeInside.readMore}
-              lessLabel={lifeInside.readLess}
-            />
-          ))}
-        </dl>
+      </div>
+      <div className="amenity-grid">
+        {lifeInside.items.map((item) => (
+          <AmenityCard
+            key={item.term}
+            item={item}
+            moreLabel={lifeInside.readMore}
+            lessLabel={lifeInside.readLess}
+          />
+        ))}
       </div>
     </section>
   );
@@ -719,6 +729,7 @@ function PhaseOne() {
   const { phaseOne } = c;
   const [mapOpen, setMapOpen] = useState(false);
   const [priceOpen, setPriceOpen] = useState(false);
+  const [openLotImage, setOpenLotImage] = useState(null);
 
   return (
     <section className="phase-one" id="phase-one">
@@ -752,6 +763,19 @@ function PhaseOne() {
           {phaseOne.lots.map((lot, lotIndex) => (
             <article key={lot.name}>
               <span>{String(lotIndex + 1).padStart(2, "0")}</span>
+              {lot.image ? (
+                <button
+                  type="button"
+                  className="lot-thumb"
+                  onClick={() => setOpenLotImage(lotIndex)}
+                  aria-label={`Expand the ${lot.name} image`}
+                >
+                  <img src={lot.image} alt={lot.imageAlt || lot.name} loading="lazy" />
+                  <span className="lot-thumb-zoom" aria-hidden="true">
+                    <ArrowsOutSimpleIcon size={15} weight="bold" />
+                  </span>
+                </button>
+              ) : null}
               <h3>{lot.name}</h3>
               <strong>{lot.price}</strong>
               <p>{lot.body}</p>
@@ -765,6 +789,18 @@ function PhaseOne() {
       </Lightbox>
       <Lightbox open={priceOpen} onClose={() => setPriceOpen(false)} label="Apple Woods price sheet">
         <img src="/assets/apple-woods-price-sheet-v3@2x.png" alt="Apple Woods Phase 1 price sheet" />
+      </Lightbox>
+      <Lightbox
+        open={openLotImage !== null}
+        onClose={() => setOpenLotImage(null)}
+        label={openLotImage !== null ? `${phaseOne.lots[openLotImage].name} homesite image` : ""}
+      >
+        {openLotImage !== null ? (
+          <img
+            src={phaseOne.lots[openLotImage].image}
+            alt={phaseOne.lots[openLotImage].imageAlt || phaseOne.lots[openLotImage].name}
+          />
+        ) : null}
       </Lightbox>
     </section>
   );

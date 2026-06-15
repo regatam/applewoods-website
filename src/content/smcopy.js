@@ -181,6 +181,27 @@ export const faqDocItems = {
       es: "Para los propietarios con mascotas que decidan utilizar el servicio opcional de sacar y regresar los botes de basura, Apple Woods requerirá un sistema de barrera segura diseñado para ayudar a evitar que las mascotas salgan accidentalmente del patio durante la recolección de basura.\n\nLos propietarios podrán instalar su propia barrera aprobada, o Apple Woods podrá ofrecer una solución personalizada diseñada para integrarse con la apariencia y el estilo del cercado comunitario. Estos sistemas están pensados para crear un área de acceso separada y segura para el manejo de basura, mientras ayudan a proteger a las mascotas y mantener la imagen limpia y armónica del fraccionamiento.",
     },
   },
+  // New doc FAQ section (2026-06-14 client comments doc): Restrictions + Life.
+  respectAmenities: {
+    question: {
+      en: "How does Apple Woods help ensure that residents and guests feel comfortable and respected in shared amenities such as the pool, clubhouse, parks, and recreation areas?",
+      es: "¿Cómo ayuda Apple Woods a garantizar que los residentes y visitantes se sientan cómodos, seguros y respetados en las amenidades compartidas, como la alberca, la Casa Club, los parques y las áreas recreativas?",
+    },
+    answer: {
+      en: "Apple Woods is committed to fostering a family-oriented environment where every resident and guest is treated with dignity, courtesy, and respect. Whether enjoying the pool, fitness facilities, parks, clubhouse, or any other community amenity, all individuals should feel comfortable and free from harassment, intimidation, discrimination, or inappropriate behavior.\n\nThe community maintains clear standards of conduct designed to promote a welcoming atmosphere for people of all ages, backgrounds, and lifestyles. Inappropriate staring, unwanted attention, offensive language, harassment, racism, antisemitism, discrimination, bullying, or any other disrespectful behavior toward residents or guests is not tolerated. Every person deserves to enjoy the community's amenities without feeling uncomfortable, judged, or disrespected.\n\nTo encourage a positive and engaged community culture, Apple Woods has implemented the Resident Excellence Program™, a community recognition and accountability system designed to promote respect, participation, good citizenship, and pride of ownership. Through their resident portal, homeowners can view their current standing, track accomplishments, earn merits, identify opportunities for improvement, and work toward higher levels of recognition within the community.\n\nResidents demonstrating outstanding participation and community stewardship may qualify for special recognition, awards, privileges, and annual honors. Likewise, repeated violations of community standards may result in reductions in standing, temporary restrictions on certain privileges, or other actions consistent with community policies.\n\nOur goal is simple: to create an environment where families can relax, children can play, neighbors can connect, and everyone can enjoy the community with confidence, knowing they will be treated with respect and consideration.",
+      es: "Apple Woods está comprometido con fomentar una comunidad orientada a la familia, donde cada residente e invitado sea tratado con dignidad, cortesía y respeto. Ya sea disfrutando de la piscina, las instalaciones deportivas, los parques, la Casa Club o cualquier otra amenidad, todas las personas deben sentirse cómodas, seguras y libres de acoso, intimidación, discriminación o conductas inapropiadas.\n\nLa comunidad mantiene normas claras de convivencia diseñadas para promover un ambiente acogedor para personas de todas las edades, antecedentes y estilos de vida. Las miradas inapropiadas, la atención no deseada, el lenguaje ofensivo, el acoso, el racismo, el antisemitismo, la discriminación, la intimidación o cualquier comportamiento irrespetuoso hacia residentes o invitados no serán tolerados. Toda persona tiene derecho a disfrutar de las amenidades de la comunidad sin sentirse incómoda, juzgada o faltada al respeto.\n\nPara fortalecer una cultura de participación positiva y sana convivencia, Apple Woods ha implementado el Programa de Excelencia Residencial™, un sistema de reconocimiento y responsabilidad comunitaria diseñado para fomentar el respeto, la participación, la buena ciudadanía y el orgullo de pertenecer a la comunidad. A través de su portal residencial, los propietarios podrán consultar su nivel de excelencia, dar seguimiento a sus logros, acumular méritos, identificar oportunidades de mejora y avanzar hacia niveles superiores de reconocimiento dentro de la comunidad.\n\nLos residentes que demuestren un compromiso ejemplar con los valores de Apple Woods, la participación comunitaria y el bienestar colectivo podrán ser elegibles para reconocimientos especiales, premios, privilegios y distinciones anuales. De igual manera, las conductas reiteradas que incumplan las normas comunitarias podrán afectar el nivel de excelencia del residente y dar lugar a restricciones temporales sobre ciertos privilegios o al acceso a determinadas amenidades, de conformidad con las políticas de la comunidad.\n\nNuestro objetivo es simple: crear un entorno donde las familias puedan relajarse, los niños puedan jugar, los vecinos puedan convivir y todos disfruten de la comunidad con la confianza de que serán tratados con respeto, consideración y cortesía.",
+    },
+  },
+  designedFor: {
+    question: {
+      en: "Is Apple Woods designed for retirees, young families, professionals, or a specific type of resident?",
+      es: "¿Apple Woods está diseñado para jubilados, familias jóvenes, profesionistas o algún tipo específico de residente?",
+    },
+    answer: {
+      en: "Apple Woods was not designed for a particular age group, income level, or stage of life. It was thoughtfully planned to create an exceptional living environment that can be enjoyed by a wide variety of residents, each with their own goals, interests, and lifestyles.\n\nRetirees appreciate the peace of mind that comes from living in a well-maintained community with convenient amenities, recreational opportunities, and fewer day-to-day concerns. Young families enjoy the parks, sports facilities, recreational amenities, and family-oriented environment designed to help children thrive. In a time when many children spend increasing amounts of time on tablets, smartphones, video games, and other electronic devices, Apple Woods was planned to encourage a more active, balanced, and engaging lifestyle. Through sports, outdoor activities, social events, playgrounds, and community programs, children have opportunities to build friendships, develop confidence, and create lasting memories through real-world experiences.\n\nMany parents also appreciate the community's emphasis on safety and connectivity. Advanced security features, including strategically placed surveillance systems throughout common areas, help provide additional peace of mind while children participate in approved community activities. Combined with thoughtfully designed amenities and a strong sense of community, Apple Woods allows parents to feel more comfortable knowing their children are spending time in a safe, active, and enriching environment.\n\nProfessionals value the attractive surroundings, sense of pride, and amenities that support both active and social lifestyles. First-time homeowners appreciate the opportunity to become part of a thoughtfully planned community, while those looking to upgrade can enjoy features and amenities often associated with much higher-priced neighborhoods.\n\nApple Woods was not created exclusively for the wealthy, nor was it intended to be unattainable for hardworking families. Instead, it was designed around a simple belief: everyone deserves the opportunity to enjoy a beautiful home, a welcoming community, quality amenities, and a lifestyle that promotes well-being, connection, and pride of ownership. Luxury should not be reserved for a select few. At Apple Woods, many of the features that make a community feel exceptional have been thoughtfully incorporated from the very beginning, helping make quality living more attainable.\n\nWhether you are starting a family, raising children, building your career, enjoying retirement, or simply looking for a better place to call home, Apple Woods offers an environment designed to support your lifestyle today and adapt to your needs tomorrow.\n\nIn short, Apple Woods is not defined by age, occupation, or income level. It is defined by people who value community, respect, quality, opportunity, and the desire to live in a place they are proud to call home.",
+      es: "Apple Woods no fue diseñado para un grupo de edad, nivel de ingresos o etapa de vida en particular. Fue cuidadosamente planificado para crear un entorno residencial excepcional que pueda ser disfrutado por una amplia variedad de personas, cada una con sus propias metas, intereses y estilo de vida.\n\nLos jubilados valoran la tranquilidad que brinda vivir en una comunidad bien mantenida, con amenidades convenientes, oportunidades recreativas y menos preocupaciones en el día a día. Las familias jóvenes disfrutan de los parques, instalaciones deportivas, amenidades recreativas y un entorno orientado a la familia, diseñado para ayudar a los niños a desarrollarse plenamente. En una época en la que muchos niños pasan cada vez más tiempo frente a tabletas, teléfonos inteligentes, videojuegos y otros dispositivos electrónicos, Apple Woods fue concebido para fomentar un estilo de vida más activo, equilibrado y participativo. A través de deportes, actividades al aire libre, eventos sociales, áreas de juego y programas comunitarios, los niños tienen la oportunidad de desarrollar amistades, fortalecer su confianza y crear recuerdos duraderos mediante experiencias reales e interactivas.\n\nMuchos padres también valoran el enfoque de la comunidad en la seguridad y la conectividad. Los sistemas de videovigilancia estratégicamente ubicados en las áreas comunes brindan una mayor tranquilidad mientras los niños participan en actividades comunitarias autorizadas. Combinados con amenidades cuidadosamente planificadas y un fuerte sentido de comunidad, estos elementos permiten que los padres se sientan más seguros sabiendo que sus hijos están aprovechando su tiempo en un entorno activo, saludable y enriquecedor.\n\nLos profesionistas valoran el entorno atractivo, el sentido de orgullo y las amenidades que respaldan tanto estilos de vida activos como sociales. Los compradores de su primera vivienda aprecian la oportunidad de formar parte de una comunidad cuidadosamente planificada, mientras que quienes buscan mejorar su calidad de vida pueden disfrutar de características y amenidades comúnmente asociadas con desarrollos de mucho mayor costo.\n\nApple Woods no fue creado exclusivamente para personas de altos ingresos, ni tampoco fue concebido para estar fuera del alcance de las familias trabajadoras. Por el contrario, fue diseñado bajo una convicción sencilla: toda persona merece la oportunidad de disfrutar de una hermosa vivienda, una comunidad acogedora, amenidades de calidad y un estilo de vida que fomente el bienestar, la convivencia y el orgullo de pertenencia. La calidad de vida no debería estar reservada para unos cuantos. En Apple Woods, muchos de los elementos que hacen excepcional a una comunidad han sido incorporados desde el inicio, ayudando a que una mejor forma de vivir sea más accesible para más personas.\n\nYa sea que esté formando una familia, criando hijos, desarrollando su carrera profesional, disfrutando de su jubilación o simplemente buscando un mejor lugar para vivir, Apple Woods ofrece un entorno diseñado para satisfacer sus necesidades actuales y adaptarse a las del futuro.\n\nEn resumen, Apple Woods no está definido por la edad, la profesión o el nivel de ingresos de sus residentes. Está definido por personas que valoran la comunidad, el respeto, la calidad, las oportunidades y el deseo de vivir en un lugar del que puedan sentirse orgullosas.",
+    },
+  },
 };
 
 // Ecology card (client doc) — no smcopy variant; same copy in both versions.
@@ -370,6 +391,9 @@ export const smcopyContent = {
     items: [
       {
         term: { en: "Clubhouse", es: "Casa club" },
+        // Clubhouse render (swap the JPEG at this path to update). The component
+        // falls back to a styled placeholder for any item with an empty image.
+        image: "/assets/life-clubhouse.jpg",
         detail: {
           en: "A central place for residents to gather and use shared spaces.",
           es: "Un lugar central para que los residentes se reúnan y utilicen espacios compartidos.",
@@ -381,6 +405,7 @@ export const smcopyContent = {
       },
       {
         term: { en: "Gym", es: "Gimnasio" },
+        image: "/assets/life-gym.jpg",
         detail: {
           en: "Fitness access inside the community, without leaving the neighborhood.",
           es: "Acceso a fitness dentro de la comunidad, sin salir del vecindario.",
@@ -388,6 +413,7 @@ export const smcopyContent = {
       },
       {
         term: { en: "Pool", es: "Piscina" },
+        image: "/assets/aw-pool-slide.jpg",
         detail: {
           en: "A shared outdoor amenity for family time, relaxation, and weekend use.",
           es: "Un servicio compartido al aire libre para tiempo en familia, relajación y uso los fines de semana.",
@@ -399,6 +425,7 @@ export const smcopyContent = {
       },
       {
         term: { en: "Outdoor Spaces", es: "Espacios al aire libre" },
+        image: "/assets/life-outdoor-spaces.jpg",
         detail: {
           en: "Recreation areas planned for sports, play, celebrations, and time together outdoors.",
           es: "Áreas recreativas pensadas para deportes, juegos, celebraciones y convivencia al aire libre.",
@@ -410,6 +437,7 @@ export const smcopyContent = {
       },
       {
         term: { en: "Event Center", es: "Salón de eventos" },
+        image: "/assets/life-event-center.jpg",
         detail: {
           en: "An indoor venue for larger gatherings, celebrations, and community events year-round.",
           es: "Un espacio interior para reuniones, celebraciones y eventos comunitarios durante todo el año.",
@@ -421,6 +449,7 @@ export const smcopyContent = {
       },
       {
         term: { en: "Maintained surroundings", es: "Entorno mantenido" },
+        image: "/assets/life-maintained-surroundings.jpg",
         detail: {
           en: "Landscaping, lighting, and standards that help the community stay beautiful.",
           es: "Paisajismo, iluminación y estándares que ayudan a que la comunidad se mantenga bella.",
@@ -447,6 +476,9 @@ export const smcopyContent = {
         // ES name from doc ("Lotes estándar") — diverges from EN "Classic Homesites".
         name: { en: "Classic Homesites", es: "Lotes estándar" },
         price: { en: "Expected from $85,000", es: "Se esperan desde $85,000" },
+        // Lot render — click expands to a full-screen lightbox, same as the
+        // map / price sheet above. Swap the JPEG at this path to update.
+        image: "/assets/lot-classic.jpg",
         body: {
           en: "An attractive introductory opportunity to join the Apple Woods community, with Phase 1 homesites offered at early-release pricing designed to provide exceptional value within a thoughtfully planned neighborhood.",
           es: "Un fuerte punto de entrada a la comunidad de Apple Woods.",
@@ -455,6 +487,7 @@ export const smcopyContent = {
       {
         name: { en: "Premier Homesites", es: "Lotes prémium" },
         price: { en: "Expected from $95,000", es: "Se esperan desde $95,000" },
+        image: "/assets/aw-water-walk.jpg",
         body: {
           en: "A limited collection near the planned clubhouse, river walk, natural water elements, landscaping, and resort-style pool area.",
           es: "Terrenos seleccionados cerca del área planificada de la casa club.",
@@ -463,6 +496,7 @@ export const smcopyContent = {
       {
         name: { en: "Corner Homesites", es: "Lotes en esquina" },
         price: { en: "Priced individually", es: "Precio individual" },
+        image: "/assets/lot-corner.jpg",
         body: {
           en: "Larger or irregular homesites priced by size and location.",
           es: "Lotes más grandes o irregulares con precio según el tamaño y la ubicación.",
@@ -761,6 +795,7 @@ export const smcopyContent = {
                 es: "Los estándares de la comunidad cubren el tamaño de la casa, la arquitectura, el paisajismo, el mantenimiento, la iluminación, el ruido, los colores y el almacenamiento exterior para proteger la apariencia y la calidad de vida de la comunidad.",
               },
             },
+            faqDocItems.respectAmenities,
           ],
         },
         {
@@ -777,6 +812,7 @@ export const smcopyContent = {
             faqDocItems.reading,
             faqDocItems.outdoorSpaces,
             faqDocItems.trashService,
+            faqDocItems.designedFor,
           ],
         },
       ],

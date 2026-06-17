@@ -681,7 +681,9 @@ function AmenityCard({ item, moreLabel, lessLabel }) {
         )}
       </figure>
       <div className="amenity-card-copy">
-        <p className="amenity-card-detail">{item.detail}</p>
+        {/* Cards with long body copy drop the short intro (it duplicated the
+            opening of the full description); detail-only cards keep theirs. */}
+        {!item.body && <p className="amenity-card-detail">{item.detail}</p>}
         {item.body ? (
           open ? (
             <div className="amenity-card-more">

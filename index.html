@@ -30,6 +30,11 @@
       content="Apple Woods is a smart residential community designed around security, comfort, beauty, technology, and attainable everyday luxury."
     />
     <meta name="twitter:image" content="https://applewoods-website.vercel.app/og-image.jpg" />
+    <!-- Preload the LCP hero so it starts downloading in parallel with the JS
+         bundle. This is an SPA — the hero <img> only appears after React renders,
+         so without this the browser can't discover it until the bundle executes. -->
+    <link rel="preload" as="image" type="image/webp" href="/assets/hero-desktop.webp" media="(min-width: 761px)" fetchpriority="high" />
+    <link rel="preload" as="image" type="image/webp" href="/assets/hero-mobile.webp" media="(max-width: 760px)" fetchpriority="high" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="/aw-icon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

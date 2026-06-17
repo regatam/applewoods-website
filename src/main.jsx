@@ -368,8 +368,17 @@ function V2Hero() {
 
       <figure className="v2-hero-image">
         <picture>
-          <source media="(max-width: 760px)" srcSet="/assets/apple-corregido.png" />
-          <img src="/assets/apple-corregido.png" alt={hero.imageAlt} />
+          <source type="image/webp" media="(max-width: 760px)" srcSet="/assets/hero-mobile.webp" />
+          <source type="image/webp" srcSet="/assets/hero-desktop.webp" />
+          <source media="(max-width: 760px)" srcSet="/assets/hero-mobile.jpg" />
+          <img
+            src="/assets/hero-desktop.jpg"
+            alt={hero.imageAlt}
+            width={1920}
+            height={1080}
+            fetchPriority="high"
+            decoding="async"
+          />
         </picture>
       </figure>
     </section>
@@ -426,7 +435,7 @@ function ExpandableFeatureCard({ item, moreLabel, lessLabel, className, collapse
   return (
     <article className={className} ref={cardRef}>
       <div className="v2-feature-image">
-        <img src={item.image} alt="" aria-hidden="true" />
+        <img src={item.image} alt="" aria-hidden="true" loading="lazy" decoding="async" />
       </div>
       <div className="v2-feature-copy">
         <h3>{item.title}</h3>
@@ -504,7 +513,7 @@ function V2Difference() {
           {cards.map((item) => (
             <article key={item.title}>
               <div className="v2-feature-image">
-                <img src={item.image} alt="" aria-hidden="true" />
+                <img src={item.image} alt="" aria-hidden="true" loading="lazy" decoding="async" />
               </div>
               <div className="v2-feature-copy">
                 <h3>{item.title}</h3>
@@ -578,6 +587,8 @@ function V2StickyAmenities() {
                 key={item.label}
                 src={item.image}
                 alt=""
+                loading="lazy"
+                decoding="async"
                 className={itemIndex === index ? "is-active" : ""}
               />
             ))}
@@ -590,7 +601,7 @@ function V2StickyAmenities() {
             </div>
 
             <figure className="v2-amenity-image" ref={imageRef}>
-              <img src={active.image} alt={active.label} />
+              <img src={active.image} alt={active.label} loading="lazy" decoding="async" />
               <figcaption>{active.title}</figcaption>
             </figure>
 
@@ -746,7 +757,7 @@ function PhaseOne() {
             onClick={() => setMapOpen(true)}
             aria-label="Open the Phase 1 lot map"
           >
-            <img src="/assets/phase-1-aw-sold-map.png" alt={phaseOne.mapAlt} />
+            <img src="/assets/phase-1-aw-sold-map.png" alt={phaseOne.mapAlt} loading="lazy" decoding="async" />
             <span className="lot-doc-hint">{phaseOne.masterplanHint}</span>
           </button>
           <button
@@ -755,7 +766,7 @@ function PhaseOne() {
             onClick={() => setPriceOpen(true)}
             aria-label="Open the Apple Woods price sheet"
           >
-            <img src="/assets/apple-woods-price-sheet-v3-preview.png" alt={phaseOne.pricePreviewAlt} />
+            <img src="/assets/apple-woods-price-sheet-v3-preview.png" alt={phaseOne.pricePreviewAlt} loading="lazy" decoding="async" />
             <span className="lot-doc-hint">{phaseOne.priceSheetHint}</span>
           </button>
         </div>
@@ -785,10 +796,10 @@ function PhaseOne() {
       </div>
       <p className="phase-note">{phaseOne.phaseNote}</p>
       <Lightbox open={mapOpen} onClose={() => setMapOpen(false)} label="Apple Woods Phase 1 lot map">
-        <img src="/assets/phase-1-aw-sold-map@2x.png" alt="Apple Woods Phase 1 lot map" />
+        <img src="/assets/phase-1-aw-sold-map@2x.png" alt="Apple Woods Phase 1 lot map" loading="lazy" decoding="async" />
       </Lightbox>
       <Lightbox open={priceOpen} onClose={() => setPriceOpen(false)} label="Apple Woods price sheet">
-        <img src="/assets/apple-woods-price-sheet-v3@2x.png" alt="Apple Woods Phase 1 price sheet" />
+        <img src="/assets/apple-woods-price-sheet-v3@2x.png" alt="Apple Woods Phase 1 price sheet" loading="lazy" decoding="async" />
       </Lightbox>
       <Lightbox
         open={openLotImage !== null}
@@ -799,6 +810,8 @@ function PhaseOne() {
           <img
             src={phaseOne.lots[openLotImage].image}
             alt={phaseOne.lots[openLotImage].imageAlt || phaseOne.lots[openLotImage].name}
+            loading="lazy"
+            decoding="async"
           />
         ) : null}
       </Lightbox>
@@ -817,7 +830,7 @@ function Location() {
         <Paras text={location.body} />
       </div>
       <div className="location-panel">
-        <img src="/assets/locationsaw.png" alt={location.imageAlt} />
+        <img src="/assets/locationsaw.png" alt={location.imageAlt} loading="lazy" decoding="async" />
       </div>
     </section>
   );

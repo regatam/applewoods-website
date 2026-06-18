@@ -681,8 +681,9 @@ function AmenityCard({ item, moreLabel, lessLabel }) {
         )}
       </figure>
       <div className="amenity-card-copy">
-        {/* Cards with long body copy drop the short intro (it duplicated the
-            opening of the full description); detail-only cards keep theirs. */}
+        {/* Detail-only cards show their short description. Cards with long body
+            show a 3-line clamped teaser of that body when collapsed (not the old
+            separate intro), so expanding continues seamlessly with no duplication. */}
         {!item.body && <p className="amenity-card-detail">{item.detail}</p>}
         {item.body ? (
           open ? (
@@ -698,18 +699,63 @@ function AmenityCard({ item, moreLabel, lessLabel }) {
               </button>
             </div>
           ) : (
-            <button
-              type="button"
-              className="v2-feature-toggle amenity-toggle"
-              aria-expanded={false}
-              onClick={() => setOpen(true)}
-            >
-              {moreLabel}
-            </button>
+            <>
+              <p className="amenity-card-detail amenity-card-teaser">
+                {String(item.body).split(/\n\n+/)[0]}
+              </p>
+              <button
+                type="button"
+                className="v2-feature-toggle amenity-toggle"
+                aria-expanded={false}
+                onClick={() => setOpen(true)}
+              >
+                {moreLabel}
+              </button>
+            </>
           )
         ) : null}
       </div>
     </article>
+  );
+}
+
+// Phase 1 lot-card body. A long multi-paragraph body (e.g. the Premier collection)
+// collapses to a 3-line teaser behind Read more; a short single-paragraph body
+// renders as a plain paragraph with no toggle.
+function LotBody({ text, moreLabel, lessLabel }) {
+  const [open, setOpen] = useState(false);
+  if (!/\n\n/.test(String(text))) return <p>{text}</p>;
+  return open ? (
+    <>
+      <div className="lot-body">
+        <Paras text={text} />
+      </div>
+      <button
+        type="button"
+        className="v2-feature-toggle amenity-toggle"
+        aria-expanded={true}
+        onClick={() => setOpen(false)}
+      >
+        {lessLabel}
+      </button>
+    </>
+  ) : (
+    <>
+      {/* Collapsed: the full copy fills the card and clips with a soft fade so
+          the text runs to the bottom (matching the plain cards' height); Read
+          more reveals the rest. */}
+      <div className="lot-body lot-body-teaser">
+        <Paras text={text} />
+      </div>
+      <button
+        type="button"
+        className="v2-feature-toggle amenity-toggle"
+        aria-expanded={false}
+        onClick={() => setOpen(true)}
+      >
+        {moreLabel}
+      </button>
+    </>
   );
 }
 
@@ -791,7 +837,7 @@ function PhaseOne() {
               ) : null}
               <h3>{lot.name}</h3>
               <strong>{lot.price}</strong>
-              <p>{lot.body}</p>
+              <LotBody text={lot.body} moreLabel={phaseOne.readMore} lessLabel={phaseOne.readLess} />
             </article>
           ))}
         </div>
@@ -1115,7 +1161,7 @@ function Contact() {
 
       <div className="faq">
         <p className="eyebrow">{contact.faq.eyebrow}</p>
-        <h2>{contact.faq.heading}</h2>
+        <h2>{emphasize(contact.faq.heading)}</h2>
         {contact.faq.groups.map((group) => (
           <div className="faq-group" key={group.label}>
             <h3 className="faq-group-label">{group.label}</h3>

@@ -677,6 +677,16 @@ h1 {
   line-height: 1.6;
 }
 
+/* Collapsed teaser for cards with a long body: first paragraph clamped to 3
+   lines so the card reads like (and sits at a similar height to) the short
+   description cards, then Read more reveals the full copy. */
+.amenity-card-teaser {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* Full amenity description, revealed under the teaser by Read more. */
 .amenity-card-more {
   display: grid;
@@ -796,9 +806,27 @@ h1 {
 }
 
 .lot-cards article {
+  display: flex;
+  flex-direction: column;
   padding: 28px;
   border: 1px solid var(--line);
   background: rgba(255, 250, 244, 0.74);
+}
+
+/* Multi-paragraph lot body (Premier collection) — spacing between paragraphs. */
+.lot-body p + p {
+  margin-top: 12px;
+}
+
+/* Collapsed teaser fills the leftover card height (cards are equal-height) and
+   clips the overflowing copy with a soft fade, so the text runs to the bottom
+   and Read more sits beneath it. flex-basis:0 keeps it from growing the card. */
+.lot-body-teaser {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 74%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 74%, transparent 100%);
 }
 
 .lot-cards span {

@@ -467,6 +467,9 @@ export const smcopyContent = {
       en: "The first opportunity to own in Apple Woods.",
       es: "La primera oportunidad de ser propietario en Apple Woods.",
     },
+    // Read more / less for long lot-card bodies (e.g. the Premier collection).
+    readMore: { en: "Read more", es: "Leer más" },
+    readLess: { en: "Read less", es: "Leer menos" },
     body: {
       en: "Phase 1 is the first release inside Apple Woods and gives early buyers a strong opportunity to secure a homesite at introductory pricing.",
       es: "La Fase 1 es el primer lanzamiento dentro de la comunidad de Apple Woods y se espera que sea el punto de entrada con el precio más bajo. Revisa la disponibilidad, compara los tipos de lotes y confirma los precios actuales antes de que los lotes preferidos pasen a estar reservados, bajo contrato o vendidos.",

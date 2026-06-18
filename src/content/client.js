@@ -166,9 +166,13 @@ clientContent.phaseOne.lots[0].body = {
   en: "An attractive introductory opportunity to join the Apple Woods community, with Phase 1 homesites offered at early-release pricing designed to provide exceptional value within a thoughtfully planned and growing neighborhood.",
   es: "Una excelente oportunidad de introducción para formar parte de la comunidad Apple Woods en su primera fase. Con precios especiales de lanzamiento, esta etapa inicial ofrece un valor excepcional dentro de un fraccionamiento cuidadosamente planificado y diseñado para crecer en armonía, comodidad y estilo de vida.",
 };
+// Premier collection — long "Version 2" copy (client doc 2026-06-18). Multi-paragraph
+// (\n\n) so the lot card renders it behind Read more. NOTE: the source PDF cut off the
+// EN closing paragraph ("More than a premium location… an experience that can be …") and
+// has no ES equivalent — pending Rene's complete final paragraph before adding it.
 clientContent.phaseOne.lots[1].body = {
-  en: "A limited collection of homesites located near the planned clubhouse, offering immediate access to a thoughtfully designed river walk featuring natural water elements, fish, and lush exotic landscaping. These premium locations also provide convenient, unrestricted access to the resort-style pool area, enhancing the overall lifestyle experience at Apple Woods.",
-  es: "Una exclusiva colección de terrenos residenciales ubicados cerca de la futura casa club, ofreciendo acceso inmediato a un hermoso andador al costado de un arroyo cuidadosamente diseñado, rodeado de elementos naturales de agua, peces y exuberante vegetación exótica. Estas ubicaciones premium también brindan acceso cómodo y sin restricciones al área de alberca estilo resort, elevando aún más la experiencia de vida y el estilo exclusivo que distingue a Apple Woods.",
+  en: "A limited collection of premium homesites located within one of the most distinctive areas of Apple Woods.\n\nThese select properties are thoughtfully positioned along the signature Water Walk™, a beautifully designed pedestrian promenade featuring flowing water elements, ornamental fish, lush tropical landscaping, gathering spaces, and resort-inspired surroundings. Rather than viewing the Water Walk™ as a separate amenity, residents of these homesites become part of the experience itself, enjoying enhanced scenery and a unique atmosphere rarely found in traditional residential communities.\n\nThe Water Walk™ serves as a scenic connection between the Premier Homesites Collection and the planned Resort Pool District™, allowing residents to enjoy a walkable lifestyle where recreation, relaxation, and community amenities are just steps from home.\n\nDesigned for those who appreciate beauty, convenience, and a stronger connection to their surroundings, these homesites offer an exceptional opportunity to live within one of the most sought-after environments in Apple Woods.",
+  es: "Una colección limitada de terrenos residenciales premium ubicados dentro de una de las áreas más distintivas de Apple Woods.\n\nEstos exclusivos terrenos han sido cuidadosamente ubicados a lo largo del emblemático Water Walk™, un hermoso paseo peatonal diseñado con elementos de agua en movimiento, peces ornamentales, exuberante vegetación tropical, áreas de convivencia y un entorno inspirado en los mejores complejos turísticos. Más que una amenidad independiente, el Water Walk™ forma parte integral de la experiencia diaria de quienes residen en esta sección, brindando vistas privilegiadas, paisajes excepcionales y una atmósfera difícil de encontrar en los desarrollos residenciales tradicionales.\n\nEl Water Walk™ sirve como un corredor escénico que conecta la Colección Premier con el futuro Resort Pool District™, permitiendo a los residentes disfrutar de un estilo de vida caminable donde la recreación, el descanso y las principales amenidades de la comunidad se encuentran a solo unos pasos de su hogar.\n\nDiseñados para quienes valoran la belleza, la conveniencia y una mayor conexión con su entorno, estos terrenos representan una oportunidad excepcional para construir una residencia dentro de una de las zonas más deseadas de Apple Woods.",
 };
 clientContent.phaseOne.lots[2].body = {
   en: "Larger or irregular homesites priced by size and location.",
@@ -189,6 +193,12 @@ clientContent.location.body = {
 clientContent.contact.form.submit = {
   en: "Ask About Phase 1 homesites",
   es: "Preguntar sobre los lotes de la Fase 1",
+};
+
+// --- FAQ heading (Rene 2026-06-17): frame the FAQ as the on-ramp to the concept ---
+clientContent.contact.faq.heading = {
+  en: "Here are the FAQs that make the concept easy to understand.",
+  es: "Aquí las preguntas frecuentes que facilitarán **ENTENDER** el concepto",
 };
 
 // --- FAQ — grouped by the doc's categories (General / Cost / Size / Restrictions / Life).

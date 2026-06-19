@@ -197,7 +197,7 @@ clientContent.contact.form.submit = {
 
 // --- FAQ heading (Rene 2026-06-17): frame the FAQ as the on-ramp to the concept ---
 clientContent.contact.faq.heading = {
-  en: "Here are the FAQs that make the concept easy to understand.",
+  en: "FAQs to help make the Apple Woods concept easy to understand",
   es: "Aquí las preguntas frecuentes que facilitarán **ENTENDER** el concepto",
 };
 

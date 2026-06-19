@@ -182,6 +182,37 @@ export const faqDocItems = {
     },
   },
   // New doc FAQ section (2026-06-14 client comments doc): Restrictions + Life.
+  // Restrictions additions (client FAQ doc 2026-06-19) — verbatim EN + ES from the doc.
+  vehicleWork: {
+    question: {
+      en: "I enjoy working on my vehicles, woodworking, and other hands-on projects. Are there any restrictions?",
+      es: "Disfruto trabajar en mis vehículos, hacer carpintería y realizar otros proyectos manuales. ¿Existen restricciones?",
+    },
+    answer: {
+      en: "Absolutely. Many homeowners enjoy automotive work, woodworking, crafts, and other hands-on hobbies. If you anticipate spending significant time on these activities, we encourage you to design your home with a workshop, oversized garage, or climate-controlled work area so you can enjoy your hobbies comfortably year-round.\n\nTo help maintain the attractive appearance of the community and protect property values for all residents, outdoor storage of inoperable vehicles, prolonged vehicle repairs in driveways, and projects that create a visibly unfinished appearance from the street are not permitted.\n\nApple Woods is designed to balance personal freedom with a clean, welcoming environment that everyone can enjoy. These community standards help ensure that every homeowner can take pride in the appearance of the neighborhood while still enjoying their personal interests and hobbies.",
+      es: "Por supuesto. Muchos propietarios disfrutan trabajar en sus vehículos, realizar proyectos de carpintería, manualidades y otras actividades prácticas. Si prevé dedicar una cantidad significativa de tiempo a estos pasatiempos, le recomendamos diseñar su hogar con un taller, un garaje ampliado o un área de trabajo climatizada para que pueda disfrutarlos cómodamente durante todo el año.\n\nPara ayudar a mantener la apariencia atractiva de la comunidad y proteger el valor de las propiedades de todos los residentes, no se permite el almacenamiento exterior de vehículos inoperables, las reparaciones prolongadas de vehículos en las entradas de las viviendas ni los proyectos que generen una apariencia descuidada o inconclusa visible desde la calle.\n\nApple Woods ha sido diseñado para lograr un equilibrio entre la libertad personal y un entorno limpio, ordenado y agradable para todos. Estas normas comunitarias ayudan a garantizar que cada propietario pueda sentirse orgulloso de la apariencia del vecindario mientras disfruta de sus intereses y pasatiempos personales.",
+    },
+  },
+  garageEntertaining: {
+    question: {
+      en: "I enjoy entertaining friends and family and would like to keep items such as sofas, chairs, a billiard table, televisions, and grilling equipment in my garage so we can open the garage, play music, and socialize. Is that allowed?",
+      es: "Disfruto recibir a mis amigos y familiares y me gustaría tener sofás, sillas, una mesa de billar, televisores y equipo para asar en mi garaje para poder abrirlo, poner música y convivir. ¿Está permitido?",
+    },
+    answer: {
+      en: "Absolutely. Apple Woods is designed to be a place where friends, family, and neighbors can come together and create lasting memories. If you anticipate hosting gatherings regularly, we encourage you to design your home with dedicated indoor and outdoor entertainment spaces that comfortably accommodate your lifestyle and guests.\n\nTo help maintain the attractive appearance of the neighborhood and ensure a pleasant environment for all residents, garages should not be used as open-front entertainment areas that create a visible extension of living space or result in the prolonged display of furniture, recreational equipment, or other household items from the street.\n\nCommunity standards also help minimize noise and visual clutter while preserving the character and value of the neighborhood.\n\nFor larger celebrations, residents may have the option to reserve the Apple Woods Clubhouse, subject to availability and applicable reservation policies. Planning ahead and securing reservations when available is recommended for larger events.",
+      es: "Por supuesto. Apple Woods ha sido diseñado como una comunidad donde los amigos, la familia y los vecinos pueden reunirse y crear recuerdos duraderos. Si considera que organizar reuniones será una parte importante de su estilo de vida, le recomendamos diseñar su hogar con espacios de entretenimiento interiores y exteriores que se adapten cómodamente a sus necesidades y a las de sus invitados.\n\nPara ayudar a mantener la apariencia atractiva del fraccionamiento y garantizar un ambiente agradable para todos los residentes, los garajes no deben utilizarse como áreas permanentes de convivencia abiertas hacia la calle ni como extensiones visibles de las áreas habitables de la vivienda. Asimismo, no se permite la exhibición prolongada de muebles, equipos recreativos u otros artículos domésticos visibles desde la vía pública.\n\nEstas normas comunitarias ayudan a reducir el ruido y el desorden visual, al mismo tiempo que preservan el carácter y el valor de las propiedades dentro de la comunidad.\n\nPara celebraciones de mayor tamaño, los residentes podrán tener la opción de reservar la Casa Club de Apple Woods, sujeto a disponibilidad y a las políticas de reservación aplicables. Para eventos más grandes, se recomienda planificar con anticipación y realizar la reservación correspondiente cuando haya fechas disponibles.",
+    },
+  },
+  vehicleParking: {
+    question: {
+      en: "My children have grown up and our family now owns several vehicles. Can I park vehicles on my lawn or along the street?",
+      es: "Mis hijos ya crecieron y ahora nuestra familia tiene varios vehículos. ¿Puedo estacionarlos sobre el césped o en la calle frente a mi casa?",
+    },
+    answer: {
+      en: "Apple Woods is thoughtfully designed to provide an attractive streetscape, ample parking options, and a safe environment for residents and guests. To help preserve the appearance of the community and protect property values, personal vehicles must be parked in garages or on driveways and may not block sidewalks, streets, or neighboring properties. Parking on lawns or landscaped areas is not permitted.\n\nGuests may park in front of the home they are visiting, subject to community parking guidelines.\n\nTo maintain a clean and orderly environment, overnight street parking is not permitted.\n\nRecognizing that some households may require additional parking, Apple Woods has been planned with hundreds of conveniently located visitor parking spaces throughout the community. Depending on availability, residents may also have the option to rent additional parking spaces on a daily, weekly, or monthly basis.\n\nIf your family owns multiple vehicles, we encourage you to design your home with parking accommodations that suit your lifestyle and long-term needs.\n\nCommercial vehicles, recreational vehicles, trailers, boats, and similar equipment may not be stored in front of residences. However, special parking areas may be available for certain vehicle types. Please inquire regarding current options and availability.",
+      es: "Apple Woods ha sido cuidadosamente diseñado para ofrecer una imagen urbana atractiva, amplias opciones de estacionamiento y un entorno seguro y ordenado para residentes y visitantes. Con el fin de preservar la apariencia del fraccionamiento y proteger el valor de las propiedades, los vehículos particulares deberán estacionarse dentro del garaje o sobre la cochera de la vivienda, sin obstruir banquetas, calles ni propiedades vecinas. No está permitido estacionar vehículos sobre áreas verdes, jardines o césped.\n\nLos visitantes podrán estacionarse frente a la vivienda que visitan, sujeto a las normas de estacionamiento de la comunidad.\n\nPara mantener un entorno limpio, seguro y agradable para todos, no se permite el estacionamiento nocturno en las calles.\n\nEntendiendo que algunas familias pueden requerir espacios adicionales, Apple Woods ha sido planificado con cientos de cajones de estacionamiento para visitantes distribuidos estratégicamente dentro del desarrollo. Sujeto a disponibilidad, los residentes también podrán tener la opción de rentar espacios adicionales de estacionamiento por día, semana o mes.\n\nSi su familia cuenta con varios vehículos, le recomendamos diseñar su vivienda considerando sus necesidades actuales y futuras de estacionamiento.\n\nLos vehículos comerciales, vehículos recreativos, remolques, embarcaciones y equipos similares no podrán almacenarse frente a las residencias. Sin embargo, podrían existir áreas especiales destinadas para ciertos tipos de vehículos. Le invitamos a consultar las opciones y disponibilidad vigentes.",
+    },
+  },
   respectAmenities: {
     question: {
       en: "How does Apple Woods help ensure that residents and guests feel comfortable and respected in shared amenities such as the pool, clubhouse, parks, and recreation areas?",
@@ -798,6 +829,9 @@ export const smcopyContent = {
                 es: "Los estándares de la comunidad cubren el tamaño de la casa, la arquitectura, el paisajismo, el mantenimiento, la iluminación, el ruido, los colores y el almacenamiento exterior para proteger la apariencia y la calidad de vida de la comunidad.",
               },
             },
+            faqDocItems.vehicleWork,
+            faqDocItems.garageEntertaining,
+            faqDocItems.vehicleParking,
             faqDocItems.respectAmenities,
           ],
         },

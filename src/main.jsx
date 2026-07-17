@@ -1254,8 +1254,27 @@ function App() {
   return <VersionTwoPage />;
 }
 
-createRoot(document.getElementById("root")).render(
+const app = (
   <ContentProvider>
     <App />
   </ContentProvider>
 );
+
+const root = createRoot(document.getElementById("root"));
+
+if (import.meta.env.VITE_HALLOW === "1") {
+  import("@hallow/workspace/packages/overlay/dist/index.js")
+    .then(({ HallowProvider }) => {
+      root.render(
+        <HallowProvider
+          endpoint={import.meta.env.VITE_HALLOW_ENDPOINT}
+          projectKey={import.meta.env.VITE_HALLOW_PROJECT_KEY}
+        >
+          {app}
+        </HallowProvider>
+      );
+    })
+    .catch(() => root.render(app));
+} else {
+  root.render(app);
+}

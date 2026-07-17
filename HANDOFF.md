@@ -3,7 +3,7 @@
 Public sales site for Apple Woods (Brownsville, TX). Vite + React SPA, bilingual (EN/ES), deployed to Vercel.
 
 - **Branch:** `main` (this repo ships from `main`)
-- **Latest commit:** `bfd3a75` — also what's live in production
+- **Production commit:** `bfd3a75`
 - **Live:** https://applewoods-website.vercel.app
 
 ## Build & run

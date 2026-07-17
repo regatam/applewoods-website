@@ -1263,7 +1263,7 @@ const app = (
 const root = createRoot(document.getElementById("root"));
 
 if (import.meta.env.VITE_HALLOW === "1") {
-  import("@hallow/workspace/packages/overlay/dist/index.js")
+  import("../vendor/hallow/overlay.js")
     .then(({ HallowProvider }) => {
       root.render(
         <HallowProvider
@@ -1274,7 +1274,13 @@ if (import.meta.env.VITE_HALLOW === "1") {
         </HallowProvider>
       );
     })
-    .catch(() => root.render(app));
+    .catch((error) => {
+      console.error(
+        "Hallow overlay failed to load; rendering without it.",
+        error
+      );
+      root.render(app);
+    });
 } else {
   root.render(app);
 }

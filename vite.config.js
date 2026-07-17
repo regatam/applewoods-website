@@ -1,7 +1,9 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import { hallowSource } from "@hallow/workspace/packages/vite-plugin/dist/index.js";
+import { hallowSource } from "./vendor/hallow/vite-plugin.js";
 
 export default defineConfig({
-  plugins: [hallowSource(), react()],
+  plugins: [process.env.VITE_HALLOW === "1" && hallowSource(), react()].filter(
+    Boolean
+  ),
 });

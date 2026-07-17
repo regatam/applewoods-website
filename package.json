@@ -6,16 +6,13 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "node scripts/build.mjs",
-    "postinstall": "node scripts/prepare-hallow.mjs",
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {
-    "@hallow/workspace": "git+https://github.com/regatam/hallow.git#309c13d926ff6e10c65f0c3191f48af4095f4547",
     "@phosphor-icons/react": "^2.1.10",
     "@vitejs/plugin-react": "4.7.0",
     "framer-motion": "11.18.2",
     "gsap": "^3.15.0",
-    "html-to-image": "1.11.13",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-zoom-pan-pinch": "^3.7.0",
@@ -24,7 +21,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",
-    "esbuild": "0.21.5",
     "typescript": "5.9.3"
   }
 }

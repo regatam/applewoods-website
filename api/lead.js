@@ -201,15 +201,15 @@ async function sendResendEmails(lead) {
 
   const resend = new Resend(apiKey);
 
-  const tasks = [
+  const tasks = clientEmails.map((recipient) =>
     resend.emails.send({
       from,
-      to: clientEmails,
+      to: recipient,
       ...(lead.email ? { replyTo: lead.email } : {}),
       subject: `New Apple Woods lead${lead.fullName ? `: ${lead.fullName}` : ""}`,
       text: leadSummary(lead),
-    }),
-  ];
+    })
+  );
 
   // Auto-replies are intentionally opt-in. Keep this false until the client
   // approves bilingual copy and the spam controls have been observed live.

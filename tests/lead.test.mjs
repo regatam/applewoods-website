@@ -36,10 +36,10 @@ function mockResponse() {
   };
 }
 
-test("parses two comma-separated client recipients", () => {
+test("parses three comma-separated client recipients", () => {
   assert.deepEqual(
-    __testables.parseRecipientEmails("first@example.com, second@example.com"),
-    ["first@example.com", "second@example.com"]
+    __testables.parseRecipientEmails("first@example.com, second@example.com, owner@example.com"),
+    ["first@example.com", "second@example.com", "owner@example.com"]
   );
 });
 

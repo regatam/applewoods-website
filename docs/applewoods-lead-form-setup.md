@@ -102,14 +102,15 @@ Environment Variables**.
 ```text
 RESEND_API_KEY=re_...
 FROM_EMAIL=Apple Woods Leads <leads@send.applewoods.us>
-CLIENT_EMAILS=first@example.com,second@example.com
+CLIENT_EMAILS=first@example.com,second@example.com,owner@example.com
 SEND_LEAD_AUTOREPLY=false
 VITE_TURNSTILE_SITE_KEY=<real Cloudflare site key>
 TURNSTILE_SECRET_KEY=<real Cloudflare secret key>
 ```
 
-Mark `RESEND_API_KEY` and `TURNSTILE_SECRET_KEY` as Sensitive. The two recipient
-addresses belong in one comma-separated `CLIENT_EMAILS` value.
+Mark `RESEND_API_KEY` and `TURNSTILE_SECRET_KEY` as Sensitive. All recipient
+addresses belong in one comma-separated `CLIENT_EMAILS` value. The application
+sends a separate message to each address, so recipients do not see one another.
 
 For Preview, use the official Turnstile test keys above and send email only to
 an internal tester. Do not put the two client inboxes into Preview until the

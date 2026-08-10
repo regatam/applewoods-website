@@ -43,6 +43,27 @@ test("parses three comma-separated client recipients", () => {
   );
 });
 
+test("requires three unique production recipients", () => {
+  assert.doesNotThrow(() =>
+    __testables.validateRecipientEmails(
+      ["first@example.com", "second@example.com", "owner@example.com"],
+      "production"
+    )
+  );
+  assert.throws(
+    () => __testables.validateRecipientEmails(["first@example.com", "second@example.com"], "production"),
+    /three unique addresses/
+  );
+  assert.throws(
+    () =>
+      __testables.validateRecipientEmails(
+        ["first@example.com", "FIRST@example.com", "owner@example.com"],
+        "production"
+      ),
+    /three unique addresses/
+  );
+});
+
 test("validates field lengths and enum values", () => {
   assert.equal(__testables.validateLead(validBody).lead.email, "lead@example.com");
   assert.equal(__testables.validateLead({ ...validBody, notes: "x".repeat(2_001) }).error, "notes is too long.");
@@ -55,11 +76,17 @@ test("rejects non-string fields and invalid phone values", () => {
   assert.equal(__testables.validateLead({ ...validBody, phone: "+52 (956) 555-0100" }).lead.phone, "+52 (956) 555-0100");
 });
 
-test("treats Resend error results as delivery failures", () => {
-  assert.doesNotThrow(() => __testables.assertResendResults([{ data: { id: "email-id" }, error: null }]));
+test("requires a complete Resend batch result", () => {
+  assert.doesNotThrow(() =>
+    __testables.assertResendResult({ data: [{ id: "one" }, { id: "two" }, { id: "three" }], error: null }, 3)
+  );
   assert.throws(
-    () => __testables.assertResendResults([{ data: null, error: { message: "invalid recipient" } }]),
-    /Resend rejected an email request/
+    () => __testables.assertResendResult({ data: null, error: { message: "invalid recipient" } }, 3),
+    /Resend rejected the email batch/
+  );
+  assert.throws(
+    () => __testables.assertResendResult({ data: [{ id: "one" }, { id: "two" }], error: null }, 3),
+    /Resend rejected the email batch/
   );
 });
 

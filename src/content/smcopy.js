@@ -678,6 +678,11 @@ export const smcopyContent = {
         en: "Something did not send. Please call, text, email, or WhatsApp and we can take it from there.",
         es: "Algo no se envió. Llama, envía un mensaje, escribe un correo o usa WhatsApp y seguimos desde ahí.",
       },
+      verificationError: {
+        en: "We could not load the secure form check. Please retry before sending.",
+        es: "No pudimos cargar la verificación segura del formulario. Intenta de nuevo antes de enviarlo.",
+      },
+      verificationRetry: { en: "Retry secure check", es: "Reintentar verificación" },
       errors: {
         contact: {
           en: "Add a phone or email so we can reply.",

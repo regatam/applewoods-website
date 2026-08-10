@@ -61,6 +61,16 @@ function parseRecipientEmails(value) {
     .filter(Boolean);
 }
 
+function validateRecipientEmails(emails, environment = process.env.VERCEL_ENV) {
+  if (emails.some((email) => !isValidEmail(email))) {
+    throw new Error("CLIENT_EMAILS contains an invalid email address");
+  }
+  const uniqueEmails = new Set(emails.map((email) => email.toLowerCase()));
+  if (environment === "production" && (emails.length !== 3 || uniqueEmails.size !== 3)) {
+    throw new Error("CLIENT_EMAILS must contain three unique addresses in production");
+  }
+}
+
 function validateLead(body) {
   const typeValidation = validateFieldTypes(body);
   if (typeValidation.error) return typeValidation;
@@ -99,9 +109,9 @@ function validateLead(body) {
   return { lead };
 }
 
-function assertResendResults(results) {
-  if (results.some((result) => result?.error)) {
-    throw new Error("Resend rejected an email request");
+function assertResendResult(result, expectedEmails) {
+  if (result?.error || !Array.isArray(result?.data) || result.data.length !== expectedEmails) {
+    throw new Error("Resend rejected the email batch");
   }
 }
 
@@ -195,38 +205,32 @@ async function sendResendEmails(lead) {
     };
   }
 
-  if (clientEmails.some((email) => !isValidEmail(email))) {
-    throw new Error("CLIENT_EMAILS contains an invalid email address");
-  }
+  validateRecipientEmails(clientEmails);
 
   const resend = new Resend(apiKey);
 
-  const tasks = clientEmails.map((recipient) =>
-    resend.emails.send({
-      from,
-      to: recipient,
-      ...(lead.email ? { replyTo: lead.email } : {}),
-      subject: `New Apple Woods lead${lead.fullName ? `: ${lead.fullName}` : ""}`,
-      text: leadSummary(lead),
-    })
-  );
+  const messages = clientEmails.map((recipient) => ({
+    from,
+    to: recipient,
+    ...(lead.email ? { replyTo: lead.email } : {}),
+    subject: `New Apple Woods lead${lead.fullName ? `: ${lead.fullName}` : ""}`,
+    text: leadSummary(lead),
+  }));
 
   // Auto-replies are intentionally opt-in. Keep this false until the client
   // approves bilingual copy and the spam controls have been observed live.
   const autoReplyEnabled = process.env.SEND_LEAD_AUTOREPLY === "true";
   if (autoReplyEnabled && lead.email) {
-    tasks.push(
-      resend.emails.send({
-        from,
-        to: lead.email,
-        subject: "Thanks for reaching out to Apple Woods",
-        text: autoReply(lead),
-      })
-    );
+    messages.push({
+      from,
+      to: lead.email,
+      subject: "Thanks for reaching out to Apple Woods",
+      text: autoReply(lead),
+    });
   }
 
-  const results = await Promise.all(tasks);
-  assertResendResults(results);
+  const result = await resend.batch.send(messages);
+  assertResendResult(result, messages.length);
   return {
     status: "sent",
     recipients: clientEmails.length,
@@ -347,10 +351,11 @@ export default async function handler(request, response) {
 }
 
 export const __testables = {
-  assertResendResults,
+  assertResendResult,
   parseRecipientEmails,
   serializedBodyBytes,
   validateFieldTypes,
   validateLead,
+  validateRecipientEmails,
   verifyTurnstile,
 };

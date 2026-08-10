@@ -1177,6 +1177,10 @@ h1 {
   width: 100%;
 }
 
+.turnstile-retry {
+  justify-self: start;
+}
+
 .field span,
 .interest-field legend {
   color: #65542b;

@@ -1,8 +1,9 @@
 # Apple Woods lead delivery and spam protection
 
 The contact form posts to the Vercel Function at `/api/lead`. A valid submission
-can notify Slack and send one team email to multiple inboxes through Resend. A
-failure in either channel does not block the other.
+can notify Slack and send a private team email to each of three individual
+inboxes through one Resend batch request. A failure in either channel does not
+block the other.
 
 Visitor auto-replies are disabled by default. Do not enable them until the
 English and Spanish messages are approved.
@@ -30,7 +31,7 @@ At the time of this change:
 2. Deploy the protected form to a Vercel Preview.
 3. Configure Resend with an internal test recipient.
 4. Verify Slack and email from one legitimate Preview submission.
-5. Add the two client inboxes in Production.
+5. Add both client inboxes and Rene's inbox in Production.
 6. Deploy Production.
 7. Observe Vercel Firewall traffic before enforcing a rate limit.
 
@@ -109,12 +110,14 @@ TURNSTILE_SECRET_KEY=<real Cloudflare secret key>
 ```
 
 Mark `RESEND_API_KEY` and `TURNSTILE_SECRET_KEY` as Sensitive. All recipient
-addresses belong in one comma-separated `CLIENT_EMAILS` value. The application
-sends a separate message to each address, so recipients do not see one another.
+addresses belong in one comma-separated `CLIENT_EMAILS` value. Production
+requires the two client addresses plus Rene's address. The application sends
+three separate messages in one batch request, so recipients do not see one
+another.
 
 For Preview, use the official Turnstile test keys above and send email only to
-an internal tester. Do not put the two client inboxes into Preview until the
-flow has passed testing.
+an internal tester. Do not put the three Production inboxes into Preview until
+the flow has passed testing.
 
 Environment changes only apply to new deployments. Redeploy after saving them.
 
@@ -134,8 +137,8 @@ On a Vercel Preview deployment:
 8. Repeat once in Spanish and on a mobile viewport.
 
 After Production deployment, send one clearly labeled test lead and have both
-client recipients confirm delivery. Check spam folders and mark the message as
-not spam if necessary.
+client recipients and Rene confirm delivery to all three individual inboxes.
+Check spam folders and mark the message as not spam if necessary.
 
 ## 5. Vercel Firewall rollout
 
@@ -162,7 +165,7 @@ the Vercel dashboard before activation.
 - Hidden honeypot submissions return success but trigger no notifications.
 - JSON-only requests and a 16 KB body limit.
 - Field length and allowed-value validation.
-- Multiple team recipients through `CLIENT_EMAILS`.
+- Three unique Production team recipients through `CLIENT_EMAILS`.
 - Visitor auto-replies remain off unless `SEND_LEAD_AUTOREPLY=true`.
 - Accepted requests log metadata, not the lead's full message or contact data.
 

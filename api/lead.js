@@ -46,6 +46,14 @@ function validateFieldTypes(body) {
   return {};
 }
 
+function serializedBodyBytes(body) {
+  try {
+    return Buffer.byteLength(JSON.stringify(body), "utf8");
+  } catch {
+    return Number.POSITIVE_INFINITY;
+  }
+}
+
 function parseRecipientEmails(value) {
   return String(value || "")
     .split(",")
@@ -282,11 +290,14 @@ export default async function handler(request, response) {
   if (typeValidation.error) {
     return response.status(400).json({ ok: false, error: typeValidation.error });
   }
+  if (serializedBodyBytes(body) > MAX_BODY_BYTES) {
+    return response.status(413).json({ ok: false, error: "Request is too large." });
+  }
 
   // Honeypots should look successful to bots while producing no logs, Slack
   // messages, emails, or auto-replies.
   if (clean(body.companyWebsite)) {
-    return response.status(200).json({ ok: true, suppressed: true });
+    return response.status(200).json({ ok: true });
   }
 
   const validation = validateLead(body);
@@ -332,16 +343,13 @@ export default async function handler(request, response) {
     return response.status(502).json({ ok: false, error: "Lead delivery is unavailable." });
   }
 
-  return response.status(200).json({
-    ok: true,
-    email: emailResult.status === "fulfilled" ? emailResult.value : { status: "error" },
-    slack: slackResult.status === "fulfilled" ? slackResult.value : { status: "error" },
-  });
+  return response.status(200).json({ ok: true });
 }
 
 export const __testables = {
   assertResendResults,
   parseRecipientEmails,
+  serializedBodyBytes,
   validateFieldTypes,
   validateLead,
   verifyTurnstile,

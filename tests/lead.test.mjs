@@ -82,10 +82,57 @@ test("honeypot submissions return success without calling external services", as
       response
     );
     assert.equal(response.statusCode, 200);
-    assert.deepEqual(response.body, { ok: true, suppressed: true });
+    assert.deepEqual(response.body, { ok: true });
     assert.equal(fetchCalled, false);
   } finally {
     globalThis.fetch = originalFetch;
+  }
+});
+
+test("rejects oversized parsed bodies without a Content-Length header", async () => {
+  const response = mockResponse();
+  await handler(
+    {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: { ...validBody, extra: "x".repeat(16_384) },
+    },
+    response
+  );
+  assert.equal(response.statusCode, 413);
+  assert.deepEqual(response.body, { ok: false, error: "Request is too large." });
+});
+
+test("successful submissions expose no notification-channel details", async () => {
+  const environmentKeys = [
+    "VERCEL_ENV",
+    "TURNSTILE_SECRET_KEY",
+    "RESEND_API_KEY",
+    "FROM_EMAIL",
+    "CLIENT_EMAILS",
+    "CLIENT_EMAIL",
+    "SLACK_WEBHOOK_URL",
+  ];
+  const previousEnvironment = Object.fromEntries(environmentKeys.map((key) => [key, process.env[key]]));
+  for (const key of environmentKeys) delete process.env[key];
+
+  try {
+    const response = mockResponse();
+    await handler(
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: validBody,
+      },
+      response
+    );
+    assert.equal(response.statusCode, 200);
+    assert.deepEqual(response.body, { ok: true });
+  } finally {
+    for (const key of environmentKeys) {
+      if (previousEnvironment[key] === undefined) delete process.env[key];
+      else process.env[key] = previousEnvironment[key];
+    }
   }
 });
 

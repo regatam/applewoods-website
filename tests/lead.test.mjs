@@ -78,14 +78,17 @@ test("rejects non-string fields and invalid phone values", () => {
 
 test("requires a complete Resend batch result", () => {
   assert.doesNotThrow(() =>
-    __testables.assertResendResult({ data: [{ id: "one" }, { id: "two" }, { id: "three" }], error: null }, 3)
+    __testables.assertResendResult(
+      { data: { data: [{ id: "one" }, { id: "two" }, { id: "three" }] }, error: null },
+      3
+    )
   );
   assert.throws(
     () => __testables.assertResendResult({ data: null, error: { message: "invalid recipient" } }, 3),
     /Resend rejected the email batch/
   );
   assert.throws(
-    () => __testables.assertResendResult({ data: [{ id: "one" }, { id: "two" }], error: null }, 3),
+    () => __testables.assertResendResult({ data: { data: [{ id: "one" }, { id: "two" }] }, error: null }, 3),
     /Resend rejected the email batch/
   );
 });

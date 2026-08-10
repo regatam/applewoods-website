@@ -110,7 +110,7 @@ function validateLead(body) {
 }
 
 function assertResendResult(result, expectedEmails) {
-  if (result?.error || !Array.isArray(result?.data) || result.data.length !== expectedEmails) {
+  if (result?.error || !Array.isArray(result?.data?.data) || result.data.data.length !== expectedEmails) {
     throw new Error("Resend rejected the email batch");
   }
 }

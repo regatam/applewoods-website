@@ -7,6 +7,23 @@ failure in either channel does not block the other.
 Visitor auto-replies are disabled by default. Do not enable them until the
 English and Spanish messages are approved.
 
+## Current infrastructure state
+
+At the time of this change:
+
+- The linked Vercel project's Production environment has only
+  `SLACK_WEBHOOK_URL` and `SLACK_LEAD_MENTION` configured for lead delivery.
+- Resend is not configured: there is no confirmed Apple Woods account, verified
+  sending domain, API key, or related Vercel environment variable.
+- Cloudflare Turnstile is not configured: there is no confirmed account, widget,
+  site key, secret key, or related Vercel environment variable.
+- The DNS provider and current DNS access for `applewoods.us` are unknown. No
+  Resend DNS records have been confirmed.
+- Vercel contains an externally confirmed unpublished draft rule named
+  `Observe lead form rate`. It matches `POST /api/lead`, observes 30 requests per
+  600 seconds per IP, and uses **Log** when the threshold is exceeded. The draft
+  remains unpublished and has not changed Production behavior.
+
 ## Recommended order
 
 1. Configure and test Cloudflare Turnstile.
@@ -121,17 +138,18 @@ not spam if necessary.
 
 ## 5. Vercel Firewall rollout
 
-Protect `POST /api/lead` with a rate-limit rule. Start with **Log**, not Block:
+The unpublished observation rule is staged as follows:
 
+- Name: `Observe lead form rate`
 - Path equals `/api/lead`
 - Method equals `POST`
-- Initial observation threshold: 30 requests per 10 minutes per IP
-- Initial action: Log
+- Observation threshold: 30 requests per 600 seconds per IP
+- Exceeded action: Log
 
-Observe real traffic, test the rule against Preview, and only then change the
-production action to return `429`. A reasonable final starting limit is 10
-submissions per 10 minutes per IP, adjusted if legitimate shared networks are
-affected.
+Do not publish the draft as part of this change. After explicit review, publish
+it in Log mode, observe real traffic, and test it before considering a blocking
+action. A reasonable eventual starting limit is 10 submissions per 10 minutes
+per IP, adjusted if legitimate shared networks are affected.
 
 Firewall publication is a production setting and requires explicit review in
 the Vercel dashboard before activation.

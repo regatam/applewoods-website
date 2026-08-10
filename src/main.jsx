@@ -961,7 +961,11 @@ function Contact() {
 
   const updateField = (event) => {
     const { name, value } = event.target;
-    setStatus((current) => (current === "success" ? "idle" : current));
+    if (status === "success") {
+      setTurnstileToken("");
+      window.turnstile?.reset();
+      setStatus("idle");
+    }
     setMessage("");
     setFormData((current) => ({ ...current, [name]: value }));
   };

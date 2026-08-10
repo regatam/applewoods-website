@@ -15,8 +15,36 @@ const ALLOWED_VALUES = {
   interestType: new Set(["availability", "buy", "build"]),
   lang: new Set(["en", "es"]),
 };
+const STRING_FIELDS = [
+  "leadStage",
+  "fullName",
+  "phone",
+  "email",
+  "lotInterest",
+  "budget",
+  "timeline",
+  "interestType",
+  "notes",
+  "lang",
+  "companyWebsite",
+  "turnstileToken",
+];
 
-const clean = (value) => String(value || "").trim();
+const clean = (value) => (typeof value === "string" ? value.trim() : "");
+
+function validateFieldTypes(body) {
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return { error: "Request body must be an object." };
+  }
+
+  for (const field of STRING_FIELDS) {
+    if (body[field] !== undefined && typeof body[field] !== "string") {
+      return { error: `${field} must be a string.` };
+    }
+  }
+
+  return {};
+}
 
 function parseRecipientEmails(value) {
   return String(value || "")
@@ -26,6 +54,9 @@ function parseRecipientEmails(value) {
 }
 
 function validateLead(body) {
+  const typeValidation = validateFieldTypes(body);
+  if (typeValidation.error) return typeValidation;
+
   const lead = {
     leadStage: "complete",
     fullName: clean(body.fullName),
@@ -41,6 +72,12 @@ function validateLead(body) {
   };
 
   if (!lead.phone && !lead.email) return { error: "A phone or email is required." };
+  if (lead.phone) {
+    const digits = lead.phone.match(/\d/g) || [];
+    if (!/^[\d+().\s-]+$/.test(lead.phone) || digits.length < 7) {
+      return { error: "Phone is invalid." };
+    }
+  }
   if (lead.email && !isValidEmail(lead.email)) return { error: "Email is invalid." };
 
   for (const [field, max] of Object.entries(MAX_LENGTHS)) {
@@ -52,6 +89,12 @@ function validateLead(body) {
   }
 
   return { lead };
+}
+
+function assertResendResults(results) {
+  if (results.some((result) => result?.error)) {
+    throw new Error("Resend rejected an email request");
+  }
 }
 
 function visitorIp(request) {
@@ -174,7 +217,8 @@ async function sendResendEmails(lead) {
     );
   }
 
-  await Promise.all(tasks);
+  const results = await Promise.all(tasks);
+  assertResendResults(results);
   return {
     status: "sent",
     recipients: clientEmails.length,
@@ -233,7 +277,11 @@ export default async function handler(request, response) {
     return response.status(413).json({ ok: false, error: "Request is too large." });
   }
 
-  const body = typeof request.body === "object" && request.body ? request.body : {};
+  const body = request.body;
+  const typeValidation = validateFieldTypes(body);
+  if (typeValidation.error) {
+    return response.status(400).json({ ok: false, error: typeValidation.error });
+  }
 
   // Honeypots should look successful to bots while producing no logs, Slack
   // messages, emails, or auto-replies.
@@ -292,7 +340,9 @@ export default async function handler(request, response) {
 }
 
 export const __testables = {
+  assertResendResults,
   parseRecipientEmails,
+  validateFieldTypes,
   validateLead,
   verifyTurnstile,
 };

@@ -49,6 +49,20 @@ test("validates field lengths and enum values", () => {
   assert.equal(__testables.validateLead({ ...validBody, budget: "anything" }).error, "budget is invalid.");
 });
 
+test("rejects non-string fields and invalid phone values", () => {
+  assert.equal(__testables.validateLead({ ...validBody, phone: ["9565550100"] }).error, "phone must be a string.");
+  assert.equal(__testables.validateLead({ ...validBody, phone: "call-me" }).error, "Phone is invalid.");
+  assert.equal(__testables.validateLead({ ...validBody, phone: "+52 (956) 555-0100" }).lead.phone, "+52 (956) 555-0100");
+});
+
+test("treats Resend error results as delivery failures", () => {
+  assert.doesNotThrow(() => __testables.assertResendResults([{ data: { id: "email-id" }, error: null }]));
+  assert.throws(
+    () => __testables.assertResendResults([{ data: null, error: { message: "invalid recipient" } }]),
+    /Resend rejected an email request/
+  );
+});
+
 test("honeypot submissions return success without calling external services", async () => {
   const originalFetch = globalThis.fetch;
   let fetchCalled = false;

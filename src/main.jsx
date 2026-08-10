@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lightbox from "./components/Lightbox";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import MobileMenu from "./components/MobileMenu";
-import { ContentProvider, useContent } from "./content";
+import { ContentProvider, useContent, useLang } from "./content";
 import "./styles.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -71,6 +71,7 @@ const initialLeadForm = {
   timeline: "not-sure",
   interestType: "availability",
   notes: "",
+  companyWebsite: "",
 };
 
 function ContactIcon({ type }) {
@@ -884,14 +885,69 @@ function Location() {
   );
 }
 
+function TurnstileWidget({ siteKey, onTokenChange }) {
+  const containerRef = useRef(null);
+  const widgetIdRef = useRef(null);
+
+  useEffect(() => {
+    if (!siteKey || !containerRef.current) return undefined;
+
+    let cancelled = false;
+    const scriptId = "cloudflare-turnstile-script";
+
+    const renderWidget = () => {
+      if (cancelled || !containerRef.current || !window.turnstile || widgetIdRef.current !== null) return;
+      widgetIdRef.current = window.turnstile.render(containerRef.current, {
+        sitekey: siteKey,
+        appearance: "interaction-only",
+        theme: "light",
+        size: "flexible",
+        callback: onTokenChange,
+        "expired-callback": () => onTokenChange(""),
+        "error-callback": () => onTokenChange(""),
+        "timeout-callback": () => onTokenChange(""),
+        "refresh-expired": "auto",
+      });
+    };
+
+    let script = document.getElementById(scriptId);
+    if (!script) {
+      script = document.createElement("script");
+      script.id = scriptId;
+      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+
+    if (window.turnstile) renderWidget();
+    else script.addEventListener("load", renderWidget);
+
+    return () => {
+      cancelled = true;
+      script?.removeEventListener("load", renderWidget);
+      if (window.turnstile && widgetIdRef.current !== null) {
+        window.turnstile.remove(widgetIdRef.current);
+      }
+      widgetIdRef.current = null;
+    };
+  }, [siteKey, onTokenChange]);
+
+  if (!siteKey) return null;
+  return <div className="turnstile-container" ref={containerRef} />;
+}
+
 function Contact() {
   const c = useContent();
+  const { lang } = useLang();
   const { contact } = c;
   const cf = contact.form;
+  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
   const [formData, setFormData] = useState(initialLeadForm);
   const [touched, setTouched] = useState({});
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
 
   const emailValue = formData.email.trim();
   const phoneValue = formData.phone.trim();
@@ -930,6 +986,8 @@ function Contact() {
     const payload = {
       leadStage: "complete",
       ...formData,
+      lang,
+      turnstileToken,
       fullName: formData.fullName.trim(),
       phone: phoneValue,
       email: emailValue,
@@ -950,6 +1008,8 @@ function Contact() {
       setStatus("success");
       setMessage(cf.successMessage);
     } catch (error) {
+      setTurnstileToken("");
+      window.turnstile?.reset();
       setStatus("error");
       setMessage(cf.errorMessage);
     }
@@ -994,6 +1054,18 @@ function Contact() {
             <h2>{cf.title}</h2>
             <p>{cf.body}</p>
           </div>
+
+          <label className="form-trap" aria-hidden="true">
+            <span>Company website</span>
+            <input
+              type="text"
+              name="companyWebsite"
+              value={formData.companyWebsite}
+              autoComplete="off"
+              tabIndex="-1"
+              onChange={updateField}
+            />
+          </label>
 
           <label className="field">
             <span>{cf.labels.name}</span>
@@ -1137,7 +1209,17 @@ function Contact() {
             </div>
           </fieldset>
 
-          <button className="cta-submit" type="submit" disabled={status === "submitting" || status === "success"}>
+          <TurnstileWidget siteKey={turnstileSiteKey} onTokenChange={setTurnstileToken} />
+
+          <button
+            className="cta-submit"
+            type="submit"
+            disabled={
+              status === "submitting" ||
+              status === "success" ||
+              (Boolean(turnstileSiteKey) && !turnstileToken)
+            }
+          >
             {submitLabel}
           </button>
 

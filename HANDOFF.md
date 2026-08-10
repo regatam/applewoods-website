@@ -43,7 +43,8 @@ curl --compressed https://applewoods-website.vercel.app/ | grep -oE '/assets/ind
 - Two content variants: **`src/content/client.js`** (the LIVE/default) overrides a **`src/content/smcopy.js`** base. Edit `client.js` for live copy; keep the two in rough parity (a switcher exists at `?v=smcopy`). Content leaves are `{ en, es }` objects.
 - Premier lot ES closing paragraph is a working translation pending the client's official Spanish.
 - A separate, unmerged `contact-success-polish` worktree/branch holds older built-but-undeployed contact + map-icon work — leave it unless picking that thread up.
-- Secrets (Resend, Slack webhook) live in Vercel env vars, not in the repo — reference by name only.
+- Lead delivery, anti-spam environment variables, and secret handling are documented in
+  `docs/applewoods-lead-form-setup.md`.
 
 ## Key files
 - `src/main.jsx` — all components (Hero, difference cards, sticky amenities, `AmenityCard`, `LotBody`, FAQ, form, footer).

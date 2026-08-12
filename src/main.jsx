@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ArrowsOutSimpleIcon, EnvelopeSimpleIcon, PhoneIcon, WhatsappLogoIcon } from "@phosphor-icons/react";
 import { gsap } from "gsap";
@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lightbox from "./components/Lightbox";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import MobileMenu from "./components/MobileMenu";
-import { ContentProvider, useContent } from "./content";
+import { ContentProvider, useContent, useLang } from "./content";
 import "./styles.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -71,6 +71,7 @@ const initialLeadForm = {
   timeline: "not-sure",
   interestType: "availability",
   notes: "",
+  companyWebsite: "",
 };
 
 function ContactIcon({ type }) {
@@ -884,14 +885,123 @@ function Location() {
   );
 }
 
+function TurnstileWidget({ siteKey, onError, onTokenChange, retryAttempt }) {
+  const containerRef = useRef(null);
+  const widgetIdRef = useRef(null);
+
+  useEffect(() => {
+    if (!siteKey || !containerRef.current) return undefined;
+
+    let cancelled = false;
+    let loadTimer;
+    const scriptId = "cloudflare-turnstile-script";
+
+    const renderWidget = () => {
+      if (cancelled || !containerRef.current || widgetIdRef.current !== null) return;
+      window.clearTimeout(loadTimer);
+      if (!window.turnstile) {
+        onError();
+        return;
+      }
+      try {
+        widgetIdRef.current = window.turnstile.render(containerRef.current, {
+          sitekey: siteKey,
+          appearance: "interaction-only",
+          theme: "light",
+          size: "flexible",
+          callback: onTokenChange,
+          "expired-callback": () => onTokenChange(""),
+          "error-callback": onError,
+          "timeout-callback": onError,
+          "refresh-expired": "auto",
+        });
+      } catch {
+        onError();
+      }
+    };
+
+    const handleScriptError = () => {
+      window.clearTimeout(loadTimer);
+      onError();
+    };
+
+    let script = document.getElementById(scriptId);
+    if (retryAttempt > 0 && script && !window.turnstile) {
+      script.remove();
+      script = null;
+    }
+    if (!script) {
+      script = document.createElement("script");
+      script.id = scriptId;
+      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      script.async = true;
+      script.defer = true;
+    }
+
+    if (window.turnstile) renderWidget();
+    else {
+      script.addEventListener("load", renderWidget);
+      script.addEventListener("error", handleScriptError);
+      loadTimer = window.setTimeout(handleScriptError, 10_000);
+      if (!script.isConnected) document.head.appendChild(script);
+    }
+
+    return () => {
+      cancelled = true;
+      script?.removeEventListener("load", renderWidget);
+      script?.removeEventListener("error", handleScriptError);
+      window.clearTimeout(loadTimer);
+      if (window.turnstile && widgetIdRef.current !== null) {
+        window.turnstile.remove(widgetIdRef.current);
+      }
+      widgetIdRef.current = null;
+    };
+  }, [onError, onTokenChange, retryAttempt, siteKey]);
+
+  if (!siteKey) return null;
+  return <div className="turnstile-container" ref={containerRef} />;
+}
+
 function Contact() {
   const c = useContent();
+  const { lang } = useLang();
   const { contact } = c;
   const cf = contact.form;
+  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
   const [formData, setFormData] = useState(initialLeadForm);
   const [touched, setTouched] = useState({});
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileError, setTurnstileError] = useState(false);
+  const [turnstileRetryAttempt, setTurnstileRetryAttempt] = useState(0);
+
+  const handleTurnstileToken = useCallback((token) => {
+    setTurnstileToken(token);
+    if (token) {
+      setTurnstileError((failed) => {
+        if (failed) {
+          setStatus("idle");
+          setMessage("");
+        }
+        return false;
+      });
+    }
+  }, []);
+
+  const handleTurnstileError = useCallback(() => {
+    setTurnstileToken("");
+    setTurnstileError(true);
+    setStatus("error");
+  }, []);
+
+  const retryTurnstile = () => {
+    setTurnstileToken("");
+    setTurnstileError(false);
+    setStatus("idle");
+    setMessage("");
+    setTurnstileRetryAttempt((attempt) => attempt + 1);
+  };
 
   const emailValue = formData.email.trim();
   const phoneValue = formData.phone.trim();
@@ -902,11 +1012,16 @@ function Contact() {
     phone: contactMissing ? cf.errors.contact : "",
     email: emailIsInvalid ? cf.errors.email : "",
   };
+  const formMessage = turnstileError ? cf.verificationError : message;
 
   const updateField = (event) => {
     const { name, value } = event.target;
-    setStatus((current) => (current === "success" ? "idle" : current));
-    setMessage("");
+    if (status === "success") {
+      setTurnstileToken("");
+      window.turnstile?.reset();
+      setStatus("idle");
+    }
+    if (!turnstileError) setMessage("");
     setFormData((current) => ({ ...current, [name]: value }));
   };
 
@@ -930,6 +1045,8 @@ function Contact() {
     const payload = {
       leadStage: "complete",
       ...formData,
+      lang,
+      turnstileToken,
       fullName: formData.fullName.trim(),
       phone: phoneValue,
       email: emailValue,
@@ -950,6 +1067,8 @@ function Contact() {
       setStatus("success");
       setMessage(cf.successMessage);
     } catch (error) {
+      setTurnstileToken("");
+      window.turnstile?.reset();
       setStatus("error");
       setMessage(cf.errorMessage);
     }
@@ -994,6 +1113,18 @@ function Contact() {
             <h2>{cf.title}</h2>
             <p>{cf.body}</p>
           </div>
+
+          <label className="form-trap" aria-hidden="true">
+            <span>Company website</span>
+            <input
+              type="text"
+              name="companyWebsite"
+              value={formData.companyWebsite}
+              autoComplete="off"
+              tabIndex="-1"
+              onChange={updateField}
+            />
+          </label>
 
           <label className="field">
             <span>{cf.labels.name}</span>
@@ -1137,13 +1268,34 @@ function Contact() {
             </div>
           </fieldset>
 
-          <button className="cta-submit" type="submit" disabled={status === "submitting" || status === "success"}>
+          <TurnstileWidget
+            siteKey={turnstileSiteKey}
+            onError={handleTurnstileError}
+            onTokenChange={handleTurnstileToken}
+            retryAttempt={turnstileRetryAttempt}
+          />
+
+          {turnstileError ? (
+            <button className="turnstile-retry" type="button" onClick={retryTurnstile}>
+              {cf.verificationRetry}
+            </button>
+          ) : null}
+
+          <button
+            className="cta-submit"
+            type="submit"
+            disabled={
+              status === "submitting" ||
+              status === "success" ||
+              (Boolean(turnstileSiteKey) && !turnstileToken)
+            }
+          >
             {submitLabel}
           </button>
 
-          {message ? (
+          {formMessage ? (
             <p className={`form-message ${status === "error" ? "is-error" : "is-success"}`}>
-              {message}
+              {formMessage}
             </p>
           ) : null}
 

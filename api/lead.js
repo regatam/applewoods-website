@@ -1,6 +1,160 @@
 import { Resend } from "resend";
 
 const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+const MAX_BODY_BYTES = 16_384;
+const MAX_LENGTHS = {
+  fullName: 120,
+  phone: 40,
+  email: 254,
+  notes: 2_000,
+};
+const ALLOWED_VALUES = {
+  lotInterest: new Set(["not-sure", "standard", "premier", "corner"]),
+  budget: new Set(["not-sure", "85-95", "95-plus", "depends"]),
+  timeline: new Set(["not-sure", "now", "soon", "later"]),
+  interestType: new Set(["availability", "buy", "build"]),
+  lang: new Set(["en", "es"]),
+};
+const STRING_FIELDS = [
+  "leadStage",
+  "fullName",
+  "phone",
+  "email",
+  "lotInterest",
+  "budget",
+  "timeline",
+  "interestType",
+  "notes",
+  "lang",
+  "companyWebsite",
+  "turnstileToken",
+];
+
+const clean = (value) => (typeof value === "string" ? value.trim() : "");
+
+function validateFieldTypes(body) {
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return { error: "Request body must be an object." };
+  }
+
+  for (const field of STRING_FIELDS) {
+    if (body[field] !== undefined && typeof body[field] !== "string") {
+      return { error: `${field} must be a string.` };
+    }
+  }
+
+  return {};
+}
+
+function serializedBodyBytes(body) {
+  try {
+    return Buffer.byteLength(JSON.stringify(body), "utf8");
+  } catch {
+    return Number.POSITIVE_INFINITY;
+  }
+}
+
+function parseRecipientEmails(value) {
+  return String(value || "")
+    .split(",")
+    .map((email) => email.trim())
+    .filter(Boolean);
+}
+
+function validateRecipientEmails(emails, environment = process.env.VERCEL_ENV) {
+  if (emails.some((email) => !isValidEmail(email))) {
+    throw new Error("CLIENT_EMAILS contains an invalid email address");
+  }
+  const uniqueEmails = new Set(emails.map((email) => email.toLowerCase()));
+  if (environment === "production" && (emails.length !== 3 || uniqueEmails.size !== 3)) {
+    throw new Error("CLIENT_EMAILS must contain three unique addresses in production");
+  }
+}
+
+function validateLead(body) {
+  const typeValidation = validateFieldTypes(body);
+  if (typeValidation.error) return typeValidation;
+
+  const lead = {
+    leadStage: "complete",
+    fullName: clean(body.fullName),
+    phone: clean(body.phone),
+    email: clean(body.email),
+    lotInterest: clean(body.lotInterest) || "not-sure",
+    budget: clean(body.budget) || "not-sure",
+    timeline: clean(body.timeline) || "not-sure",
+    interestType: clean(body.interestType) || "availability",
+    notes: clean(body.notes),
+    lang: clean(body.lang) || "en",
+    receivedAt: new Date().toISOString(),
+  };
+
+  if (!lead.phone && !lead.email) return { error: "A phone or email is required." };
+  if (lead.phone) {
+    const digits = lead.phone.match(/\d/g) || [];
+    if (!/^[\d+().\s-]+$/.test(lead.phone) || digits.length < 7) {
+      return { error: "Phone is invalid." };
+    }
+  }
+  if (lead.email && !isValidEmail(lead.email)) return { error: "Email is invalid." };
+
+  for (const [field, max] of Object.entries(MAX_LENGTHS)) {
+    if (lead[field].length > max) return { error: `${field} is too long.` };
+  }
+
+  for (const [field, allowed] of Object.entries(ALLOWED_VALUES)) {
+    if (!allowed.has(lead[field])) return { error: `${field} is invalid.` };
+  }
+
+  return { lead };
+}
+
+function assertResendResult(result, expectedEmails) {
+  if (result?.error || !Array.isArray(result?.data?.data) || result.data.data.length !== expectedEmails) {
+    throw new Error("Resend rejected the email batch");
+  }
+}
+
+function visitorIp(request) {
+  const forwarded = request.headers?.["x-forwarded-for"];
+  return String(Array.isArray(forwarded) ? forwarded[0] : forwarded || "")
+    .split(",")[0]
+    .trim();
+}
+
+async function verifyTurnstile(token, request) {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+
+  // Keep local development usable without production credentials, but fail
+  // closed on Vercel production if the secret was not configured.
+  if (!secret) {
+    return process.env.VERCEL_ENV === "production"
+      ? { ok: false, configurationError: true }
+      : { ok: true, skipped: true };
+  }
+
+  if (!token || token.length > 2_048) return { ok: false };
+
+  const payload = new URLSearchParams({ secret, response: token });
+  const ip = visitorIp(request);
+  if (ip) payload.set("remoteip", ip);
+
+  try {
+    const verification = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: payload,
+      signal: AbortSignal.timeout(5_000),
+    });
+    if (!verification.ok) return { ok: false, serviceError: true };
+
+    const result = await verification.json();
+    return { ok: result.success === true, errors: result["error-codes"] || [] };
+  } catch (error) {
+    console.error("Applewoods Turnstile verification failed", error);
+    return { ok: false, serviceError: true };
+  }
+}
 
 // Plain-text summary of the lead for the team notification email.
 function leadSummary(lead) {
@@ -36,49 +190,52 @@ function autoReply(lead) {
   ].join("\n");
 }
 
-// Notify the team and (optionally) auto-reply to the lead via Resend. Mirrors
-// the Flex Space setup: a tiny serverless function + Resend's free tier, no
-// third-party form service. Until RESEND_API_KEY / FROM_EMAIL / CLIENT_EMAIL
-// are set, this is a no-op ("skipped") so the form still succeeds for the
-// visitor and the lead is captured in the function logs.
+// Notify the team and (optionally) auto-reply to the lead via Resend. Until
+// RESEND_API_KEY / FROM_EMAIL / CLIENT_EMAILS are set, email is a no-op while
+// Slack continues independently.
 async function sendResendEmails(lead) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.FROM_EMAIL;
-  const clientEmail = process.env.CLIENT_EMAIL;
+  const clientEmails = parseRecipientEmails(process.env.CLIENT_EMAILS || process.env.CLIENT_EMAIL);
 
-  if (!apiKey || !from || !clientEmail) {
+  if (!apiKey || !from || clientEmails.length === 0) {
     return {
       status: "skipped",
-      reason: "Missing RESEND_API_KEY, FROM_EMAIL, or CLIENT_EMAIL",
+      reason: "Missing RESEND_API_KEY, FROM_EMAIL, or CLIENT_EMAILS",
     };
   }
 
+  validateRecipientEmails(clientEmails);
+
   const resend = new Resend(apiKey);
 
-  const tasks = [
-    resend.emails.send({
-      from,
-      to: clientEmail,
-      ...(lead.email ? { replyTo: lead.email } : {}),
-      subject: `New Apple Woods lead${lead.fullName ? `: ${lead.fullName}` : ""}`,
-      text: leadSummary(lead),
-    }),
-  ];
+  const messages = clientEmails.map((recipient) => ({
+    from,
+    to: recipient,
+    ...(lead.email ? { replyTo: lead.email } : {}),
+    subject: `New Apple Woods lead${lead.fullName ? `: ${lead.fullName}` : ""}`,
+    text: leadSummary(lead),
+  }));
 
-  // Only auto-reply when the lead left an email address.
-  if (lead.email) {
-    tasks.push(
-      resend.emails.send({
-        from,
-        to: lead.email,
-        subject: "Thanks for reaching out to Apple Woods",
-        text: autoReply(lead),
-      })
-    );
+  // Auto-replies are intentionally opt-in. Keep this false until the client
+  // approves bilingual copy and the spam controls have been observed live.
+  const autoReplyEnabled = process.env.SEND_LEAD_AUTOREPLY === "true";
+  if (autoReplyEnabled && lead.email) {
+    messages.push({
+      from,
+      to: lead.email,
+      subject: "Thanks for reaching out to Apple Woods",
+      text: autoReply(lead),
+    });
   }
 
-  await Promise.all(tasks);
-  return { status: "sent" };
+  const result = await resend.batch.send(messages);
+  assertResendResult(result, messages.length);
+  return {
+    status: "sent",
+    recipients: clientEmails.length,
+    autoReply: autoReplyEnabled && Boolean(lead.email) ? "sent" : "disabled",
+  };
 }
 
 // Real-time lead alert to Slack via an incoming webhook. No-op until
@@ -122,41 +279,60 @@ export default async function handler(request, response) {
     return response.status(405).json({ ok: false, error: "Method not allowed" });
   }
 
-  const body = typeof request.body === "object" && request.body ? request.body : {};
-  const phone = String(body.phone || "").trim();
-  const email = String(body.email || "").trim();
+  const contentType = String(request.headers?.["content-type"] || "");
+  if (!contentType.startsWith("application/json")) {
+    return response.status(415).json({ ok: false, error: "Content-Type must be application/json." });
+  }
 
-  if (!phone && !email) {
-    return response.status(400).json({
+  const contentLength = Number(request.headers?.["content-length"] || 0);
+  if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) {
+    return response.status(413).json({ ok: false, error: "Request is too large." });
+  }
+
+  const body = request.body;
+  const typeValidation = validateFieldTypes(body);
+  if (typeValidation.error) {
+    return response.status(400).json({ ok: false, error: typeValidation.error });
+  }
+  if (serializedBodyBytes(body) > MAX_BODY_BYTES) {
+    return response.status(413).json({ ok: false, error: "Request is too large." });
+  }
+
+  // Honeypots should look successful to bots while producing no logs, Slack
+  // messages, emails, or auto-replies.
+  if (clean(body.companyWebsite)) {
+    return response.status(200).json({ ok: true });
+  }
+
+  const validation = validateLead(body);
+  if (validation.error) {
+    return response.status(400).json({ ok: false, error: validation.error });
+  }
+
+  const turnstile = await verifyTurnstile(clean(body.turnstileToken), request);
+  if (turnstile.configurationError) {
+    console.error("Applewoods lead form is missing TURNSTILE_SECRET_KEY in production");
+    return response.status(503).json({ ok: false, error: "Form verification is unavailable." });
+  }
+  if (!turnstile.ok) {
+    console.warn("Applewoods lead rejected by Turnstile", { errors: turnstile.errors || [] });
+    return response.status(turnstile.serviceError ? 503 : 400).json({
       ok: false,
-      error: "A phone or email is required.",
+      error: turnstile.serviceError ? "Form verification is unavailable." : "Please verify and try again.",
     });
   }
 
-  if (email && !isValidEmail(email)) {
-    return response.status(400).json({
-      ok: false,
-      error: "Email is invalid.",
-    });
-  }
+  const { lead } = validation;
+  console.info("Applewoods lead accepted", {
+    hasPhone: Boolean(lead.phone),
+    hasEmail: Boolean(lead.email),
+    interestType: lead.interestType,
+    lang: lead.lang,
+    turnstile: turnstile.skipped ? "skipped-local" : "verified",
+  });
 
-  const lead = {
-    leadStage: "complete",
-    fullName: String(body.fullName || "").trim(),
-    phone,
-    email,
-    lotInterest: String(body.lotInterest || ""),
-    budget: String(body.budget || ""),
-    timeline: String(body.timeline || ""),
-    interestType: String(body.interestType || ""),
-    notes: String(body.notes || "").trim(),
-    receivedAt: new Date().toISOString(),
-  };
-
-  console.info("Applewoods lead received", lead);
-
-  // Fire all notification channels; never fail the visitor because a
-  // notification did (the lead is already captured in the log above).
+  // Fire all notification channels; never fail the visitor because one
+  // downstream notification provider did.
   const [emailResult, slackResult] = await Promise.allSettled([
     sendResendEmails(lead),
     notifySlack(lead),
@@ -164,9 +340,22 @@ export default async function handler(request, response) {
   if (emailResult.status === "rejected") console.error("Applewoods lead email failed", emailResult.reason);
   if (slackResult.status === "rejected") console.error("Applewoods lead Slack notify failed", slackResult.reason);
 
-  return response.status(200).json({
-    ok: true,
-    email: emailResult.status === "fulfilled" ? emailResult.value : { status: "error" },
-    slack: slackResult.status === "fulfilled" ? slackResult.value : { status: "error" },
-  });
+  const delivered = [emailResult, slackResult].some(
+    (result) => result.status === "fulfilled" && result.value?.status === "sent"
+  );
+  if (process.env.VERCEL_ENV === "production" && !delivered) {
+    return response.status(502).json({ ok: false, error: "Lead delivery is unavailable." });
+  }
+
+  return response.status(200).json({ ok: true });
 }
+
+export const __testables = {
+  assertResendResult,
+  parseRecipientEmails,
+  serializedBodyBytes,
+  validateFieldTypes,
+  validateLead,
+  validateRecipientEmails,
+  verifyTurnstile,
+};

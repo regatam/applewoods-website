@@ -10,3 +10,8 @@ yarn-error.log*
 pnpm-debug.log*
 .vercel
 .env*.local
+
+deploy.js
+web.config
+ecosystem.config.cjs
+package-lock.json

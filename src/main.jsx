@@ -790,6 +790,10 @@ function PhaseOne() {
   const [mapOpen, setMapOpen] = useState(false);
   const [priceOpen, setPriceOpen] = useState(false);
   const [openLotImage, setOpenLotImage] = useState(null);
+  // Phase switcher: swaps the lot map + price sheet documents (cards and
+  // lightboxes). The intro copy and lot cards stay the same across phases.
+  const [phaseKey, setPhaseKey] = useState(phaseOne.phases[0].key);
+  const phase = phaseOne.phases.find((p) => p.key === phaseKey) || phaseOne.phases[0];
 
   return (
     <section className="phase-one" id="phase-one">
@@ -797,25 +801,38 @@ function PhaseOne() {
         <p className="eyebrow">{phaseOne.eyebrow}</p>
         <h2>{phaseOne.heading}</h2>
         <p>{phaseOne.body}</p>
+        <div className="phase-switch" role="group" aria-label={phaseOne.phaseSwitchLabel}>
+          {phaseOne.phases.map((p) => (
+            <button
+              key={p.key}
+              type="button"
+              className={p.key === phase.key ? "is-active" : ""}
+              aria-pressed={p.key === phase.key}
+              onClick={() => setPhaseKey(p.key)}
+            >
+              {p.label}
+            </button>
+          ))}
+        </div>
       </div>
       <div className="lot-layout">
-        <div className="lot-docs">
+        <div className="lot-docs" key={phase.key}>
           <button
             type="button"
             className="lot-doc"
             onClick={() => setMapOpen(true)}
-            aria-label="Open the Phase 1 lot map"
+            aria-label={`Open the ${phase.label} lot map`}
           >
-            <img src="/assets/phase-1-aw-sold-map.png" alt={phaseOne.mapAlt} loading="lazy" decoding="async" />
+            <img src={`${phase.map}.png`} alt={phase.mapAlt} loading="lazy" decoding="async" />
             <span className="lot-doc-hint">{phaseOne.masterplanHint}</span>
           </button>
           <button
             type="button"
             className="lot-doc"
             onClick={() => setPriceOpen(true)}
-            aria-label="Open the Apple Woods price sheet"
+            aria-label={`Open the ${phase.label} price sheet`}
           >
-            <img src="/assets/apple-woods-price-sheet-v3-preview.png" alt={phaseOne.pricePreviewAlt} loading="lazy" decoding="async" />
+            <img src={`${phase.priceSheet}-preview.png`} alt={phase.priceSheetAlt} loading="lazy" decoding="async" />
             <span className="lot-doc-hint">{phaseOne.priceSheetHint}</span>
           </button>
         </div>
@@ -844,11 +861,11 @@ function PhaseOne() {
         </div>
       </div>
       <p className="phase-note">{phaseOne.phaseNote}</p>
-      <Lightbox open={mapOpen} onClose={() => setMapOpen(false)} label="Apple Woods Phase 1 lot map">
-        <img src="/assets/phase-1-aw-sold-map@2x.png" alt="Apple Woods Phase 1 lot map" loading="lazy" decoding="async" />
+      <Lightbox open={mapOpen} onClose={() => setMapOpen(false)} label={phase.mapAlt}>
+        <img src={`${phase.map}@2x.png`} alt={phase.mapAlt} loading="lazy" decoding="async" />
       </Lightbox>
-      <Lightbox open={priceOpen} onClose={() => setPriceOpen(false)} label="Apple Woods price sheet">
-        <img src="/assets/apple-woods-price-sheet-v3@2x.png" alt="Apple Woods Phase 1 price sheet" loading="lazy" decoding="async" />
+      <Lightbox open={priceOpen} onClose={() => setPriceOpen(false)} label={phase.priceSheetAlt}>
+        <img src={`${phase.priceSheet}@2x.png`} alt={phase.priceSheetAlt} loading="lazy" decoding="async" />
       </Lightbox>
       <Lightbox
         open={openLotImage !== null}

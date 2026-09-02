@@ -322,7 +322,7 @@ clientContent.contact.faq.groups = [
     ],
   },
   {
-    label: { en: "Restrictions", es: "Restricciones" },
+    label: { en: "Shared Standards", es: "Estándares compartidos" },
     items: [
       {
         question: { en: "What are the restrictions?", es: "¿Cuáles son las restricciones?" },

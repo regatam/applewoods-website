@@ -560,6 +560,34 @@ export const smcopyContent = {
       en: "Apple Woods Phase 1 developer introductory offer price sheet preview",
       es: "Vista previa de la lista de precios de la oferta introductoria del desarrollador de la Fase 1 de Apple Woods",
     },
+    // Phase switcher: each entry swaps the lot map + price sheet shown in the
+    // document cards / lightboxes. Image paths are prefixes — the component
+    // appends ".png" (card preview) and "@2x.png" (lightbox).
+    phaseSwitchLabel: { en: "Choose a phase", es: "Elige una fase" },
+    phases: [
+      {
+        key: "1",
+        label: { en: "Phase 1", es: "Fase 1" },
+        map: "/assets/phase-1-aw-sold-map",
+        mapAlt: { en: "Apple Woods Phase 1 lot map", es: "Mapa de lotes de la Fase 1 de Apple Woods" },
+        priceSheet: "/assets/apple-woods-price-sheet-v3",
+        priceSheetAlt: {
+          en: "Apple Woods Phase 1 developer introductory offer price sheet",
+          es: "Lista de precios de la oferta introductoria del desarrollador de la Fase 1 de Apple Woods",
+        },
+      },
+      {
+        key: "2",
+        label: { en: "Phase 2", es: "Fase 2" },
+        map: "/assets/phase-2-aw-sold-map",
+        mapAlt: { en: "Apple Woods Phase 2 lot map", es: "Mapa de lotes de la Fase 2 de Apple Woods" },
+        priceSheet: "/assets/apple-woods-price-sheet-phase-2",
+        priceSheetAlt: {
+          en: "Apple Woods Phase 2 developer suggested retail price sheet",
+          es: "Lista de precios de venta sugeridos del desarrollador de la Fase 2 de Apple Woods",
+        },
+      },
+    ],
   },
   location: {
     eyebrow: { en: "Location", es: "Ubicación" },
@@ -825,7 +853,7 @@ export const smcopyContent = {
           ],
         },
         {
-          label: { en: "Restrictions", es: "Restricciones" },
+          label: { en: "Shared Standards", es: "Estándares compartidos" },
           items: [
             {
               question: { en: "What are the restrictions?", es: "¿Cuáles son las restricciones?" },

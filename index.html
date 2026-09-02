@@ -33,6 +33,7 @@
     <!-- Preload the LCP hero so it starts downloading in parallel with the JS
          bundle. This is an SPA — the hero <img> only appears after React renders,
          so without this the browser can't discover it until the bundle executes. -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/raleway-latin.woff2" crossorigin />
     <link rel="preload" as="image" type="image/webp" href="/assets/hero-desktop.webp" media="(min-width: 761px)" fetchpriority="high" />
     <link rel="preload" as="image" type="image/webp" href="/assets/hero-mobile.webp" media="(max-width: 760px)" fetchpriority="high" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />

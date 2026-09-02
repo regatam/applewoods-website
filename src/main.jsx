@@ -7,6 +7,7 @@ import Lightbox from "./components/Lightbox";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import MobileMenu from "./components/MobileMenu";
 import { ContentProvider, useContent, useLang } from "./content";
+import { imgProps } from "./img.js";
 import "./styles.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -311,7 +312,7 @@ function V2Nav() {
       aria-label="Primary navigation"
     >
       <a className="v2-logo" href="#top" aria-label="Apple Woods home">
-        <img src="/assets/applewoods-logo.png" alt={nav.logoAlt} />
+        <img {...imgProps("/assets/applewoods-logo.png")} alt={nav.logoAlt} />
       </a>
       <nav>
         {nav.links.map((link) => (
@@ -436,7 +437,7 @@ function ExpandableFeatureCard({ item, moreLabel, lessLabel, className, collapse
   return (
     <article className={className} ref={cardRef}>
       <div className="v2-feature-image">
-        <img src={item.image} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <img {...imgProps(item.image)} alt="" aria-hidden="true" loading="lazy" decoding="async" />
       </div>
       <div className="v2-feature-copy">
         <h3>{item.title}</h3>
@@ -514,7 +515,7 @@ function V2Difference() {
           {cards.map((item) => (
             <article key={item.title}>
               <div className="v2-feature-image">
-                <img src={item.image} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                <img {...imgProps(item.image)} alt="" aria-hidden="true" loading="lazy" decoding="async" />
               </div>
               <div className="v2-feature-copy">
                 <h3>{item.title}</h3>
@@ -586,7 +587,7 @@ function V2StickyAmenities() {
             {stories.map((item, itemIndex) => (
               <img
                 key={item.label}
-                src={item.image}
+                {...imgProps(item.image)}
                 alt=""
                 loading="lazy"
                 decoding="async"
@@ -602,7 +603,7 @@ function V2StickyAmenities() {
             </div>
 
             <figure className="v2-amenity-image" ref={imageRef}>
-              <img src={active.image} alt={active.label} loading="lazy" decoding="async" />
+              <img {...imgProps(active.image)} alt={active.label} loading="lazy" decoding="async" />
               <figcaption>{active.title}</figcaption>
             </figure>
 
@@ -674,7 +675,7 @@ function AmenityCard({ item, moreLabel, lessLabel }) {
       <h3 className="amenity-card-title">{item.term}</h3>
       <figure className="amenity-figure">
         {item.image ? (
-          <img src={item.image} alt={item.imageAlt || item.term} loading="lazy" />
+          <img {...imgProps(item.image)} alt={item.imageAlt || item.term} loading="lazy" />
         ) : (
           <span className="amenity-figure-ph" aria-hidden="true">
             {item.term}
@@ -823,7 +824,7 @@ function PhaseOne() {
             onClick={() => setMapOpen(true)}
             aria-label={`Open the ${phase.label} lot map`}
           >
-            <img src={`${phase.map}.png`} alt={phase.mapAlt} loading="lazy" decoding="async" />
+            <img src={`${phase.map}.png`} alt={phase.mapAlt} width={1530} height={1980} loading="lazy" decoding="async" />
             <span className="lot-doc-hint">{phaseOne.masterplanHint}</span>
           </button>
           <button
@@ -832,7 +833,7 @@ function PhaseOne() {
             onClick={() => setPriceOpen(true)}
             aria-label={`Open the ${phase.label} price sheet`}
           >
-            <img src={`${phase.priceSheet}-preview.png`} alt={phase.priceSheetAlt} loading="lazy" decoding="async" />
+            <img src={`${phase.priceSheet}-preview.png`} alt={phase.priceSheetAlt} width={1275} height={1650} loading="lazy" decoding="async" />
             <span className="lot-doc-hint">{phaseOne.priceSheetHint}</span>
           </button>
         </div>
@@ -847,7 +848,7 @@ function PhaseOne() {
                   onClick={() => setOpenLotImage(lotIndex)}
                   aria-label={`Expand the ${lot.name} image`}
                 >
-                  <img src={lot.image} alt={lot.imageAlt || lot.name} loading="lazy" />
+                  <img {...imgProps(lot.image)} alt={lot.imageAlt || lot.name} loading="lazy" />
                   <span className="lot-thumb-zoom" aria-hidden="true">
                     <ArrowsOutSimpleIcon size={15} weight="bold" />
                   </span>
@@ -896,7 +897,7 @@ function Location() {
         <Paras text={location.body} />
       </div>
       <div className="location-panel">
-        <img src="/assets/locationsaw.png" alt={location.imageAlt} loading="lazy" decoding="async" />
+        <img {...imgProps("/assets/locationsaw.png")} alt={location.imageAlt} loading="lazy" decoding="async" />
       </div>
     </section>
   );
@@ -1354,7 +1355,7 @@ function Footer() {
     <footer className="footer" id="footer">
       <div className="footer-inner">
         <a className="footer-logo" href="#top" aria-label="Apple Woods home">
-          <img src="/assets/applewoods-logo.png" alt={nav.logoAlt} />
+          <img {...imgProps("/assets/applewoods-logo.png")} alt={nav.logoAlt} />
         </a>
 
         <div className="footer-content">

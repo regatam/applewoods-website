@@ -1,0 +1,17 @@
+# Apple Woods
+
+> Apple Woods is a planned smart-living residential community in Brownsville, Texas. The site presents the community concept, amenities, Phase 1 and Phase 2 homesite maps and price sheets, and a contact form for the sales team. Content is available in English and Spanish.
+
+## Sections
+
+- Community and Structured Living: what makes Apple Woods different from a standard lot purchase
+- Amenities: clubhouse, pool, fitness, parks, event center, maintained surroundings
+- Phase 1 and Phase 2 homesites: interactive lot maps and developer price sheets
+- FAQ: general, cost, size, shared standards, and life in the community
+- Location: Brownsville, TX
+- Contact: inquiry form and direct sales contact
+
+## Notes
+
+- Single-page site; all sections live at the root URL with hash anchors.
+- Pricing and lot availability change; the price sheets on the page are the current reference.

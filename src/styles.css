@@ -1439,6 +1439,7 @@ textarea.input {
 
 .footer-logo img {
   width: clamp(260px, 34vw, 426px);
+  height: auto; /* the img carries width/height attrs (imgProps) — keep the ratio */
   mix-blend-mode: multiply;
 }
 
@@ -1664,6 +1665,7 @@ textarea.input {
 
 .v2-logo img {
   width: 170px;
+  height: auto; /* the img carries width/height attrs (imgProps) — keep the ratio */
   mix-blend-mode: multiply;
   transition:
     opacity 200ms ease,

@@ -388,14 +388,26 @@ function V2Hero() {
 }
 
 // Render copy that may contain blank-line paragraph breaks as separate <p> tags.
+// Paragraphs split on blank lines. A block whose lines all start with "- "
+// renders as a bulleted list (client FAQ answers use them).
 function Paras({ text }) {
   return (
     <>
       {String(text)
         .split(/\n\n+/)
-        .map((para, paraIndex) => (
-          <p key={paraIndex}>{para}</p>
-        ))}
+        .map((para, paraIndex) => {
+          const lines = para.split("\n");
+          if (lines.length > 1 && lines.every((l) => l.startsWith("- "))) {
+            return (
+              <ul key={paraIndex}>
+                {lines.map((l, i) => (
+                  <li key={i}>{l.slice(2)}</li>
+                ))}
+              </ul>
+            );
+          }
+          return <p key={paraIndex}>{para}</p>;
+        })}
     </>
   );
 }
@@ -1332,6 +1344,19 @@ function Contact() {
       <div className="faq">
         <p className="eyebrow">{contact.faq.eyebrow}</p>
         <h2>{emphasize(contact.faq.heading)}</h2>
+        {contact.faq.intro ? (
+          <div className="faq-intro">
+            <h3 className="faq-group-label">{contact.faq.intro.heading}</h3>
+            <ol>
+              {contact.faq.intro.items.map((item) => (
+                <li key={item.title}>
+                  <strong>{item.title}</strong>
+                  <span>{item.body}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ) : null}
         {contact.faq.groups.map((group) => (
           <div className="faq-group" key={group.label}>
             <h3 className="faq-group-label">{group.label}</h3>

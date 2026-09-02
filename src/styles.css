@@ -1143,6 +1143,43 @@ h1 {
   text-transform: uppercase;
 }
 
+/* 10 reasons list — sits above the FAQ groups, no topic label of its own. */
+.faq-intro {
+  margin-bottom: 40px;
+}
+
+.faq-intro ol {
+  margin: 0;
+  padding-left: 22px;
+  display: grid;
+  gap: 12px;
+}
+
+.faq-intro li {
+  padding-left: 4px;
+}
+
+.faq-intro li strong {
+  display: block;
+  font-weight: 600;
+  color: var(--brown);
+}
+
+.faq-intro li span {
+  display: block;
+  line-height: 1.6;
+}
+
+.faq details ul {
+  margin: 0 0 14px;
+  padding-left: 20px;
+}
+
+.faq details li {
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
 .faq-group {
   margin-top: 54px;
 }

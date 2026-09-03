@@ -1066,6 +1066,17 @@ function Contact() {
 
       setStatus("success");
       setMessage(cf.successMessage);
+      // GA4 key event. Form choices only, never name, phone, email, or notes.
+      if (typeof window.gtag === "function") {
+        window.gtag("event", "generate_lead", {
+          method: "lead_form",
+          lang,
+          lot_interest: formData.lotInterest,
+          budget: formData.budget,
+          timeline: formData.timeline,
+          interest_type: formData.interestType,
+        });
+      }
     } catch (error) {
       setTurnstileToken("");
       window.turnstile?.reset();
